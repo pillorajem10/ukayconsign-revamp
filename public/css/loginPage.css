@@ -1,0 +1,18 @@
+.login-card {
+    border: none;
+    border-radius: 15px; /* Rounded corners for the card */
+    padding: 40px; /* Increase padding for a taller form */
+}
+
+.btn-gradient {
+    background: linear-gradient(135deg, #004d00, #008000);
+    border: none;
+    border-radius: 20px; /* Rounded button */
+    padding: 10px 20px; /* Button padding */
+    font-size: 16px; /* Font size */
+    color: white;
+}
+
+.btn-gradient:hover {
+    background: linear-gradient(135deg, #008000, #004d00); /* Darker gradient on hover */
+}
