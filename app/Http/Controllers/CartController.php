@@ -10,6 +10,20 @@ use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
+    public function index()
+    {
+        // Ensure user is authenticated
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Please log in to view your cart.');
+        }
+
+        // Retrieve the cart items for the authenticated user
+        $carts = Cart::where('user_id', Auth::id())->get();
+
+        return view('pages.cartPage', compact('carts'));
+    }
+
+
     // ADD TO CART
     public function add(Request $request)
     {

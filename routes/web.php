@@ -41,6 +41,7 @@ Route::get('/products', function () {
 
 // CART
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/delete-selected', [CartController::class, 'deleteSelected'])->name('cart.deleteSelected');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
