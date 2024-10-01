@@ -1,3 +1,4 @@
+/*----TABLE/CONTAINER PRODUCT SECTION----*/
 .product-section-container {
     width: 100%;
     margin: 0 auto; /* Center the container */
@@ -55,11 +56,131 @@
 .product-section-table th,
 .product-section-table td {
     border: 1px solid #ccc; /* Table border */
-    padding: 8px; /* Padding inside table cells */
+    padding: 2px; /* Padding inside table cells */
     text-align: left; /* Align text to the left */
     font-size: 0.8rem; /* Set font size to 0.8rem */
 }
 
 .product-section-table th {
     background-color: #f2f2f2; /* Header background color */
+}
+
+.product-section-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.product-section-pagination-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 10px; /* Space between items */
+}
+
+.product-section-pagination-list li {
+    display: inline-block;
+}
+
+.product-section-link,
+.product-section-pagination-list span {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid #28a745; /* Green border color */
+    border-radius: 4px; /* Rounded corners */
+    text-decoration: none;
+    color: #28a745; /* Green link color */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.product-section-link:hover {
+    background-color: #28a745; /* Green background on hover */
+    color: white; /* White text color on hover */
+}
+
+.product-section-disabled {
+    color: #ccc; /* Color for disabled items */
+    pointer-events: none; /* Prevent interaction */
+}
+
+.product-section-active {
+    background-color: #28a745; /* Active page background */
+    color: white; /* Active page text color */
+    border: 1px solid #28a745; /* Active border */
+}
+
+
+.product-section-disabled {
+    color: #ccc; /* Color for disabled items */
+    pointer-events: none; /* Prevent interaction */
+}
+
+.product-section-active {
+    background-color: white; /* Active page background */
+    color: white; /* Active page text color */
+    border: 2px solid green; /* Active border */
+}
+
+.product-section-add-to-cart-btn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Add some padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the button inline-block */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Add some margin */
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.product-section-add-to-cart-btn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/*----HOME PAGE----*/
+
+.home-page-cont {
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.prodlist-cont {
+    width: 70rem;
+}
+
+/*----CART SECTION----*/
+
+.cart-view-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.cart-view-header {
+    background-color: #f2f2f2;
+}
+
+.cart-view-header th {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.cart-view-body tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.cart-view-body td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+.cart-view-login-message {
+    font-weight: bold;
 }

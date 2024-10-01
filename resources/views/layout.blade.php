@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="USC Admin dashboard for managing suppliers, transactions, and store inventory efficiently.">
-    <meta name="keywords" content="admin, dashboard, suppliers, transactions, store inventory, USC">
+    <meta name="keywords" content="ukay ukay, ukay, suppliers, transactions, store inventory, USC, ukay consign, consign, retail, clothes">
     <meta name="author" content="Your Name">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
     <link rel="canonical" href="{{ url()->current() }}">
     <script>
         window.Laravel = {
@@ -35,8 +38,8 @@
 
         .navbar-brand {
             color: white !important; /* Changed to white */
-            font-weight: bold;
             font-size: 1.5rem;
+            font-family: "Pinyon Script", cursive;
         }
 
         .navbar-nav .nav-link {
@@ -120,7 +123,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="/">USC Admin</a>
+        <a class="navbar-brand" href="/">Ukay Supplier Consign</a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <div class="navbar-toggler-icon">
                 <span class="bar1"></span>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Cart;
 use App\Models\Product; // Import the Product model
 use App\Models\ProductBarcode; // Import the Product model
 use App\Models\Batch; // Import the Product model
@@ -27,15 +28,37 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $search = $request->input('search'); 
+        $search = $request->input('search');
+    
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // Fetch cart items for the authenticated user
+            $carts = Cart::with('product')->where('user_id', Auth::id())->get();
+    
+            // Check if the cart is empty
+            if ($carts->isEmpty()) {
+                $cartMessage = "Your cart is empty.";
+            } else {
+                $cartMessage = null; // Or set it to an empty string if you prefer
+            }
+        } else {
+            $carts = collect(); // Create an empty collection
+            $cartMessage = "Login first to access cart.";
+        }
+    
+        // Paginate the results first, then group them by Bundle
         $products = Product::when($search, function ($query) use ($search) {
             return $query->where('ProductID', 'like', '%' . $search . '%');
-        })->get()->groupBy('Bundle'); // Group by Bundle
+        })
+        ->paginate(10);
     
-        return view('pages.home', compact('products', 'search')); 
-    }    
-      
-
+        // Group the paginated items by Bundle
+        $groupedProducts = $products->getCollection()->groupBy('Bundle');
+        $products->setCollection($groupedProducts); // Replace the collection with grouped one
+    
+        return view('pages.home', compact('products', 'search', 'carts', 'cartMessage')); // Pass the cart message
+    }
+    
     /**
      * Show the form for creating a new resource.
      */

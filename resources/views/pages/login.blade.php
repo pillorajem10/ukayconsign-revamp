@@ -16,6 +16,12 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-lg rounded login-card">

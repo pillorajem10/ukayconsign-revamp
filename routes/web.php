@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +39,16 @@ Route::get('/products', function () {
 })->name('products.index');
 
 
+// CART
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/delete-selected', [CartController::class, 'deleteSelected'])->name('cart.deleteSelected');
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+});
 
 
 
