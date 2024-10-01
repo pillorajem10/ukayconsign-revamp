@@ -8,6 +8,10 @@ class Store extends Model
 {
     protected $table = 'stores';
 
+    public $timestamps = false;
+
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'store_name',
         'store_owner',
