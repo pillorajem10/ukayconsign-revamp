@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Login')
+@section('title', 'Register')
 
 @section('content')
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Login</h1>
+        <h1 class="text-center mb-4">Register</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -16,12 +16,6 @@
             </div>
         @endif
 
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        
         @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
@@ -32,7 +26,7 @@
             <div class="col-md-6">
                 <div class="card shadow-lg rounded login-card">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="form-group">
                                 <label for="email">Email:</label>
@@ -42,10 +36,10 @@
                                 <label for="password">Password:</label>
                                 <input type="password" name="password" id="password" class="form-control" required>
                             </div>
-                            <button type="submit" class="btn btn-gradient btn-block">Login</button>
+                            <button type="submit" class="btn btn-gradient btn-block">Register</button>
                         </form>
                         <div class="mt-3 text-center">
-                            <a href="/register" class="text-decoration-none">Don't have an account? Register here</a>
+                            <a href="/login" class="text-decoration-none">Already have an account? Login here</a>
                         </div>
                     </div>
                 </div>
