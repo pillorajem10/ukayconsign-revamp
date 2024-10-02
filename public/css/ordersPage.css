@@ -1,0 +1,73 @@
+.order-tracker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+}
+.tracker-status {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+}
+.status {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+    flex: 1;
+}
+.status.active {
+    font-weight: bold;
+    color: green; /* Active color */
+}
+.tracker-line {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.line {
+    height: 2px;
+    background: #e0e0e0; /* Inactive color */
+    flex: 1;
+    margin: 0 5px;
+    transition: background 0.3s ease;
+}
+.line.active {
+    background: green; /* Active color */
+}
+
+@media (max-width: 500px) {
+    .card-title {
+        font-size: .8rem; /* Adjust as needed */
+    }
+
+    .card-subtitle {
+        font-size: .9rem; /* Adjust as needed */
+    }
+
+    .table th,
+    .table td {
+        font-size: 0.7rem; /* Adjust as needed */
+        padding: 0;
+    }
+
+    .btn {
+        font-size: 0.7rem; /* Adjust as needed */
+    }
+
+    .tracker-status {
+        font-size: .5rem;
+        font-weight: bold;
+    }
+
+    /* Add border to the table */
+    .table {
+        border: 1px solid #ccc; /* Outer border */
+        border-collapse: collapse; /* Ensure borders are collapsed */
+    }
+
+    .table th,
+    .table td {
+        border: 1px solid #ccc; /* Inner cell borders */
+    }
+}

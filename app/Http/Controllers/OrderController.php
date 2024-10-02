@@ -19,9 +19,9 @@ class OrderController extends Controller
     
     public function index()
     {
-        $orders = Order::all(); // Fetch all orders from the database
+        $orders = Order::where('user_id', auth()->id())->get(); // Fetch orders for the logged-in user
         return view('pages.orders', compact('orders')); // Pass the orders to the view
-    }
+    }    
 
     public function updateStatus(Request $request, $id)
     {

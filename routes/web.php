@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
 
 
 /*
@@ -33,7 +34,7 @@ Route::post('/logout', function () {
     return redirect('/login'); // Redirect to the login page
 })->name('logout'); // Naming the route
 
-// Route for the product list
+// PRODUCT ROUTES
 Route::get('/products', function () {
     return redirect()->route('home'); // Redirect to the home route
 })->name('products.index');
@@ -51,5 +52,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 });
 
+// ORDERS (transactions) ROUTES
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::put('/orders/{id}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
 
 

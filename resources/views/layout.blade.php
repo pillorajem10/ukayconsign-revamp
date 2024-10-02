@@ -138,6 +138,9 @@
                         <a class="nav-link" href="/cart">Cart</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="/orders">Orders</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}" 
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="exit-to-app-icon"></i> Logout

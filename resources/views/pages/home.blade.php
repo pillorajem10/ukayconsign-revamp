@@ -3,7 +3,7 @@
 @section('title', 'Home | Ukay Supplier Consign')
 
 @section('content')
-<h1>Welcome{{ Auth::check() ? ', ' . Auth::user()->email : '' }}</h1>
+<h1 class="welcome-header">Welcome{{ Auth::check() ? ', ' . Auth::user()->email : '' }}</h1>
 
 @if(session('success'))
     <div id="success-message" class="alert alert-success">

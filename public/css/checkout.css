@@ -16,25 +16,6 @@
     width: 100%;
 }
 
-/* Media Query for Larger Screens */
-@media (min-width: 768px) {
-    .checkout-page-form-container {
-        flex-direction: row; /* Side by side on larger screens */
-    }
-
-    .checkout-page-form {
-        margin-right: 20px;
-    }
-
-    .checkout-page-form:last-child {
-        margin-right: 0; /* No margin on the last form */
-    }
-
-    .checkout-page-cart-summary {
-        margin-left: 20px;
-    }
-}
-
 /* Form Styles */
 .checkout-page-form {
     flex: 1;
@@ -121,7 +102,7 @@
 }
 
 .checkout-page-summary-footer {
-    font-weight: bold;
+    font-size: 1em;
 }
 
 /* Alert Messages */
@@ -139,4 +120,56 @@
 .checkout-page-alert-danger {
     background-color: #f8d7da;
     color: #721c24;
+}
+
+/* Media Query for Smaller Screens */
+@media (max-width: 600px) {
+    .checkout-page-form-title {
+        font-size: 1.3em;
+    }
+
+    .checkout-page-input {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+
+    .checkout-page-btn {
+        padding: 8px 12px;
+        font-size: 0.9em;
+    }
+
+    .checkout-page-summary-title {
+        font-size: 1.3em;
+    }
+
+    .checkout-page-empty-cart {
+        font-size: 1em;
+    }
+
+    .checkout-page-summary-header,
+    .checkout-page-summary-data {
+        padding: 0px;
+        font-size: 0.6rem;
+        border: 1px solid #ddd; /* Add border for small screens as well */
+        font-weight: bold;
+    }
+}
+
+/* Media Query for Larger Screens */
+@media (min-width: 768px) {
+    .checkout-page-form-container {
+        flex-direction: row; /* Side by side on larger screens */
+    }
+
+    .checkout-page-form {
+        margin-right: 20px;
+    }
+
+    .checkout-page-form:last-child {
+        margin-right: 0; /* No margin on the last form */
+    }
+
+    .checkout-page-cart-summary {
+        margin-left: 20px;
+    }
 }

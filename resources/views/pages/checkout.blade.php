@@ -19,7 +19,7 @@
     <div class="checkout-page-form-container">
         <form action="{{ route('checkout.store') }}" method="POST" class="checkout-page-form">
             @csrf
-            <h2 class="checkout-page-form-title">Checkout</h2>
+            <h2 class="checkout-page-form-title">Customer Information</h2>
             
             <div class="checkout-page-form-group">
                 <label for="first_name" class="checkout-page-label">First Name</label>
@@ -65,6 +65,7 @@
                     <thead>
                         <tr>
                             <th class="checkout-page-summary-header">Bundle</th>
+                            <th class="checkout-page-summary-header">Category</th>
                             <th class="checkout-page-summary-header">Quantity</th>
                             <th class="checkout-page-summary-header">Price/Pc</th>
                             <th class="checkout-page-summary-header">Subtotal</th>
@@ -79,6 +80,7 @@
                             @endphp
                             <tr class="checkout-page-summary-row">
                                 <td class="checkout-page-summary-data">{{ $cart->product->Bundle }}</td>
+                                <td class="checkout-page-summary-data">{{ $cart->product->Category }}</td>
                                 <td class="checkout-page-summary-data">{{ $cart->quantity }}</td>
                                 <td class="checkout-page-summary-data">₱{{ number_format($cart->price, 2) }}</td>
                                 <td class="checkout-page-summary-data">₱{{ number_format($subtotal, 2) }}</td>
@@ -87,7 +89,7 @@
                     </tbody>
                     <tfoot>
                         <tr class="checkout-page-summary-footer">
-                            <td colspan="3" style="text-align: right;"><strong>Total:</strong></td>
+                            <td colspan="4" style="text-align: right;"><strong>Total:</strong></td>
                             <td><strong>₱{{ number_format($grandTotal, 2) }}</strong></td>
                         </tr>
                     </tfoot>

@@ -52,6 +52,7 @@ class CheckoutController extends Controller
                 return [
                     'cart_id' => $cart->id,
                     'bundle_name' => $cart->product->Bundle,
+                    'category' => $cart->product->Category,
                     'quantity' => $cart->quantity,
                     'price' => $cart->price,
                 ];

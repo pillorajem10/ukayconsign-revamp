@@ -16,13 +16,17 @@ class CartController extends Controller
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Please log in to view your cart.');
         }
-
+    
         // Retrieve the cart items for the authenticated user
         $carts = Cart::where('user_id', Auth::id())->get();
-
+    
+        // Check if there are no cart items
+        if ($carts->isEmpty()) {
+            return redirect()->route('home')->with('error', 'There are no items in your cart.');
+        }
+    
         return view('pages.cartPage', compact('carts'));
-    }
-
+    }    
 
     // ADD TO CART
     public function add(Request $request)
