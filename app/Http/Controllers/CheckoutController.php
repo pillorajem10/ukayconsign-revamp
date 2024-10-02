@@ -65,6 +65,7 @@ class CheckoutController extends Controller
                 'user_id' => Auth::id(),
                 'products_ordered' => json_encode($productsOrdered),
                 'address' => $request->address,
+                'store_name' => $request->store_name,
                 'email' => Auth::user()->email,
                 'total_price' => $carts->sum(function($cart) {
                     return $cart->price * $cart->quantity;
@@ -74,17 +75,15 @@ class CheckoutController extends Controller
                 'createdAt' => now(),
             ]);
     
-            // Check for existing store
-            $existingStore = Store::where('store_owner', Auth::id())->first();
+            // Check for existing store by store_name
+            $existingStore = Store::where('store_name', $request->store_name)->first();
     
             if ($existingStore) {
                 // Update the existing store information
                 $existingStore->update([
-                    'store_name' => $request->store_name,
                     'store_address' => $request->store_address,
                     'store_phone_number' => $request->store_phone_number,
                     'store_email' => $request->store_email,
-                    // Optional: Update total earnings or status if needed
                 ]);
                 Log::info('Updated store data:', $existingStore->toArray());
             } else {
@@ -109,5 +108,5 @@ class CheckoutController extends Controller
         }
     
         return redirect()->back()->with('error', 'Your cart is empty.');
-    }        
+    }  
 }
