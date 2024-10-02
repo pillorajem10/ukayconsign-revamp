@@ -13,8 +13,8 @@ document.querySelectorAll('.bundle-checkbox, .small-screen-bundle-checkbox').for
 document.addEventListener('DOMContentLoaded', () => {
     const deleteButton = document.getElementById('delete-button');
     const deleteButtonSmall = document.getElementById('delete-button-small'); // For small screen
-    const checkoutButton = document.getElementById('checkout-button');
-    const checkoutButtonSmall = document.getElementById('checkout-button-small'); // For small screen
+    // const checkoutButton = document.getElementById('checkout-button');
+    // const checkoutButtonSmall = document.getElementById('checkout-button-small'); // For small screen
 
     // Function to toggle the delete and checkout buttons based on checked checkboxes
     function toggleButton() {
@@ -120,8 +120,8 @@ function proceedToCheckout() {
 // Function to update the button state
 function updateButtonState() {
     const checkedCheckboxes = document.querySelectorAll('.bundle-checkbox:checked, .small-screen-bundle-checkbox:checked');
-    const checkoutButton = document.getElementById('checkout-button');
-    const checkoutButtonSmall = document.getElementById('checkout-button-small'); // For small screen
+    // const checkoutButton = document.getElementById('checkout-button');
+    // const checkoutButtonSmall = document.getElementById('checkout-button-small'); // For small screen
 
     // Disable the button if no items are checked, enable otherwise
     const isDisabled = checkedCheckboxes.length === 0;

@@ -19,6 +19,7 @@
         <div class="checkout-spinner"></div>
     </div>
 
+    <a href="{{ route('home') }}" class="checkout-page-link">Go back to home page</a>
     <div class="checkout-page-cont">
         <div class="checkout-page-form-container">
             <form action="{{ route('checkout.store') }}" method="POST" class="checkout-page-form" onsubmit="showLoading()">
@@ -101,10 +102,10 @@
                 @endif
             </div>
         </div>
-        <script src="{{ asset('js/checkout.js?v=1.2') }}"></script>
+        <script src="{{ asset('js/checkout.js?v=1.3') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/checkout.css?v=1.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/checkout.css?v=1.3') }}">
 @endsection

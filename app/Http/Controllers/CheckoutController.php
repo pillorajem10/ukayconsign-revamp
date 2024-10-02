@@ -28,6 +28,11 @@ class CheckoutController extends Controller
         // Retrieve the cart items for the authenticated user
         $carts = Cart::where('user_id', Auth::id())->get();
     
+        // Check if the cart is empty
+        if ($carts->isEmpty()) {
+            return redirect()->route('home')->with('error', 'Your cart is empty, there is nothing to checkout.');
+        }
+    
         // Get existing store information
         $store = Store::where('store_owner', Auth::id())->first();
     
@@ -35,7 +40,8 @@ class CheckoutController extends Controller
         $latestOrder = Order::where('user_id', Auth::id())->orderBy('createdAt', 'desc')->first();
     
         return view('pages.checkout', compact('carts', 'store', 'latestOrder'));
-    }      
+    }
+        
 
     public function store(Request $request)
     {

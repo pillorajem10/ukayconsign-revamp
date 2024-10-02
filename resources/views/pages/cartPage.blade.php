@@ -3,6 +3,7 @@
 @section('title', 'Your Cart')
 
 @section('content')
+    <a href="{{ route('home') }}" class="checkout-page-link">Go back to home page</a>
     <div class="cart-container">
         <h1>Your Shopping Cart</h1>
         
@@ -59,7 +60,7 @@
                     <td colspan="7" style="text-align: right;">
                         @if(Auth::check())
                             <button id="delete-button" class="btn btn-danger" onclick="deleteCheckedItems()" disabled>Delete Selected</button>
-                            <button id="checkout-button" class="btn btn-primary" onclick="proceedToCheckout()" disabled>Proceed to Checkout</button>
+                            <button id="checkout-button" class="btn btn-primary" onclick="proceedToCheckout()">Proceed to Checkout</button>
                         @endif
                     </td>
                 </tr>
@@ -97,7 +98,7 @@
     
             <div class="small-screen-cart-actions">
                 <button id="delete-button-small" class="btn btn-danger" onclick="deleteCheckedItemsSmallScreen()" disabled>Delete Selected</button>
-                <button id="checkout-button-small" class="btn btn-primary" onclick="proceedToCheckout()" disabled>Proceed to Checkout</button>
+                <button id="checkout-button-small" class="btn btn-primary" onclick="proceedToCheckout()">Proceed to Checkout</button>
             </div>
         @else
             <div class="small-screen-cart-login-message" style="text-align: center; color: red;">Please log in to view your cart.</div>
@@ -106,9 +107,9 @@
     
 
     <!-- Include the cart.js file -->
-    <script src="{{ asset('js/cart.js?v=1.2') }}"></script>
+    <script src="{{ asset('js/cart.js?v=1.3') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=1.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=1.3') }}">
 @endsection

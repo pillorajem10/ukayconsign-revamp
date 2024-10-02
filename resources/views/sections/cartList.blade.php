@@ -52,7 +52,7 @@
                 <td colspan="7" style="text-align: right;">
                     @if(Auth::check())
                         <button id="delete-button" class="btn btn-danger" onclick="deleteCheckedItems()" disabled>Delete Selected</button>
-                        <button id="checkout-button" class="btn btn-primary" onclick="proceedToCheckout()" disabled>Proceed to Checkout</button>
+                        <button id="checkout-button" class="btn btn-primary" onclick="proceedToCheckout()">Proceed to Checkout</button>
                     @endif
                 </td>
             </tr>
@@ -60,5 +60,5 @@
     </table>
 
     <!-- Include the cart.js file -->
-    <script src="{{ asset('js/cart.js?v=1.2') }}"></script>
+    <script src="{{ asset('js/cart.js?v=1.3') }}"></script>
 </body>

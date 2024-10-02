@@ -67,7 +67,7 @@
                             <p class="mt-3"><strong>Total Price:</strong> ₱{{ number_format($order->total_price, 2) }}</p>
                             <p><strong>Order Date:</strong> {{ $order->order_date }}</p>
                             
-                            @if (!in_array($order->order_status, ['Shipped', 'Delivered', 'Canceled']))
+                            @if (in_array($order->order_status, ['Processing']))
                                 <form action="{{ route('orders.updateStatus', $order->id) }}" method="POST" class="mt-3">
                                     @csrf
                                     @method('PUT')
@@ -90,5 +90,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=1.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=1.3') }}">
 @endsection
