@@ -6,6 +6,9 @@
     <meta name="description" content="USC Admin dashboard for managing suppliers, transactions, and store inventory efficiently.">
     <meta name="keywords" content="ukay ukay, ukay, suppliers, transactions, store inventory, USC, ukay consign, consign, retail, clothes">
     <meta name="author" content="Your Name">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>@yield('title')</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
