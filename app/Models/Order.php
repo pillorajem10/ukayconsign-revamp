@@ -25,6 +25,7 @@ class Order extends Model
         'user_id',
         'products_ordered',
         'address',
+        'store_name',
         'email',
         'total_price',
         'order_date',

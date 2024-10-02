@@ -13,6 +13,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Order ID: {{ $order->id }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">Customer: {{ $order->first_name }} {{ $order->last_name }}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Store Name: {{ $order->store_name }}</h6>
                             <p><strong>Email:</strong> {{ $order->email }}</p>
                             <p><strong>Address:</strong> {{ $order->address }}</p>
 
