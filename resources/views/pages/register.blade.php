@@ -3,6 +3,10 @@
 @section('title', 'Register')
 
 @section('content')
+    <div class="regpage-loading-overlay" id="regPageloadingOverlay">
+        <div class="regpage-spinner"></div>
+    </div>
+
     <div class="container mt-5">
         <h1 class="text-center mb-4">Register</h1>
 
@@ -26,7 +30,7 @@
             <div class="col-md-6">
                 <div class="card shadow-lg rounded login-card">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('register') }}" onsubmit="showLoading()">
                             @csrf
                             <div class="form-group">
                                 <label for="email">Email:</label>
@@ -45,9 +49,11 @@
                 </div>
             </div>
         </div>
+        <script src="{{ asset('js/registration.js?v=1.1') }}"></script>
     </div>
 @endsection
 
 @section('styles')
     <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=1.1') }}">
 @endsection
+

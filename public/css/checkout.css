@@ -122,6 +122,35 @@
     color: #721c24;
 }
 
+/* public/css/loginPage.css */
+.checkout-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    display: none; /* Initially hidden */
+}
+.checkout-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-left-color: green; /* Change this color as needed */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /* Media Query for Smaller Screens */
 @media (max-width: 600px) {
     .checkout-page-form-title {

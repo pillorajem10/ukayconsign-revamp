@@ -3,6 +3,10 @@
 @section('title', 'Login')
 
 @section('content')
+    <div class="logpage-loading-overlay" id="logPageloadingOverlay">
+        <div class="logpage-spinner"></div>
+    </div>
+
     <div class="container mt-5">
         <h1 class="text-center mb-4">Login</h1>
 
@@ -32,7 +36,7 @@
             <div class="col-md-6">
                 <div class="card shadow-lg rounded login-card">
                     <div class="card-body">
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('login') }}" onsubmit="showLoading()">
                             @csrf
                             <div class="form-group">
                                 <label for="email">Email:</label>
@@ -51,6 +55,7 @@
                 </div>
             </div>
         </div>
+        <script src="{{ asset('js/login.js?v=1.1') }}"></script>
     </div>
 @endsection
 

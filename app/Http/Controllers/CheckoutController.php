@@ -7,7 +7,13 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\Store;
+use App\Models\User;
+
 use Illuminate\Support\Facades\Log;
+
+use App\Mail\OrderConfirmationMail; 
+use App\Mail\AdminOrderNotification; 
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -48,7 +54,7 @@ class CheckoutController extends Controller
         $carts = Cart::where('user_id', Auth::id())->get();
     
         if ($carts->isNotEmpty()) {
-            $productsOrdered = $carts->map(function($cart) {
+            $productsOrdered = $carts->map(function ($cart) {
                 return [
                     'cart_id' => $cart->id,
                     'bundle_name' => $cart->product->Bundle,
@@ -59,7 +65,7 @@ class CheckoutController extends Controller
             });
     
             // Create the order
-            Order::create([
+            $order = Order::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'user_id' => Auth::id(),
@@ -67,7 +73,7 @@ class CheckoutController extends Controller
                 'address' => $request->address,
                 'store_name' => $request->store_name,
                 'email' => Auth::user()->email,
-                'total_price' => $carts->sum(function($cart) {
+                'total_price' => $carts->sum(function ($cart) {
                     return $cart->price * $cart->quantity;
                 }),
                 'order_date' => now(),
@@ -88,25 +94,39 @@ class CheckoutController extends Controller
                 Log::info('Updated store data:', $existingStore->toArray());
             } else {
                 // Create new store information
-                $storeData = [
+                Store::create([
                     'store_name' => $request->store_name,
-                    'store_owner' => Auth::id(), // Set the store_owner to the logged-in user's ID
+                    'store_owner' => Auth::id(),
                     'store_address' => $request->store_address,
                     'store_phone_number' => $request->store_phone_number,
                     'store_email' => $request->store_email,
-                    'store_total_earnings' => 0, // Default earnings
-                    'store_status' => 'active', // Default status
-                ];
-                Store::create($storeData);
-                Log::info('Created store data:', $storeData);
+                    'store_total_earnings' => 0,
+                    'store_status' => 'active',
+                ]);
+                Log::info('Created store data:', [
+                    'store_name' => $request->store_name,
+                    'store_owner' => Auth::id(),
+                    'store_address' => $request->store_address,
+                    'store_phone_number' => $request->store_phone_number,
+                    'store_email' => $request->store_email,
+                ]);
             }
     
             // Clear the cart for the user
             Cart::where('user_id', Auth::id())->delete();
     
+            // Send the order confirmation email to the user
+            Mail::to(Auth::user()->email)->send(new OrderConfirmationMail($order, $productsOrdered));
+    
+            // Send the order notification to all admins
+            $adminUsers = User::where('role', 'admin')->get(); // Adjust the query based on your User model
+            foreach ($adminUsers as $admin) {
+                Mail::to($admin->email)->send(new AdminOrderNotification($order));
+            }
+    
             return redirect()->route('home')->with('success', 'Order placed successfully!');
         }
     
         return redirect()->back()->with('error', 'Your cart is empty.');
-    }  
+    }    
 }
