@@ -9,7 +9,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
+    protected $table = 'usc_products';
     protected $primaryKey = 'SKU';
     public $incrementing = false;
 
@@ -18,15 +18,15 @@ class Product extends Model
 
     protected $fillable = [
         'SKU', 'Bundle', 'ProductID', 'Type', 'Style', 'Color', 
-        'Gender', 'Category', 'Bundle_Qty', 'Consign', 'Cash', 
-        'SRP', 'maxSRP', 'PotentialProfit', 'Date', 'Cost', 
+        'Gender', 'Category', 'Bundle_Qty', 'Consign', 
+        'SRP', 'PotentialProfit', 'Cost', 
         'Stock', 'Supplier', 'Image', 'Secondary_Img', 
         'Img_color', 'is_hidden', 'Batch_number', 'Bale', 
         'createdAt'
     ];
 
     protected $dates = [
-        'Date', 'createdAt'
+        'createdAt'
     ];
 
     public function batches()

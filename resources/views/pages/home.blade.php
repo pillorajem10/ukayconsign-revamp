@@ -19,16 +19,16 @@
 
 <div class="home-page-cont">
     <div class="prodlist-cont">
-        @include('sections.productList', ['products' => $products]) 
+        @include('sections.productList', ['products' => $groupedProducts]) 
     </div> 
     <div class="cart-cont">
         @include('sections.cartList', ['carts' => $carts]) 
     </div>
 </div>
 
-<script src="{{ asset('js/home.js?v=1.3') }}"></script>
+<script src="{{ asset('js/home.js?v=1.4') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=1.3') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=1.4') }}">
 @endsection

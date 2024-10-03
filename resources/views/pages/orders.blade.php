@@ -67,16 +67,32 @@
                             <p class="mt-3"><strong>Total Price:</strong> ₱{{ number_format($order->total_price, 2) }}</p>
                             <p><strong>Order Date:</strong> {{ $order->order_date }}</p>
                             
-                            @if (in_array($order->order_status, ['Processing']))
-                                <form action="{{ route('orders.updateStatus', $order->id) }}" method="POST" class="mt-3">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="order_status" value="Canceled">
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this order?')">Cancel Order</button>
-                                </form>
-                            @else
-                                <button class="btn btn-danger" disabled>Cancel Order</button>
-                            @endif
+                            <div class="order-page-action-btn">
+                                @if (in_array($order->order_status, ['Processing']))
+                                    <div>
+                                        <form action="{{ route('orders.updateStatus', $order->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="order_status" value="Canceled">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to cancel this order?')">Cancel Order</button>
+                                        </form>
+                                    </div>
+                                @else
+                                    <div><button class="btn btn-danger" disabled>Cancel Order</button></div>
+                                @endif
+                                @if (!in_array($order->order_status, ['Canceled', 'Delivered']))
+                                    <div>
+                                        <form action="{{ route('orders.updateStatus', $order->id) }}" method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="order_status" value="Delivered">
+                                            <button type="submit" class="btn btn-info" onclick="return confirm('Are you sure you already received the order?')">Received Order</button>
+                                        </form>
+                                    </div>
+                                @else
+                                    <div><button class="btn btn-info" disabled>Received Order</button></div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -90,5 +106,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=1.3') }}">
+    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=1.4') }}">
 @endsection

@@ -46,18 +46,18 @@ class ProductController extends Controller
             $cartMessage = "Login first to access cart.";
         }
     
-        // Paginate the results first, then group them by Bundle
+        // Retrieve all products and filter based on search
         $products = Product::when($search, function ($query) use ($search) {
             return $query->where('ProductID', 'like', '%' . $search . '%');
         })
-        ->paginate(10);
+        ->get();
     
-        // Group the paginated items by Bundle
-        $groupedProducts = $products->getCollection()->groupBy('Bundle');
-        $products->setCollection($groupedProducts); // Replace the collection with grouped one
+        // Group the products by Bundle
+        $groupedProducts = $products->groupBy('Bundle');
     
-        return view('pages.home', compact('products', 'search', 'carts', 'cartMessage')); // Pass the cart message
+        return view('pages.home', compact('groupedProducts', 'search', 'carts', 'cartMessage')); // Pass the cart message
     }
+    
     
     /**
      * Show the form for creating a new resource.
@@ -84,11 +84,8 @@ class ProductController extends Controller
             'Category' => 'nullable|string|max:50',
             'Bundle_Qty' => 'nullable|integer',
             'Consign' => 'nullable|numeric',
-            'Cash' => 'nullable|numeric',
             'SRP' => 'nullable|string|max:50',
-            'maxSRP' => 'nullable|string|max:50',
             'PotentialProfit' => 'nullable|numeric',
-            'Date' => 'nullable|date',
             'Cost' => 'nullable|numeric',
             'Stock' => 'nullable|integer',
             'Supplier' => 'nullable|string|max:255',
@@ -139,13 +136,11 @@ class ProductController extends Controller
             'Bundle_Qty' => $product->Bundle_Qty,
             'Consign' => $product->Consign,
             'SRP' => $product->SRP,
-            'maxSRP' => $product->maxSRP,
             'PotentialProfit' => $product->PotentialProfit,
             'Cost' => $product->Cost,
             'Stock' => $product->Stock,
             'Supplier' => $product->Supplier,
             'Img_color' => $product->Img_color,
-            'Date' => now(), // Use current date
             'Bale' => $bale,
             'Batch_number' => $batchNumber,
         ]);

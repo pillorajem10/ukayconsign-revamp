@@ -29,7 +29,7 @@
                     <td class="cart-view-category-value">{{ $cart->product->Category ?? 'N/A' }}</td> 
                     <td class="cart-view-price-value">₱{{ number_format($cart->price, 2) }}</td>
                     <td class="cart-view-quantity-value">{{ $cart->quantity }}</td>
-                    <td class="cart-view-srp-value">{{ $cart->product->maxSRP ?? 'N/A' }}</td> 
+                    <td class="cart-view-srp-value">{{ $cart->product->SRP ?? 'N/A' }}</td> 
                     <td class="cart-view-subtotal-value">₱{{ number_format($subtotal, 2) }}</td>
                 </tr>
                 @endforeach
@@ -60,5 +60,5 @@
     </table>
 
     <!-- Include the cart.js file -->
-    <script src="{{ asset('js/cart.js?v=1.3') }}"></script>
+    <script src="{{ asset('js/cart.js?v=1.4') }}"></script>
 </body>

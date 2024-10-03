@@ -28,20 +28,17 @@ class Batch extends Model
         'Bundle_Qty', 
         'Consign', 
         'SRP', 
-        'maxSRP', 
         'PotentialProfit', 
         'Cost', 
         'Stock', 
         'Supplier', 
         'Img_color', 
-        'Date', 
         'Bale', 
         'Batch_number', 
         'createdAt'
     ];
 
     protected $dates = [
-        'Date', 
         'createdAt'
     ];
 

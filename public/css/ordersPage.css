@@ -36,6 +36,12 @@
     background: green; /* Active color */
 }
 
+.order-page-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 @media (max-width: 500px) {
     .card-title {
         font-size: .8rem; /* Adjust as needed */

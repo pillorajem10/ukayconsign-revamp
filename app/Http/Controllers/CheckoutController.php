@@ -60,14 +60,52 @@ class CheckoutController extends Controller
         $carts = Cart::where('user_id', Auth::id())->get();
     
         if ($carts->isNotEmpty()) {
-            $productsOrdered = $carts->map(function ($cart) {
+            // Check for existing store by store_name
+            $existingStore = Store::where('store_name', $request->store_name)->first();
+    
+            if ($existingStore) {
+                // Update the existing store information
+                $existingStore->update([
+                    'store_address' => $request->store_address,
+                    'store_phone_number' => $request->store_phone_number,
+                    'store_email' => $request->store_email,
+                ]);
+                $storeId = $existingStore->id; // Get the existing store ID
+                Log::info('Updated store data:', $existingStore->toArray());
+            } else {
+                // Create new store information
+                $newStore = Store::create([
+                    'store_name' => $request->store_name,
+                    'store_owner' => Auth::id(),
+                    'store_address' => $request->store_address,
+                    'store_phone_number' => $request->store_phone_number,
+                    'store_email' => $request->store_email,
+                    'store_total_earnings' => 0,
+                    'store_status' => 'active',
+                ]);
+                $storeId = $newStore->id; // Get the new store ID
+                Log::info('Created store data:', [
+                    'store_name' => $request->store_name,
+                    'store_owner' => Auth::id(),
+                    'store_address' => $request->store_address,
+                    'store_phone_number' => $request->store_phone_number,
+                    'store_email' => $request->store_email,
+                ]);
+            }
+    
+            // Build the productsOrdered array with store_id
+            $productsOrdered = $carts->map(function ($cart) use ($storeId) {
                 return [
                     'cart_id' => $cart->id,
                     'bundle_name' => $cart->product->Bundle,
                     'product_sku' => $cart->product->SKU,
+                    'product_srp' => $cart->product->SRP,
+                    'product_id' => $cart->product->ProductID,
+                    'product_consign' => $cart->product->Consign,
                     'category' => $cart->product->Category,
                     'quantity' => $cart->quantity,
                     'price' => $cart->price,
+                    'store_id' => $storeId, // Use the store ID here
                 ];
             });
     
@@ -88,37 +126,6 @@ class CheckoutController extends Controller
                 'createdAt' => now(),
             ]);
     
-            // Check for existing store by store_name
-            $existingStore = Store::where('store_name', $request->store_name)->first();
-    
-            if ($existingStore) {
-                // Update the existing store information
-                $existingStore->update([
-                    'store_address' => $request->store_address,
-                    'store_phone_number' => $request->store_phone_number,
-                    'store_email' => $request->store_email,
-                ]);
-                Log::info('Updated store data:', $existingStore->toArray());
-            } else {
-                // Create new store information
-                Store::create([
-                    'store_name' => $request->store_name,
-                    'store_owner' => Auth::id(),
-                    'store_address' => $request->store_address,
-                    'store_phone_number' => $request->store_phone_number,
-                    'store_email' => $request->store_email,
-                    'store_total_earnings' => 0,
-                    'store_status' => 'active',
-                ]);
-                Log::info('Created store data:', [
-                    'store_name' => $request->store_name,
-                    'store_owner' => Auth::id(),
-                    'store_address' => $request->store_address,
-                    'store_phone_number' => $request->store_phone_number,
-                    'store_email' => $request->store_email,
-                ]);
-            }
-    
             // Clear the cart for the user
             Cart::where('user_id', Auth::id())->delete();
     
@@ -126,7 +133,7 @@ class CheckoutController extends Controller
             Mail::to(Auth::user()->email)->send(new OrderConfirmationMail($order, $productsOrdered));
     
             // Send the order notification to all admins
-            $adminUsers = User::where('role', 'admin')->get(); // Adjust the query based on your User model
+            $adminUsers = User::where('role', 'admin')->get();
             foreach ($adminUsers as $admin) {
                 Mail::to($admin->email)->send(new AdminOrderNotification($order));
             }
@@ -135,5 +142,6 @@ class CheckoutController extends Controller
         }
     
         return redirect()->back()->with('error', 'Your cart is empty.');
-    }    
+    }
+      
 }

@@ -37,7 +37,7 @@
                             <td class="cart-page-category-value">{{ $cart->product->Category ?? 'N/A' }}</td> 
                             <td class="cart-page-price-value">₱{{ number_format($cart->price, 2) }}</td>
                             <td class="cart-page-quantity-value">{{ $cart->quantity }}</td>
-                            <td class="cart-page-srp-value">{{ $cart->product->maxSRP ?? 'N/A' }}</td> 
+                            <td class="cart-page-srp-value">{{ $cart->product->SRP ?? 'N/A' }}</td> 
                             <td class="cart-page-subtotal-value">₱{{ number_format($subtotal, 2) }}</td>
                         </tr>
                     @endforeach
@@ -87,7 +87,7 @@
                     <div class="small-screen-cart-category">Category: {{ $cart->product->Category ?? 'N/A' }}</div>
                     <div class="small-screen-cart-price">Price/Pc: ₱{{ number_format($cart->price, 2) }}</div>
                     <div class="small-screen-cart-quantity">Quantity: {{ $cart->quantity }}</div>
-                    <div class="small-screen-cart-srp">SRP: {{ $cart->product->maxSRP ?? 'N/A' }}</div>
+                    <div class="small-screen-cart-srp">SRP: {{ $cart->product->SRP ?? 'N/A' }}</div>
                     <div class="small-screen-cart-subtotal">Sub Total: ₱{{ number_format($subtotal, 2) }}</div>
                 </div>
             @endforeach
@@ -107,9 +107,9 @@
     
 
     <!-- Include the cart.js file -->
-    <script src="{{ asset('js/cart.js?v=1.3') }}"></script>
+    <script src="{{ asset('js/cart.js?v=1.4') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=1.3') }}">
+    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=1.4') }}">
 @endsection
