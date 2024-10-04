@@ -74,6 +74,8 @@ Route::put('/orders/{id}/update-status', [OrderController::class, 'updateStatus'
 // POS
 Route::match(['get', 'post'], '/pos', [PosController::class, 'index'])->name('pos.index');
 Route::post('/pos/sale', [PosController::class, 'completeSale'])->name('sales.store');
+Route::get('/pos/choose', [PosController::class, 'chooseStore'])->name('pos.choose');
+
 
 
 

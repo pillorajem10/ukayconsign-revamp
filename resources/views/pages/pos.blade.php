@@ -12,6 +12,12 @@
             </div>
         @endif
 
+        @if(session('success'))
+            <div id="success-message" class="alert alert-success">
+                {{ session('success') }}
+            </div>
+         @endif
+
         <div class="action-select">
             <label for="actionSelect">Select Action:</label>
             <select id="actionSelect" name="action" onchange="updateSelectedAction()">
@@ -20,20 +26,14 @@
             </select>                       
         </div>        
         
-        <form method="POST" action="{{ route('pos.index') }}" id="barcodeForm" onsubmit="updateSelectedAction()">
+        <form method="POST" action="{{ route('pos.index', ['store_id' => request()->input('store_id')]) }}" id="barcodeForm" onsubmit="updateSelectedAction()">
             @csrf
             <input type="hidden" name="action" id="actionInput" value="{{ $selectedAction }}">
-            <select name="store_id" required class="form-select">
-                <option value="">Select Store</option>
-                @foreach($stores as $store)
-                    <option value="{{ $store->id }}">{{ $store->store_name }}</option>
-                @endforeach
-            </select>
             <input type="text" name="barcode_number" placeholder="Enter Barcode Number" required class="form-input">
             <button type="submit" class="form-button">Get Barcode Details</button>
         </form>                           
 
-        <button id="scanBarcodeButton" class="form-button">Scan Barcode</button>
+        <button id="scanBarcodeButton" class="form-button">Activate Camera For Barcode</button>
 
         <div id="cameraContainer" style="display:none; position:relative;">
             <div id="videoContainer" style="width: 100%; height: auto;"></div>
@@ -98,44 +98,25 @@
                         </tr>
                     </tfoot>
                 </table>
-            
 
                 <!-- Sale Form -->
                 <h2 class="form-title">Complete Sale</h2>
                 <form method="POST" action="{{ route('sales.store') }}" class="sale-form">
                     @csrf
                     <input type="hidden" name="ordered_items" value="{{ json_encode($posCarts) }}">
+                    <input type="hidden" name="total" value="{{ $posCarts->sum('sub_total') }}"> <!-- Hidden field for total -->
+                    <input type="hidden" name="store_id" value="{{ request()->input('store_id') }}"> <!-- Hidden field for store_id -->
                     
-                    <div class="form-group">
-                        <label for="customer_name">Customer Name:</label>
-                        <input type="text" name="customer_name" required class="form-input" placeholder="Enter Customer Name">
-                    </div>
-                    <div class="form-group">
-                        <label for="customer_number">Customer Number:</label>
-                        <input type="text" name="customer_number" required class="form-input" placeholder="Enter Customer Number">
-                    </div>
-                    <div class="form-group">
-                        <label for="total">Total:</label>
-                        <input type="number" step="0.01" name="total" required class="form-input" value="{{ number_format($posCarts->sum('sub_total'), 2) }}" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="mode_of_payment">Mode of Payment:</label>
-                        <input type="text" name="mode_of_payment" required class="form-input" placeholder="Enter Mode of Payment">
-                    </div>
                     <div class="form-group">
                         <label for="amount_paid">Amount Paid:</label>
                         <input type="number" step="0.01" name="amount_paid" required class="form-input" placeholder="Enter Amount Paid" oninput="calculateChange()">
                     </div>
                     <div class="form-group">
                         <label for="cx_change">Change:</label>
-                        <input type="number" step="0.01" name="cx_change" class="form-input" placeholder="Enter Change" readonly id="cx_change">
-                    </div>
-                    <div class="form-group">
-                        <label for="cx_type">Change Type:</label>
-                        <input type="text" name="cx_type" class="form-input" placeholder="Enter Change Type">
+                        <input type="number" step="0.01" name="cx_change" class="form-input" placeholder="Change" readonly id="cx_change">
                     </div>
                     <button type="submit" class="form-button">Complete Sale</button>
-                </form>
+                </form>                              
             @else
                 <p>No items in the cart.</p>
             @endif
@@ -143,6 +124,10 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
         <script src="{{ asset('js/pos.js?v=1.6') }}"></script>
+        <script>
+            // Pass PHP values to JavaScript variables
+            const totalAmount = {{ json_encode($posCarts->sum('sub_total')) }};
+        </script>     
     </div>
 @endsection
 

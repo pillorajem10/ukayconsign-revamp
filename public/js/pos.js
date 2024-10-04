@@ -73,9 +73,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function calculateChange() {
-    const total = parseFloat(document.querySelector('input[name="total"]').value) || 0;
     const amountPaid = parseFloat(document.querySelector('input[name="amount_paid"]').value) || 0;
-    const change = amountPaid - total;
-
-    document.getElementById('cx_change').value = change.toFixed(2); // Display the change with two decimal places
+    const total = totalAmount; // Use the value passed from the Blade template
+    const change = (amountPaid - total).toFixed(2);
+    document.getElementById('cx_change').value = change >= 0 ? change : 0;
 }
+
+function validateSaleForm() {
+    const amountPaid = parseFloat(document.querySelector('input[name="amount_paid"]').value);
+    const total = totalAmount; // Use the value passed from the Blade template
+    if (amountPaid < total) {
+        alert('Amount paid cannot be less than the total amount.');
+        return false;
+    }
+    return true;
+}
+
+// Attach event listener for the amount paid input
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('input[name="amount_paid"]').addEventListener('input', calculateChange);
+});
+
+
