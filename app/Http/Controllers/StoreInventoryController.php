@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StoreInventory;
+use App\Models\Store;
 use Illuminate\Http\Request;
 
 class StoreInventoryController extends Controller
@@ -15,11 +16,27 @@ class StoreInventoryController extends Controller
         $this->middleware('auth'); // Require authentication for all methods in this controller
     }
     
-    public function index()
+    public function index(Request $request)
     {
-        $inventory = StoreInventory::with('store')->paginate(10);
+        $query = StoreInventory::query();
+        
+        // Filter by store_id if provided
+        if ($request->filled('store_id')) {
+            // Check if the store_id is valid
+            $store = Store::find($request->store_id);
+            if (!$store) {
+                return redirect()->route('home')->with('error', 'Store Id is not valid.');
+            }
+    
+            $query->where('store_id', $request->store_id);
+        }
+    
+        // Optionally add any other filters or sorting here
+    
+        $inventory = $query->paginate(10);
         return view('pages.storeInventory', compact('inventory'));
-    }
+    }    
+    
 
     /**
      * Show the form for creating a new resource.

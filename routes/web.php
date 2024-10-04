@@ -7,6 +7,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\StoreController;
+use App\Http\Controllers\StoreInventoryController;
 
 
 /*
@@ -50,6 +52,13 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/delete-selected', [CartController::class, 'deleteSelected'])->name('cart.deleteSelected');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+
+
+// STORE ROUTES
+Route::get('/stores', [StoreController::class, 'index'])->name('stores.index');
+
+// STORE INVENTORY ROUTES
+Route::get('/store-inventory', [StoreInventoryController::class, 'index'])->name('store-inventory.index');
 
 // Checkout Routes
 Route::middleware(['auth'])->group(function () {

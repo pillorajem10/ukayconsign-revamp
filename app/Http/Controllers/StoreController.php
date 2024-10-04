@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 
 class StoreController extends Controller
@@ -21,16 +22,20 @@ class StoreController extends Controller
     {
         $query = Store::query();
     
+        // Filter by store_owner (auth ID)
+        $query->where('store_owner', Auth::id());
+        
         // Optional: Filtering by status
         if ($request->filled('status')) {
             $query->where('store_status', $request->status);
         }
-    
+        
         // Optional: Sorting by name
         $stores = $query->orderBy('store_name')->paginate(10);
-    
+        
         return view('pages.stores', compact('stores'));
     }
+    
     
 
     /**
