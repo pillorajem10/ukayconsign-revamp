@@ -167,6 +167,7 @@ class PosController extends Controller
         $sale->amount_paid = $request->amount_paid;
         $sale->cx_change = $request->cx_change;
         $sale->cx_type = $request->cx_type;
+        $sale->sale_made = $request->store_id;
         $sale->ordered_items = $request->ordered_items;
         $sale->processed_by = auth()->id(); // Set the ID of the user processing the sale
         $sale->date_of_transaction = now(); // Set the current timestamp

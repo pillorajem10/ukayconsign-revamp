@@ -10,6 +10,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\StoreInventoryController;
 use App\Http\Controllers\PosController;
+use App\Http\Controllers\SaleController;
+
 
 
 /*
@@ -75,6 +77,10 @@ Route::put('/orders/{id}/update-status', [OrderController::class, 'updateStatus'
 Route::match(['get', 'post'], '/pos', [PosController::class, 'index'])->name('pos.index');
 Route::post('/pos/sale', [PosController::class, 'completeSale'])->name('sales.store');
 Route::get('/pos/choose', [PosController::class, 'chooseStore'])->name('pos.choose');
+
+// SALES
+Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
+
 
 
 
