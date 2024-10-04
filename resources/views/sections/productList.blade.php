@@ -5,9 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Explore our wide range of products including categories, pricing, and potential profits.">
     <meta name="keywords" content="products, pricing, potential profit, categories">
-    <meta name="author" content="Your Name">
+    <meta name="author" content="Ukay Supplier">
 </head>
-<body>
+<body class="loading">
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
     <div class="product-section-container">
         <div class="product-section-row mt-4">
             @foreach($products as $bundle => $items)
@@ -60,5 +64,7 @@
             @endforeach                              
         </div>
     </div>
+    
+    <script src="{{ asset('js/home.js?v=1.9') }}"></script>
 </body>
 </html>

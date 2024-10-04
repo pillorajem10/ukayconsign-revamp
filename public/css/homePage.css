@@ -24,6 +24,14 @@
     transition: transform 0.2s; /* Smooth transition for hover effect */
     margin: 10px; /* Space between cards */
     overflow: hidden; /* Prevent content overflow */
+    transform: translateY(20px);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.product-section-card.visible {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .product-section-card:hover {
@@ -209,4 +217,31 @@
         width: 100%;
     }
     
+}
+
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it is on top of other content */
+}
+
+.loading-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-left-color: green;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
