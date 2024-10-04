@@ -9,7 +9,7 @@ class ProductBarcode extends Model
 {
     use HasFactory;
 
-    protected $table = 'product_barcodes';
+    protected $table = 'usc_product_barcodes';
     protected $primaryKey = 'id';
     public $timestamps = false;
 

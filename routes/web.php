@@ -9,6 +9,7 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\StoreInventoryController;
+use App\Http\Controllers\PosController;
 
 
 /*
@@ -69,5 +70,9 @@ Route::middleware(['auth'])->group(function () {
 // ORDERS (transactions) ROUTES
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 Route::put('/orders/{id}/update-status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+
+// POS
+Route::match(['get', 'post'], '/pos', [PosController::class, 'index'])->name('pos.index');
+
 
 

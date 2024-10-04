@@ -1,0 +1,105 @@
+.page-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+.pos-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-select,
+.form-input,
+.form-button {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-button {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.form-button:hover {
+    background-color: #218838;
+}
+
+/* Message Styles */
+.message {
+    color: red;
+    text-align: center;
+    margin: 15px 0;
+}
+
+/* Product Details Styles */
+.product-details {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Store Inventory Styles */
+.store-inventory-details {
+    margin-top: 20px;
+}
+
+.inventory-title {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Table Styles */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.styled-table th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #ddd;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 500px) {
+    body {
+        font-size: 14px; /* Lower font size for smaller screens */
+    }
+
+    .pos-form {
+        width: 90%; /* Reduce form width on small screens */
+    }
+
+    .form-select,
+    .form-input,
+    .form-button {
+        max-width: 100%; /* Full width on small screens */
+    }
+
+    .styled-table {
+        font-size: 12px; /* Smaller table font */
+    }
+}
