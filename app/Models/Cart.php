@@ -10,7 +10,7 @@ class Cart extends Model
     use HasFactory;
 
     // Specify the table associated with the model
-    protected $table = 'carts';
+    protected $table = 'usc_carts';
 
     // Specify the primary key (if different from the default 'id')
     protected $primaryKey = 'id';

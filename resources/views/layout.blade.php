@@ -37,6 +37,11 @@
         .navbar {
             background: linear-gradient(90deg, #004d00, #007f00);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed; /* Use fixed positioning */
+            top: 0; /* Stick to the top */
+            left: 0; /* Align to the left */
+            width: 100%; /* Full width */
+            z-index: 1000; /* Ensure it stays above other content */
         }
 
         .navbar-brand {
@@ -106,6 +111,7 @@
         .content {
             min-height: calc(100% - 56px);
             padding: 20px;
+            margin-top: 3rem;
             background: #ffffff;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;

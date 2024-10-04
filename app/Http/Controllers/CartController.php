@@ -58,21 +58,23 @@ class CartController extends Controller
                 }
     
                 Cart::create([
-                    'user_id' => Auth::id(), // Get the authenticated user's ID
-                    'product_sku' => $sku, // Use the SKU from the key
+                    'user_id' => Auth::id(),
+                    'product_sku' => $sku,
                     'quantity' => $product['quantity'],
                     'price_type' => $product['price_type'],
                     'price' => $product['price'],
-                    'added_at' => now(), // Current timestamp
+                    'added_at' => now(),
                 ]);
             }
     
-            // Redirect back to home with a success message
             return redirect()->route('home')->with('success', 'Bundle Added to Cart Successfully!');
         } catch (\Exception $e) {
+            Log::error('Failed to add items to cart for user ' . Auth::id() . ': ' . $e->getMessage(), [
+                'request_data' => $request->all(),
+            ]);
             return response()->json(['message' => 'Failed to add items to cart.'], 500);
         }
-    } 
+    }    
     
     
     // DELETE SELECTED CART ITEMS
