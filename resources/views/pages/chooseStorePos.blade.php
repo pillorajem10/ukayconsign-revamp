@@ -14,18 +14,21 @@
             {{ session('success') }}
         </div>
     @endif
-    <div>
+
+    <div class="store-selection">
         <h2>Choose Store For POS</h2>
-        <div class="store-buttons">
+        <ul class="store-list">
             @foreach($stores as $store)
-                <a href="/pos?store_id={{ $store->id }}" class="store-button">
-                    {{ $store->store_name }}
-                </a>
+                <li class="store-item">
+                    <a href="/pos?store_id={{ $store->id }}" class="store-link">
+                        {{ $store->store_name }}
+                    </a>
+                </li>
             @endforeach
-        </div>
+        </ul>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=1.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/chooseStorePos.css?v=1.7') }}">
 @endsection

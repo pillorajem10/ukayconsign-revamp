@@ -153,7 +153,7 @@
                         <a class="nav-link" href="/stores">Manage Stores</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/pos">POS</a>
+                        <a class="nav-link" href="/pos/choose">POS</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}" 

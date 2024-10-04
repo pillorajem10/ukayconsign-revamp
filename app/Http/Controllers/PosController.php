@@ -23,8 +23,15 @@ class PosController extends Controller
     public function chooseStore()
     {
         $stores = Store::all();
+    
+        // Check if there is only one store
+        if ($stores->count() === 1) {
+            return redirect()->route('pos.index', ['store_id' => $stores->first()->id]);
+        }
+    
         return view('pages.chooseStorePos', compact('stores'));
     }
+    
 
     public function index(Request $request)
     {

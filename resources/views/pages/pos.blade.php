@@ -123,7 +123,7 @@
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
-        <script src="{{ asset('js/pos.js?v=1.6') }}"></script>
+        <script src="{{ asset('js/pos.js?v=1.7') }}"></script>
         <script>
             // Pass PHP values to JavaScript variables
             const totalAmount = {{ json_encode($posCarts->sum('sub_total')) }};
@@ -132,5 +132,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pos.css?v=1.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/pos.css?v=1.7') }}">
 @endsection
