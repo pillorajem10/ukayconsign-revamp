@@ -86,7 +86,7 @@ class CartController extends Controller
     
         $request->validate([
             'ids' => 'required|array',
-            'ids.*' => 'integer|exists:carts,id',
+            'ids.*' => 'integer|exists:usc_carts,id',
         ]);
     
         // Log the incoming request data for debugging
