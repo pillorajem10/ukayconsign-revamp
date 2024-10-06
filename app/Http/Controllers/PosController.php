@@ -155,7 +155,6 @@ class PosController extends Controller
     
     
 
-    // Complete the sale
     public function completeSale(Request $request)
     {
         // Create a new sale record
@@ -178,8 +177,28 @@ class PosController extends Controller
         // Clear the PosCart for the user
         PosCart::where('user', auth()->id())->delete();
     
+        // Decode ordered_items from JSON string to an array
+        $orderedItems = json_decode($request->ordered_items, true);
+    
+        // Deduct the stock for each ordered item
+        foreach ($orderedItems as $item) {
+            $sku = $item['product_sku']; // Get the SKU from ordered items
+            $quantity = $item['quantity']; // Assuming you have quantity in ordered items
+    
+            // Find the StoreInventory record
+            $storeInventory = StoreInventory::where('sku', $sku)
+                ->where('store_id', $request->store_id) // Ensure you're checking the correct store
+                ->first();
+    
+            // If the inventory record exists, deduct the quantity
+            if ($storeInventory) {
+                $storeInventory->Stocks -= $quantity; // Deduct the quantity
+                $storeInventory->save(); // Save the changes
+            }
+        }
+    
         // Return a JSON response with a success message
         return redirect()->route('pos.index', ['store_id' => $request->input('store_id')])
-          ->with('success', 'Sale completed successfully.');return response()->json(['message' => 'Sale completed successfully.']);
-    }    
+            ->with('success', 'Sale completed successfully.');
+    }          
 }
