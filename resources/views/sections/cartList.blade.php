@@ -60,5 +60,5 @@
     </table>
 
     <!-- Include the cart.js file -->
-    <script src="{{ asset('js/cart.js?v=2.3') }}"></script>
+    <script src="{{ asset('js/cart.js?v=2.4') }}"></script>
 </body>

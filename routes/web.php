@@ -85,7 +85,7 @@ Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
 Route::get('/', [PromoController::class, 'index']);
 
 // PROMOS
-Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
 

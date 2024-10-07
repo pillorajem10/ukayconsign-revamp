@@ -102,6 +102,33 @@ h1 {
     align-items: center;
 }
 
+.earnings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.table-header {
+    background-color: green;
+    color: #fff;
+}
+
+.header-cell, .data-cell {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.header-cell {
+    font-weight: bold;
+}
+
+.table-row:hover {
+    background-color: #f1f1f1;
+}
+
+
+
 /* Slide In Animations */
 @keyframes slideInLeft {
     from {
@@ -165,5 +192,35 @@ h1 {
     .dashboard-page {
         flex-direction: column; /* Stack items vertically on very small screens */
         align-items: center; /* Center alignment */
+    }
+}
+
+@media (max-width: 600px) {
+    .table-header {
+        display: none; /* Hide the header on small screens */
+    }
+
+    .table-body, .table-row, .data-cell {
+        display: block; /* Stack the rows */
+        width: 100%; /* Full width */
+    }
+
+    .table-row {
+        margin-bottom: 15px; /* Space between rows */
+        border: 1px solid #ddd; /* Border around rows */
+    }
+
+    .data-cell {
+        text-align: right; /* Right-align text for better readability */
+        position: relative;
+        padding-left: 50%; /* Space for label */
+    }
+
+    .data-cell::before {
+        content: attr(data-label); /* Add label for the data */
+        position: absolute;
+        left: 10px; /* Space from the left */
+        font-weight: bold; /* Bold label */
+        text-align: left;
     }
 }

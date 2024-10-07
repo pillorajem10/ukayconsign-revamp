@@ -28,12 +28,29 @@ class DashboardController extends Controller
         // Fetch stores for the authenticated user
         $stores = Store::where('store_owner', $user->id)->get(); // Filter stores by the authenticated user's ID
     
-        // Get the store IDs
-        $storeIds = $stores->pluck('id')->toArray(); // Extract the IDs of the stores
+        // Initialize an array to hold earnings data
+        $storeEarnings = [];
+    
+        // Calculate earnings for each store
+        foreach ($stores as $store) {
+            $storeId = $store->id;
+            $storeEarnings[$store->store_name] = [
+                'total_today' => Sale::where('sale_made', $storeId)
+                    ->whereDate('createdAt', today())
+                    ->sum('total'), // Assuming there's a 'total' field
+                'total_month' => Sale::where('sale_made', $storeId)
+                    ->whereMonth('createdAt', date('m'))
+                    ->whereYear('createdAt', date('Y'))
+                    ->sum('total'), // Assuming there's a 'total' field
+            ];
+        }
     
         // Fetch sales for the stores owned by the user
-        $sales = Sale::whereIn('sale_made', $storeIds)->get(); // Filter sales by store IDs
-
+        $sales = Sale::whereIn('sale_made', $stores->pluck('id')->toArray())
+            ->whereMonth('createdAt', date('m')) // Filter by the current month
+            ->whereYear('createdAt', date('Y')) // Filter by the current year
+            ->get(); // Retrieve the filtered sales
+    
         // Fetch orders for the authenticated user
         $orders = Order::where('user_id', $user->id)->get(); // Filter orders by user ID
     
@@ -66,9 +83,8 @@ class DashboardController extends Controller
         arsort($productCounts);
         $mostSoldProducts = array_slice($productCounts, 0, 5, true); // Get top 5 most sold products
     
-
-    
-        // Return the dashboard view with the user's details, promos, stores, most sold products, and orders
-        return view('pages.dashboard', compact('user', 'promos', 'stores', 'mostSoldProducts', 'orders'));
-    }            
+        // Return the dashboard view with the user's details, promos, stores, most sold products, orders, and earnings
+        return view('pages.dashboard', compact('user', 'promos', 'stores', 'mostSoldProducts', 'orders', 'storeEarnings'));
+    }
+                 
 }

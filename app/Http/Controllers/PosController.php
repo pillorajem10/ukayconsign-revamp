@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ProductBarcode;
 use App\Models\PosCart;
 use App\Models\Product;
+use App\Models\Tally;
 use App\Models\Sale;
 use App\Models\StoreInventory;
 use App\Models\Store;

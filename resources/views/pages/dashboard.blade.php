@@ -38,7 +38,29 @@
             </div>
 
             <div class="dashboard-container">
-                <h2>Your Stores</h2>
+                <p class="welcome-message">Earnings</p>
+                <table class="earnings-table">
+                    <thead class="table-header">
+                        <tr>
+                            <th class="header-cell">Store Name</th>
+                            <th class="header-cell">Total Today</th>
+                            <th class="header-cell">Total This Month</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-body">
+                        @foreach ($storeEarnings as $storeName => $earnings)
+                            <tr class="table-row">
+                                <td class="data-cell" data-label="Store Name">{{ $storeName }}</td>
+                                <td class="data-cell" data-label="Total Today">₱{{ number_format($earnings['total_today'], 2) }}</td>
+                                <td class="data-cell" data-label="Total This Month">₱{{ number_format($earnings['total_month'], 2) }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>                       
+
+            <div class="dashboard-container">
+                <h2 class="welcome-message">Your Stores</h2>
                 @if($stores->isEmpty())
                     <p>No stores found.</p>
                 @else
@@ -46,7 +68,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Total Earnings</th>
+                                <th>Total Earnings (Overall)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,10 +84,10 @@
                 <div class="text-center mt-3">
                     <a href="/stores" class="btn btn-success">Manage Stores</a>
                 </div>
-            </div>
-            
+            </div>          
+
             <div class="dashboard-container">
-                <h2>Top 5 Most Sold Products (All stores combine)</h2>
+                <h2 class="welcome-message">Top 5 Most Sold Products (All stores combined)</h2>
                 @if(empty($mostSoldProducts))
                     <p>No sales data available.</p>
                 @else
@@ -81,7 +103,7 @@
             </div>
             
             <div class="dashboard-container">
-                <h2>Your Orders</h2>
+                <h2 class="welcome-message">Your Orders</h2>
                 @if($orders->isEmpty())
                     <p>No orders found.</p>
                 @else
@@ -108,10 +130,11 @@
             </div>            
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=2.3') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=2.4') }}"></script>
     </div>
 @endsection
 
+
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.3') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.4') }}">
 @endsection
