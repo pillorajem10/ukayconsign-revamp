@@ -53,7 +53,7 @@
         }
 
         .navbar-brand img {
-            width: 20rem;
+            width: 7rem;
         }
 
         .navbar-nav .nav-link {
@@ -125,25 +125,13 @@
             padding: 10px;
             width: 100%;
         }
-
-        @media (max-width: 500px) {
-            .navbar-brand img {
-                width: 15rem; /* Adjust image width for smaller screens */
-            }
-        }
-
-        @media (max-width: 400px) {
-            .navbar-brand img {
-                width: 12rem; /* Adjust image width for smaller screens */
-            }
-        }
     </style>
     @yield('styles')
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="/">
-            <img src="{{ asset('images/usc_header_trns.png') }}" alt="Logo">
+            <img src="{{ asset('images/USC_logo.png') }}" alt="Logo">
         </a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <div class="navbar-toggler-icon">
