@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Promos;
+use App\Models\Tally;
 use App\Models\Store;
 use App\Models\Sale;
 use App\Models\Order;
@@ -34,16 +35,17 @@ class DashboardController extends Controller
         // Calculate earnings for each store
         foreach ($stores as $store) {
             $storeId = $store->id;
-            $storeEarnings[$store->store_name] = [
+            $storeEarnings[$storeId] = [
+                'store_name' => $store->store_name, // Store name added
                 'total_today' => Sale::where('sale_made', $storeId)
                     ->whereDate('createdAt', today())
-                    ->sum('total'), // Assuming there's a 'total' field
+                    ->sum('total'), 
                 'total_month' => Sale::where('sale_made', $storeId)
                     ->whereMonth('createdAt', date('m'))
                     ->whereYear('createdAt', date('Y'))
-                    ->sum('total'), // Assuming there's a 'total' field
+                    ->sum('total'), 
             ];
-        }
+        }        
     
         // Fetch sales for the stores owned by the user
         $sales = Sale::whereIn('sale_made', $stores->pluck('id')->toArray())

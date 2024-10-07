@@ -42,22 +42,24 @@
                 <table class="earnings-table">
                     <thead class="table-header">
                         <tr>
+                            <th class="header-cell">Store ID</th> <!-- Added Store ID column -->
                             <th class="header-cell">Store Name</th>
                             <th class="header-cell">Total Today</th>
                             <th class="header-cell">Total This Month</th>
                         </tr>
                     </thead>
                     <tbody class="table-body">
-                        @foreach ($storeEarnings as $storeName => $earnings)
+                        @foreach ($storeEarnings as $storeId => $earnings)
                             <tr class="table-row">
-                                <td class="data-cell" data-label="Store Name">{{ $storeName }}</td>
+                                <td class="data-cell" data-label="Store ID">{{ $storeId }}</td> <!-- Display Store ID -->
+                                <td class="data-cell" data-label="Store Name">{{ $earnings['store_name'] }}</td>
                                 <td class="data-cell" data-label="Total Today">₱{{ number_format($earnings['total_today'], 2) }}</td>
                                 <td class="data-cell" data-label="Total This Month">₱{{ number_format($earnings['total_month'], 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-            </div>                       
+            </div>                                 
 
             <div class="dashboard-container">
                 <h2 class="welcome-message">Your Stores</h2>

@@ -8,12 +8,19 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 class Kernel extends ConsoleKernel
 {
     /**
-     * Define the application's command schedule.
+     * The application's command schedule.
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('tally:save')->dailyAt('00:00');
     }
+
+    /**
+     * The commands provided by your application.
+     */
+    protected $commands = [
+        \App\Console\Commands\SaveTally::class,
+    ];
 
     /**
      * Register the commands for the application.
