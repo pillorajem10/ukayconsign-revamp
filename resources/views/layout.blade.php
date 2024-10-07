@@ -165,7 +165,7 @@
                         <a class="nav-link" href="/orders">Orders</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/stores">Manage Stores</a>
+                        <a class="nav-link" href="/dashboard">Dashboard</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/pos/choose">POS</a>

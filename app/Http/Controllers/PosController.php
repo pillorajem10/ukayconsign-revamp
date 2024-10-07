@@ -7,7 +7,7 @@ use App\Models\PosCart;
 use App\Models\Product;
 use App\Models\Sale;
 use App\Models\StoreInventory;
-use App\Models\Store; // Make sure to import the Store model
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -195,6 +195,13 @@ class PosController extends Controller
                 $storeInventory->Stocks -= $quantity; // Deduct the quantity
                 $storeInventory->save(); // Save the changes
             }
+        }
+    
+        // Update the store's total earnings
+        $store = Store::find($request->store_id); // Find the store by ID
+        if ($store) {
+            $store->store_total_earnings += $sale->total; // Add the sale total to total earnings
+            $store->save(); // Save the updated store record
         }
     
         // Return a JSON response with a success message

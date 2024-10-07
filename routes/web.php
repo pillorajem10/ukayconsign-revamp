@@ -12,6 +12,7 @@ use App\Http\Controllers\StoreInventoryController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PromoController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,6 +83,9 @@ Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
 
 // PROMOS
 Route::get('/', [PromoController::class, 'index']);
+
+// PROMOS
+Route::get('/dashboard', [DashboardController::class, 'index']);
 
 
 
