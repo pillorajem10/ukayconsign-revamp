@@ -65,6 +65,6 @@
         </div>
     </div>
     
-    <script src="{{ asset('js/home.js?v=2.2') }}"></script>
+    <script src="{{ asset('js/home.js?v=2.3') }}"></script>
 </body>
 </html>

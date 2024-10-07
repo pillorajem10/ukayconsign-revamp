@@ -16,9 +16,8 @@
                 <div class="promo-images">
                     @foreach($promos as $promo)
                         @php
-                            // Convert the binary data to base64
                             $imageData = base64_encode($promo->image);
-                            $src = 'data:image/jpeg;base64,' . $imageData; // Adjust the MIME type as necessary
+                            $src = 'data:image/jpeg;base64,' . $imageData;
                         @endphp
                         <img src="{{ $src }}" alt="Promo Image" style="max-width: 100%; border-radius: 8px; margin: 10px 0;">
                     @endforeach
@@ -63,13 +62,56 @@
                 <div class="text-center mt-3">
                     <a href="/stores" class="btn btn-success">Manage Stores</a>
                 </div>
-            </div>                                  
+            </div>
+            
+            <div class="dashboard-container">
+                <h2>Top 5 Most Sold Products (All stores combine)</h2>
+                @if(empty($mostSoldProducts))
+                    <p>No sales data available.</p>
+                @else
+                    <ul>
+                        @foreach($mostSoldProducts as $sku => $data)
+                            <li>
+                                <strong>Product Bundle ID:</strong> {{ $data['product_bundle_id'] }} | 
+                                <strong>Sold Count:</strong> {{ $data['count'] }}
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+            
+            <div class="dashboard-container">
+                <h2>Your Orders</h2>
+                @if($orders->isEmpty())
+                    <p>No orders found.</p>
+                @else
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($orders as $order)
+                                <tr>
+                                    <td>{{ $order->id }}</td>
+                                    <td>{{ $order->order_status }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+                <div class="text-center mt-3">
+                    <a href="/orders" class="btn btn-success">Check Orders</a>
+                </div>
+            </div>            
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=2.2') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=2.3') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.3') }}">
 @endsection

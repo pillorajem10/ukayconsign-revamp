@@ -9,12 +9,7 @@
         <table class="store-table">
             <thead class="store-table-header">
                 <tr>
-                    <th class="store-table-cell">ID</th>
                     <th class="store-table-cell">Name</th>
-                    <th class="store-table-cell">Owner</th>
-                    <th class="store-table-cell">Address</th>
-                    <th class="store-table-cell">Phone Number</th>
-                    <th class="store-table-cell">Email</th>
                     <th class="store-table-cell">Total Earnings</th>
                     <th class="store-table-cell">Status</th>
                     <th class="store-table-cell">Action</th>
@@ -23,12 +18,7 @@
             <tbody class="store-table-body">
                 @foreach($stores as $store)
                 <tr class="store-table-row">
-                    <td class="store-table-cell">{{ $store->id }}</td>
                     <td class="store-table-cell">{{ $store->store_name }}</td>
-                    <td class="store-table-cell">{{ $store->store_owner }}</td>
-                    <td class="store-table-cell">{{ $store->store_address }}</td>
-                    <td class="store-table-cell">{{ $store->store_phone_number }}</td>
-                    <td class="store-table-cell">{{ $store->store_email }}</td>
                     <td class="store-table-cell">{{ $store->store_total_earnings }}</td>
                     <td class="store-table-cell">{{ $store->store_status }}</td>
                     <td class="store-table-cell">
@@ -44,5 +34,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/stores.css?v=2.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/stores.css?v=2.3') }}">
 @endsection

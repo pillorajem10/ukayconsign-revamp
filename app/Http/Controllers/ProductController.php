@@ -52,13 +52,13 @@ class ProductController extends Controller
         });
     
         // Check if the authenticated user is the specific user
-        if (Auth::check() && Auth::user()->email === 'pillorajem7@gmail.com') {
-            // If the user is the specific user, retrieve all products
+        if (Auth::check() && (Auth::user()->email === 'pillorajem7@gmail.com' || Auth::user()->email === 'snapstockinventorychecker@gmail.com' || Auth::user()->email === 'anotheremail@example.com')) {
+            // If the user is one of the specific users, retrieve all products
             $products = $products->get();
         } else {
             // For other users, retrieve only products that do not have SKU restrictions
             $products = $products->where('SKU', '!=', 'TEST')->get(); // Modify 'restricted_value' based on your logic
-        }
+        }        
     
         // Group the products by Bundle
         $groupedProducts = $products->groupBy('Bundle');

@@ -22,7 +22,11 @@ class PosController extends Controller
 
     public function chooseStore()
     {
-        $stores = Store::all();
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+    
+        // Fetch stores owned by the authenticated user
+        $stores = Store::where('store_owner', $userId)->get();
     
         // Check if there is only one store
         if ($stores->count() === 1) {
@@ -30,7 +34,7 @@ class PosController extends Controller
         }
     
         return view('pages.chooseStorePos', compact('stores'));
-    }
+    }    
     
 
     public function index(Request $request)
