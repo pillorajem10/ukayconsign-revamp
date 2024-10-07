@@ -32,6 +32,8 @@
             margin: 0;
             font-family: 'Arial', sans-serif;
             background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
         }
 
         .navbar {
@@ -48,6 +50,10 @@
             color: white !important; /* Changed to white */
             font-size: 1.5rem;
             font-family: "Pinyon Script", cursive;
+        }
+
+        .navbar-brand img {
+            width: 20rem;
         }
 
         .navbar-nav .nav-link {
@@ -84,14 +90,12 @@
             transition: all 0.3s ease;
         }
 
-        .navbar-toggler.collapsed .bar1 {
+        .navbar-toggler.collapsed .bar1,
+        .navbar-toggler.collapsed .bar3 {
             transform: rotate(0);
         }
         .navbar-toggler.collapsed .bar2 {
             opacity: 1;
-        }
-        .navbar-toggler.collapsed .bar3 {
-            transform: rotate(0);
         }
 
         .navbar-toggler:not(.collapsed) .bar1 {
@@ -109,12 +113,9 @@
         }
 
         .content {
-            min-height: calc(100% - 56px);
+            flex: 1; /* Allow the content area to grow and fill available space */
             padding: 20px;
-            margin-top: 3rem;
-            background: #ffffff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            margin-top: 5rem; /* Space below the navbar */
         }
 
         footer {
@@ -122,17 +123,28 @@
             color: white;
             text-align: center;
             padding: 10px;
-            position: relative;
-            bottom: 0;
             width: 100%;
-            margin-top: auto;
+        }
+
+        @media (max-width: 500px) {
+            .navbar-brand img {
+                width: 15rem; /* Adjust image width for smaller screens */
+            }
+        }
+
+        @media (max-width: 400px) {
+            .navbar-brand img {
+                width: 12rem; /* Adjust image width for smaller screens */
+            }
         }
     </style>
     @yield('styles')
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="/">Ukay Supplier Consign</a>
+        <a class="navbar-brand" href="/">
+            <img src="{{ asset('images/usc_header_trns.png') }}" alt="Logo">
+        </a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <div class="navbar-toggler-icon">
                 <span class="bar1"></span>
@@ -142,6 +154,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/shop">Shop</a>
+                </li>
                 @if(Auth::check())
                     <li class="nav-item">
                         <a class="nav-link" href="/cart">Cart</a>
@@ -171,7 +186,7 @@
                 @endif
             </ul>
         </div>        
-    </nav>
+    </nav>    
     <div class="content">
         @yield('content')
     </div>

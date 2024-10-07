@@ -11,8 +11,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\StoreInventoryController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\SaleController;
-
-
+use App\Http\Controllers\PromoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +28,7 @@ use App\Http\Controllers\SaleController;
 
 
 // Route for the home page
-Route::get('/', [ProductController::class, 'index'])->name('home');
+Route::get('/shop', [ProductController::class, 'index'])->name('home');
 
 // Auth Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -80,6 +79,9 @@ Route::get('/pos/choose', [PosController::class, 'chooseStore'])->name('pos.choo
 
 // SALES
 Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
+
+// PROMOS
+Route::get('/', [PromoController::class, 'index']);
 
 
 

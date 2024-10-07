@@ -49,14 +49,22 @@ class ProductController extends Controller
         // Retrieve all products and filter based on search
         $products = Product::when($search, function ($query) use ($search) {
             return $query->where('ProductID', 'like', '%' . $search . '%');
-        })
-        ->get();
+        });
+    
+        // Check if the authenticated user is the specific user
+        if (Auth::check() && Auth::user()->email === 'pillorajem7@gmail.com') {
+            // If the user is the specific user, retrieve all products
+            $products = $products->get();
+        } else {
+            // For other users, retrieve only products that do not have SKU restrictions
+            $products = $products->where('SKU', '!=', 'TEST')->get(); // Modify 'restricted_value' based on your logic
+        }
     
         // Group the products by Bundle
         $groupedProducts = $products->groupBy('Bundle');
     
         return view('pages.home', compact('groupedProducts', 'search', 'carts', 'cartMessage')); // Pass the cart message
-    }
+    }    
     
     
     /**

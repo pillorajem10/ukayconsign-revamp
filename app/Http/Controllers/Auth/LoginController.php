@@ -47,6 +47,7 @@ class LoginController extends Controller
     
             // Check if the user role is 'admin'
             if ($user->role === 'admin') {
+                Auth::logout();
                 return redirect()->to('https://admin.ukayukaysupplier.com/login'); // Redirect admin to admin login
             }
     
