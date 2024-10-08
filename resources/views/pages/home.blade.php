@@ -28,10 +28,10 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/home.js?v=2.5') }}"></script>
+    <script src="{{ asset('js/home.js?v=2.6') }}"></script>
 @endsection
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=2.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=2.6') }}">
 @endsection

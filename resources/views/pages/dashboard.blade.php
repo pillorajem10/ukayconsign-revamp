@@ -37,7 +37,16 @@
                     <h2>User Details</h2>
                     <ul>
                         <li><strong>Email:</strong> {{ $user->email }}</li>
+                        <li><strong>Badge:</strong></li>
                     </ul>
+
+                    @if($user->badge == 'Silver')
+                        <img src="{{ asset('images/Silver.png') }}" alt="Silver Badge" style="max-width: 160px; border-radius: 8px; margin: 10px 0;">
+                    @elseif($user->badge == 'Gold')
+                        <img src="{{ asset('images/Gold.png') }}" alt="Gold Badge" style="max-width: 160px; border-radius: 8px; margin: 10px 0;">
+                    @elseif($user->badge == 'Platinum')
+                        <img src="{{ asset('images/Plat.png') }}" alt="Platinum Badge" style="max-width: 160px; border-radius: 8px; margin: 10px 0;">
+                    @endif
                 </div>
             </div>
 
@@ -164,11 +173,11 @@
             </div>            
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=2.5') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=2.6') }}"></script>
     </div>
 @endsection
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.6') }}">
 @endsection
