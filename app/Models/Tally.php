@@ -19,9 +19,16 @@ class Tally extends Model
         'day',
         'month',
         'year',
+        'createdAt',
     ];
 
     protected $dates = [
         'createdAt', // Include createdAt as a date field
     ];
+
+    // In Tally.php model
+    public function store()
+    {
+        return $this->belongsTo(Store::class, 'store_id');
+    }
 }

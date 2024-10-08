@@ -13,6 +13,7 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TallyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,9 +85,11 @@ Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
 // PROMOS
 Route::get('/', [PromoController::class, 'index']);
 
-// PROMOS
+// DASHBOARD
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+// DASHBOARD
+Route::get('/tallies', [TallyController::class, 'index'])->name('tallies.index');
 
 
 

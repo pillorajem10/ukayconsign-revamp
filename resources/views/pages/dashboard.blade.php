@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+@endphp
+
 @extends('layout')
 
 @section('title', 'Dashboard')
@@ -42,19 +46,17 @@
                 <table class="earnings-table">
                     <thead class="table-header">
                         <tr>
-                            <th class="header-cell">Store ID</th> <!-- Added Store ID column -->
-                            <th class="header-cell">Store Name</th>
-                            <th class="header-cell">Total Today</th>
-                            <th class="header-cell">Total This Month</th>
+                            <th class="header-cell">Store</th>
+                            <th class="header-cell">Today</th>
+                            <th class="header-cell">This Month</th>
                         </tr>
                     </thead>
                     <tbody class="table-body">
                         @foreach ($storeEarnings as $storeId => $earnings)
                             <tr class="table-row">
-                                <td class="data-cell" data-label="Store ID">{{ $storeId }}</td> <!-- Display Store ID -->
-                                <td class="data-cell" data-label="Store Name">{{ $earnings['store_name'] }}</td>
-                                <td class="data-cell" data-label="Total Today">₱{{ number_format($earnings['total_today'], 2) }}</td>
-                                <td class="data-cell" data-label="Total This Month">₱{{ number_format($earnings['total_month'], 2) }}</td>
+                                <td class="data-cell" data-label="Store">{{ $earnings['store_name'] }}</td>
+                                <td class="data-cell" data-label="Today">₱{{ number_format($earnings['total_today'], 2) }}</td>
+                                <td class="data-cell" data-label="This Month">₱{{ number_format($earnings['total_month'], 2) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -103,6 +105,36 @@
                     </ul>
                 @endif
             </div>
+
+            <div class="dashboard-container">
+                <p class="welcome-message">Tallies Yesterday</p>
+                @if($tallies->isEmpty())
+                    <p class="no-tallies-message">No tallies available for yesterday.</p>
+                @else
+                    <table class="earnings-table">
+                        <thead class="table-header">
+                            <tr>
+                                <th class="header-cell">Store Name</th>
+                                <th class="header-cell">Date</th>
+                                <th class="header-cell">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody class="table-body">
+                            @foreach ($tallies as $tally)
+                                <tr class="table-row">
+                                    <td class="data-cell" data-label="Store Name">{{ $tally->store->store_name }}</td>
+                                    <td class="data-cell" data-label="Date">{{ Carbon::parse($tally->createdAt)->format('F j, Y') }}</td>
+                                    <td class="data-cell" data-label="Total">₱{{ number_format($tally->total, 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div class="text-center mt-3">
+                        <a href="/tallies" class="btn btn-success">View Tallies</a>
+                    </div>
+                @endif
+            </div>
+            
             
             <div class="dashboard-container">
                 <h2 class="welcome-message">Your Orders</h2>
@@ -132,11 +164,11 @@
             </div>            
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=2.4') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=2.5') }}"></script>
     </div>
 @endsection
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=2.5') }}">
 @endsection

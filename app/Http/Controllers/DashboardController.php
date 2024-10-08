@@ -10,6 +10,7 @@ use App\Models\Tally;
 use App\Models\Store;
 use App\Models\Sale;
 use App\Models\Order;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -20,9 +21,8 @@ class DashboardController extends Controller
 
     public function index()
     {
-        // Get the authenticated user's details
         $user = Auth::user(); // Fetch all user details
-        
+    
         // Fetch promos
         $promos = Promos::all(); // Retrieve all promos
     
@@ -85,8 +85,14 @@ class DashboardController extends Controller
         arsort($productCounts);
         $mostSoldProducts = array_slice($productCounts, 0, 5, true); // Get top 5 most sold products
     
-        // Return the dashboard view with the user's details, promos, stores, most sold products, orders, and earnings
-        return view('pages.dashboard', compact('user', 'promos', 'stores', 'mostSoldProducts', 'orders', 'storeEarnings'));
-    }
-                 
+        // Fetch the tally for yesterday
+        $yesterday = Carbon::yesterday();
+        $tallies = Tally::with('store')
+            ->whereDate('createdAt', $yesterday)
+            ->whereIn('store_id', $stores->pluck('id'))
+            ->get(); // Retrieve tallies for yesterday
+    
+        // Return the dashboard view with the user's details, promos, stores, most sold products, orders, earnings, and tallies
+        return view('pages.dashboard', compact('user', 'promos', 'stores', 'mostSoldProducts', 'orders', 'storeEarnings', 'tallies'));
+    }                
 }
