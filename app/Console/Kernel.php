@@ -10,10 +10,10 @@ class Kernel extends ConsoleKernel
     /**
      * The application's command schedule.
      */
-    protected function schedule(Schedule $schedule): void
+    protected function schedule(Schedule $schedule)
     {
         $schedule->command('tally:save')->dailyAt('00:00');
-    }
+    }    
 
     /**
      * The commands provided by your application.

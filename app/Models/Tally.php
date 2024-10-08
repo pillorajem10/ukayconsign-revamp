@@ -9,7 +9,7 @@ class Tally extends Model
 {
     use HasFactory;
 
-    protected $table = 'tallies'; // Specify the correct table name
+    protected $table = 'usc_tallies'; // Specify the correct table name
     protected $primaryKey = 'id'; // Primary key
     public $timestamps = false; // Disable Eloquent timestamps
 
