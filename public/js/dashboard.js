@@ -15,17 +15,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const hasShownPromo = localStorage.getItem('hasShownPromo');
 
         // Show the promo modal if it hasn't been shown before
+
         if (!hasShownPromo) {
             promoModal.style.display = 'flex'; // Show the modal
 
             // Hide the promo modal after 5 seconds
             setTimeout(() => {
                 promoModal.style.display = 'none'; // Hide the modal
-            }, 5000); // 5000 milliseconds = 5 seconds
+            }, 3000); // 5000 milliseconds = 5 seconds
 
             // Set flag in local storage
             localStorage.setItem('hasShownPromo', 'true'); 
         }
+
+        /*
+        promoModal.style.display = 'flex'; // Show the modal
+
+        setTimeout(() => {
+            promoModal.style.display = 'none'; // Hide the modal
+        }, 2000); // 5000 milliseconds = 5 seconds
+        */
 
         // Apply slide-in classes to dashboard containers
         const dashboardContainers = document.querySelectorAll('.dashboard-container');
@@ -36,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 container.classList.add('slide-in-right');
             }
         });
-    }, 100); // Adjust delay if necessary
+    }, 100);
 
     // Close modal when the close button is clicked
     closeModal.addEventListener('click', function() {

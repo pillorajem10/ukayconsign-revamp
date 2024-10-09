@@ -32,6 +32,26 @@
             </div>
         @endif
 
+        <div class="promo-modal" id="promoModal" style="display: none;">
+            <div class="promo-modal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <h2 class="welcome-message">Check out our promos for you!</h2>
+                @if($promos->isEmpty())
+                    <p>No promos available.</p>
+                @else
+                    <div class="promo-images">
+                        @foreach($promos as $promo)
+                            @php
+                                $imageData = base64_encode($promo->image);
+                                $src = 'data:image/jpeg;base64,' . $imageData;
+                            @endphp
+                            <img src="{{ $src }}" alt="Promo Image" class="promo-image">
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        </div> 
+
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow-lg rounded login-card">
@@ -55,10 +75,10 @@
                 </div>
             </div>
         </div>
-        <script src="{{ asset('js/login.js?v=2.7') }}"></script>
+        <script src="{{ asset('js/login.js?v=2.8') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=2.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=2.8') }}">
 @endsection

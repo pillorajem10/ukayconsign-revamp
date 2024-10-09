@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\Promos;
+use App\Models\Order;
 
 use App\Mail\VerificationEmail;
 use Illuminate\Support\Facades\Mail;
@@ -21,10 +23,11 @@ class LoginController extends Controller
             return redirect('/promos'); // Redirect to the dashboard if authenticated
         }
 
-        return view('pages.login'); // Show the login form if not authenticated
+        $promos = Promos::all(); // Retrieve all promos
+
+        return view('pages.login', compact('promos')); // Show the login form if not authenticated
     }
 
-    // Handle login request
     public function login(Request $request)
     {
         $request->validate([
@@ -51,13 +54,23 @@ class LoginController extends Controller
                 return redirect()->to('https://admin.ukayukaysupplier.com/login'); // Redirect admin to admin login
             }
     
-            return redirect()->intended('/dashboard');
+            // Check if the user has any delivered orders
+            $hasDeliveredOrders = Order::where('user_id', $user->id)
+                ->where('order_status', 'Delivered')
+                ->exists();
+    
+            // Redirect based on the order check
+            if ($hasDeliveredOrders) {
+                return redirect()->intended('/dashboard'); // Redirect to dashboard if delivered orders exist
+            } else {
+                return redirect('/shop'); // Redirect to shop if no delivered orders exist
+            }
         }
     
         return back()->withErrors([
             'email' => 'The provided credentials do not match our records.',
         ]);
-    }    
+    }      
 
     public function showRegisterForm()
     {

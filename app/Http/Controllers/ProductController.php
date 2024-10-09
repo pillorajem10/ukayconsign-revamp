@@ -7,6 +7,7 @@ use App\Models\ProductBarcode; // Import the Product model
 use App\Models\Batch; // Import the Product model
 use App\Models\ReceivedProduct;
 use App\Models\Supplier;
+use App\Models\Promos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +30,8 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+
+        $promos = Promos::all();
     
         // Check if the user is authenticated
         if (Auth::check()) {
@@ -63,7 +66,7 @@ class ProductController extends Controller
         // Group the products by Bundle
         $groupedProducts = $products->groupBy('Bundle');
     
-        return view('pages.home', compact('groupedProducts', 'search', 'carts', 'cartMessage')); // Pass the cart message
+        return view('pages.home', compact('groupedProducts', 'search', 'carts', 'cartMessage', 'promos')); // Pass the cart message
     }    
     
     
