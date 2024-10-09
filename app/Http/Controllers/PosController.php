@@ -11,7 +11,7 @@ use App\Models\StoreInventory;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 
 class PosController extends Controller
 {
@@ -29,14 +29,18 @@ class PosController extends Controller
         // Fetch stores owned by the authenticated user
         $stores = Store::where('store_owner', $userId)->get();
     
+        // Check if there are no stores
+        if ($stores->isEmpty()) {
+            return redirect()->route('home')->with('error', 'Kindly register your store first by ordering before you can use the POS.');
+        }
+    
         // Check if there is only one store
         if ($stores->count() === 1) {
             return redirect()->route('pos.index', ['store_id' => $stores->first()->id]);
         }
     
         return view('pages.chooseStorePos', compact('stores'));
-    }    
-    
+    }      
 
     public function index(Request $request)
     {
@@ -86,8 +90,6 @@ class PosController extends Controller
         $posCarts = PosCart::where('store_id', $store_id)
             ->where('user', $userId)
             ->get();
-    
-        Log::info('POS CARTTTTTTTTTTTTTTTT: ', $posCarts->toArray());
     
         return view('pages.pos', compact('productDetails', 'storeInventoryDetails', 'stores', 'posCarts', 'selectedAction'));
     }

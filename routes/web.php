@@ -33,8 +33,8 @@ use App\Http\Controllers\TallyController;
 Route::get('/shop', [ProductController::class, 'index'])->name('home');
 
 // Auth Routes
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::get('/', [LoginController::class, 'showLoginForm'])->name('login'); // Show login form
+Route::post('/', [LoginController::class, 'login']); // Handle login submission
 
 Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [LoginController::class, 'register']);
@@ -42,7 +42,7 @@ Route::get('/verify/{token}', [LoginController::class, 'verify'])->name('verify'
 
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/login'); // Redirect to the login page
+    return redirect('/'); // Redirect to the login page
 })->name('logout'); // Naming the route
 
 // PRODUCT ROUTES
@@ -83,7 +83,7 @@ Route::get('/pos/choose', [PosController::class, 'chooseStore'])->name('pos.choo
 Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
 
 // PROMOS
-Route::get('/', [PromoController::class, 'index']);
+Route::get('/promos', [PromoController::class, 'index']);
 
 // DASHBOARD
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -9,7 +9,7 @@ use App\Models\Order;
 use App\Models\Store;
 use App\Models\User;
 
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 
 use App\Mail\OrderConfirmationMail; 
 use App\Mail\AdminOrderNotification; 
@@ -71,7 +71,6 @@ class CheckoutController extends Controller
                     'store_email' => $request->store_email,
                 ]);
                 $storeId = $existingStore->id; // Get the existing store ID
-                Log::info('Updated store data:', $existingStore->toArray());
             } else {
                 // Create new store information
                 $newStore = Store::create([
@@ -84,13 +83,6 @@ class CheckoutController extends Controller
                     'store_status' => 'active',
                 ]);
                 $storeId = $newStore->id; // Get the new store ID
-                Log::info('Created store data:', [
-                    'store_name' => $request->store_name,
-                    'store_owner' => Auth::id(),
-                    'store_address' => $request->store_address,
-                    'store_phone_number' => $request->store_phone_number,
-                    'store_email' => $request->store_email,
-                ]);
             }
     
             // Build the productsOrdered array with store_id

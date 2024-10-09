@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+// use Illuminate\Support\Facades\Log;
 
 
 class CartController extends Controller
@@ -69,9 +69,6 @@ class CartController extends Controller
     
             return redirect()->route('home')->with('success', 'Bundle Added to Cart Successfully!');
         } catch (\Exception $e) {
-            Log::error('Failed to add items to cart for user ' . Auth::id() . ': ' . $e->getMessage(), [
-                'request_data' => $request->all(),
-            ]);
             return response()->json(['message' => 'Failed to add items to cart.'], 500);
         }
     }    
@@ -89,24 +86,16 @@ class CartController extends Controller
             'ids.*' => 'integer|exists:usc_carts,id',
         ]);
     
-        // Log the incoming request data for debugging
-        Log::info('Request data: ', $request->all());
-    
         // Check if there are no IDs selected
         if (!isset($request->ids) || count($request->ids) === 0) {
             return redirect()->route('home')->with('error', 'No items were selected for deletion.');
         }
     
         try {
-            // Log the IDs being requested for deletion
-            Log::info('User ' . Auth::id() . ' is requesting to delete cart items: ', $request->ids);
-            
-            // Proceed to delete the items
             Cart::whereIn('id', $request->ids)->delete();
     
             return redirect()->route('home')->with('success', 'Selected items deleted successfully!');
         } catch (\Exception $e) {
-            Log::error('Failed to delete selected items for user ' . Auth::id() . ': ' . $e->getMessage());
             return redirect()->route('home')->with('error', 'Failed to delete selected items. Please try again.');
         }
     }           

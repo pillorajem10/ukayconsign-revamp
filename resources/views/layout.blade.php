@@ -161,13 +161,13 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}" 
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                           onclick="event.preventDefault(); localStorage.removeItem('hasShownPromo'); document.getElementById('logout-form').submit();">
                             <i class="exit-to-app-icon"></i> Logout
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                    </li>
+                    </li>                    
                 @else
                     <li class="nav-item">
                         <a class="nav-link" href="/login">Login</a>

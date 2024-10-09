@@ -18,7 +18,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return redirect('/'); // Redirect to the dashboard if authenticated
+            return redirect('/promos'); // Redirect to the dashboard if authenticated
         }
 
         return view('pages.login'); // Show the login form if not authenticated
@@ -51,7 +51,7 @@ class LoginController extends Controller
                 return redirect()->to('https://admin.ukayukaysupplier.com/login'); // Redirect admin to admin login
             }
     
-            return redirect()->intended('/'); // Redirect other users to the dashboard
+            return redirect()->intended('/dashboard');
         }
     
         return back()->withErrors([
@@ -62,7 +62,7 @@ class LoginController extends Controller
     public function showRegisterForm()
     {
         if (Auth::check()) {
-            return redirect('/'); // Redirect to the dashboard if authenticated
+            return redirect('/promos'); // Redirect to the dashboard if authenticated
         }
 
         return view('pages.register'); // Show the login form if not authenticated
