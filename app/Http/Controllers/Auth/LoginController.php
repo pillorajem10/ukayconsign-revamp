@@ -16,17 +16,30 @@ use App\Models\User;
 
 class LoginController extends Controller
 {
-    // Show the login form
+
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return redirect('/promos'); // Redirect to the dashboard if authenticated
+            $user = Auth::user(); // Get the authenticated user
+    
+            // Check if the user has any delivered orders
+            $hasDeliveredOrders = Order::where('user_id', $user->id)
+                ->where('order_status', 'Delivered')
+                ->exists();
+    
+            // Redirect based on the order check
+            if ($hasDeliveredOrders) {
+                return redirect()->route('dashboard');
+            } else {
+                return redirect()->route('home');; // Redirect to shop if no delivered orders exist
+            }
         }
-
+    
         $promos = Promos::all(); // Retrieve all promos
-
+    
         return view('pages.login', compact('promos')); // Show the login form if not authenticated
     }
+    
 
     public function login(Request $request)
     {
@@ -75,7 +88,19 @@ class LoginController extends Controller
     public function showRegisterForm()
     {
         if (Auth::check()) {
-            return redirect('/promos'); // Redirect to the dashboard if authenticated
+            $user = Auth::user(); // Get the authenticated user
+    
+            // Check if the user has any delivered orders
+            $hasDeliveredOrders = Order::where('user_id', $user->id)
+                ->where('order_status', 'Delivered')
+                ->exists();
+    
+            // Redirect based on the order check
+            if ($hasDeliveredOrders) {
+                return redirect()->route('dashboard');
+            } else {
+                return redirect()->route('home');; // Redirect to shop if no delivered orders exist
+            }
         }
 
         return view('pages.register'); // Show the login form if not authenticated
