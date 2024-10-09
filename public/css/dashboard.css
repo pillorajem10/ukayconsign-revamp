@@ -142,7 +142,7 @@ h1 {
 
 .promo-modal-content {
     background-color: white;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     max-width: 80%; /* Adjust based on your design */
@@ -152,11 +152,11 @@ h1 {
 .promo-images {
     display: flex;
     flex-wrap: wrap; /* Wrap to next line if necessary */
-    justify-content: space-around; /* Space between images */
+    justify-content: center; /* Space between images */
 }
 
 .promo-image {
-    max-width: 150px; /* Adjust size as needed */
+    max-width: 20rem; /* Adjust size as needed */
     margin: 10px; /* Space around each image */
     border-radius: 8px; /* Rounded corners */
 }
@@ -270,4 +270,11 @@ h1 {
         font-weight: bold; /* Bold label */
         text-align: left;
     }
+
+    .promo-image {
+        max-width: 100%; /* Adjust size as needed */
+        margin: 10px; /* Space around each image */
+        border-radius: 8px; /* Rounded corners */
+    }
+    
 }
