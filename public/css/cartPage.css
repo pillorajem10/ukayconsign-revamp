@@ -1,30 +1,44 @@
 .cart-page-table {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 8px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensure border-radius is applied */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
 .cart-page-header {
-    background-color: #f2f2f2;
+    background-color: #4CAF50; /* Green header */
+    color: white; /* White text */
 }
 
 .cart-page-header th {
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 12px; /* Increased padding */
+    border: none; /* Remove border for a cleaner look */
     text-align: left;
+    font-size: 1rem; /* Larger font size for better readability */
 }
 
 .cart-page-body tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #f9f9f9; /* Light background for even rows */
+}
+
+.cart-page-body tr:hover {
+    background-color: #e0f7e0; /* Light green on hover */
 }
 
 .cart-page-body td {
-    padding: 10px;
-    border: 1px solid #ddd;
+    padding: 12px; /* Increased padding */
+    border: 1px solid #ddd; /* Keep a subtle border */
+    font-size: 0.95rem; /* Slightly smaller font size */
 }
 
 .cart-page-login-message {
     font-weight: bold;
+    color: #d9534f; /* Red color for emphasis */
 }
+
+
+
 
 /* FOR SMALL SCREEN CART */
 .small-screen-cart-container {
@@ -35,42 +49,70 @@
 
 .small-screen-cart-card {
     border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    flex-direction: column; /* Stack items in a column */
+    border-radius: 8px; /* Rounded corners for cards */
+    padding: 15px; /* Padding for card */
+    margin-bottom: 15px; /* Space below each card */
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for cards */
+    background-color: #fff; /* White background for contrast */
+    flex-direction: column;
 }
 
-.small-screen-cart-select, 
+.small-screen-cart-image {
+    margin-right: 10px; /* Space between image and text */
+}
+
+.small-screen-cart-details {
+    flex-grow: 1; /* Allow details to take up remaining space */
+}
+
+.small-screen-cart-select,
 .small-screen-cart-product-sku,
-.small-screen-cart-category, 
+.small-screen-cart-category,
 .small-screen-cart-price,
-.small-screen-cart-quantity, 
+.small-screen-cart-quantity,
 .small-screen-cart-srp,
 .small-screen-cart-subtotal {
-    margin-bottom: 5px; /* Space between items */
+    margin-bottom: 10px; /* More space between items */
+    font-size: 0.9rem; /* Smaller font for mobile view */
 }
 
 .small-screen-cart-login-message {
-    color: red;
+    color: #d9534f; /* Red color for emphasis */
     text-align: center;
+    font-weight: bold; /* Bold message */
 }
 
 .small-screen-cart-total {
-    margin-top: 10px;
+    margin-top: 15px; /* More space above total */
     font-weight: bold;
     text-align: right;
+    font-size: 1.1rem; /* Larger font size for total */
 }
 
 .small-screen-cart-actions {
-    margin-top: 10px;
+    margin-top: 15px; /* More space above actions */
     display: flex;
     justify-content: flex-end;
 }
 
 .small-screen-cart-actions .btn {
     margin-left: 10px; /* Space between buttons */
+    padding: 10px 15px; /* More padding for buttons */
+    border-radius: 5px; /* Rounded corners for buttons */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+.small-screen-cart-actions .btn.btn-danger {
+    background-color: #d9534f; /* Red background for delete button */
+    color: white; /* White text */
+}
+
+.small-screen-cart-actions .btn.btn-primary {
+    background-color: #4CAF50; /* Green background for primary button */
+    color: white; /* White text */
 }
 
 /* Hide small screen cart container on larger screens */

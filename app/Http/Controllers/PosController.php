@@ -7,10 +7,14 @@ use App\Models\PosCart;
 use App\Models\Product;
 use App\Models\Tally;
 use App\Models\Sale;
+use App\Models\User;
 use App\Models\StoreInventory;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use App\Mail\BadgePromotionMail;
+use Illuminate\Support\Facades\Mail;
 // use Illuminate\Support\Facades\Log;
 
 class PosController extends Controller
@@ -209,10 +213,29 @@ class PosController extends Controller
         if ($store) {
             $store->store_total_earnings += $sale->total; // Add the sale total to total earnings
             $store->save(); // Save the updated store record
-        }
+        
+            // Check and update user badge
+            $user = User::find($store->store_owner); // Find the user by store_owner ID
+            if ($user) {
+                $promoted = false; // Track if the user has been promoted
+        
+                if ($store->store_total_earnings >= 30000 && $user->badge === 'Silver') {
+                    $user->badge = 'Gold'; // Update badge to Gold
+                    $promoted = true;
+                } elseif ($store->store_total_earnings >= 50000 && $user->badge === 'Gold') {
+                    $user->badge = 'Platinum'; // Update badge to Platinum
+                    $promoted = true;
+                }
+        
+                if ($promoted) {
+                    $user->save(); // Save the updated user
+                    Mail::to($user->email)->send(new BadgePromotionMail($user)); // Send email notification
+                }
+            }
+        }        
     
         // Return a JSON response with a success message
         return redirect()->route('pos.index', ['store_id' => $request->input('store_id')])
             ->with('success', 'Sale completed successfully.');
-    }          
+    }   
 }
