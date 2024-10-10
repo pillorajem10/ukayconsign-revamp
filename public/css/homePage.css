@@ -276,6 +276,13 @@
     cursor: pointer;
 }
 
+.welcome-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 30px;
+}
+
 /* Responsive styles */
 @media (max-width: 1545px) {
     .product-section-card-title {
@@ -295,6 +302,18 @@
         width: 100%;
     }
     
+}
+
+@media (max-width: 760px) {
+    .promo-modal-content {
+        height: 30rem;
+    }
+
+    .promo-image {
+        max-width: 100%; /* Adjust size as needed */
+        margin: 10px; /* Space around each image */
+        border-radius: 8px; /* Rounded corners */
+    }
 }
 
 

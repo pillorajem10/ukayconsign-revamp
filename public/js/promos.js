@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const promoItems = document.querySelectorAll('.promo-item');
         promoItems.forEach((item, index) => {
             setTimeout(() => {
-                item.classList.add('show'); // Trigger the slide-in animation
+                item.classList.add('show'); // Trigger the fade-in animation
             }, index * 300); // Stagger the animations
         });
     }, 1000); // Adjust the timeout as needed

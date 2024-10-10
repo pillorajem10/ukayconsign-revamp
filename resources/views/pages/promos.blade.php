@@ -14,8 +14,8 @@
             <p class="no-promos">No promotions available.</p>
         @else
             <ul class="promo-list">
-                @foreach ($promos as $index => $promo)
-                    <li class="promo-item promo-slide {{ $index % 2 == 0 ? 'slide-left' : 'slide-right' }}">
+                @foreach ($promos as $promo)
+                    <li class="promo-item"> <!-- Removed promo-slide class -->
                         <img src="data:image/jpeg;base64,{{ base64_encode($promo->image) }}" alt="Promo Image" class="promo-image">
                     </li>
                 @endforeach
@@ -26,5 +26,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/promos.css?v=3.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/promos.css?v=3.1') }}">
 @endsection

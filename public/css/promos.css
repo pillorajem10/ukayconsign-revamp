@@ -15,25 +15,13 @@
 
 .promo-item {
     opacity: 0; /* Initially hidden */
-    transform: translateX(100%); /* Start from the right */
-    transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transition */
-}
-
-.slide-left {
-    transform: translateX(-100%); /* Start from the left */
-}
-
-/* Slide from right */
-.slide-right {
-    transform: translateX(100%); /* Start from the right */
+    transition: opacity 0.5s ease; /* Smooth transition for opacity */
 }
 
 /* Visible state */
 .show {
-    opacity: 1;
-    transform: translateX(0); /* End position */
+    opacity: 1; /* Fully visible */
 }
-
 
 .promo-image {
     border-radius: 8px;
@@ -47,8 +35,6 @@
     text-align: center;
     color: #777;
 }
-
-/* promos.css */
 
 /* Loading overlay styles */
 .loading-overlay {
@@ -79,7 +65,6 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
 
 @media (max-width: 600px) {
     .promo-list {

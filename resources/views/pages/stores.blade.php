@@ -34,5 +34,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/stores.css?v=3.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/stores.css?v=3.1') }}">
 @endsection
