@@ -30,9 +30,9 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-
-        $promos = Promos::all();
     
+        $promos = Promos::all();
+        
         // Check if the user is authenticated
         if (Auth::check()) {
             // Fetch cart items for the authenticated user
@@ -48,27 +48,24 @@ class ProductController extends Controller
             $carts = collect(); // Create an empty collection
             $cartMessage = "Login first to access cart.";
         }
-    
+        
         // Retrieve all products and filter based on search
         $products = Product::when($search, function ($query) use ($search) {
             return $query->where('ProductID', 'like', '%' . $search . '%');
-        });
-    
-        // Check if the authenticated user is the specific user
-        if (Auth::check() && (Auth::user()->email === 'pillorajem7@gmail.com' || Auth::user()->email === 'snapstockinventorychecker@gmail.com' || Auth::user()->email === 'anotheremail@example.com')) {
-            // If the user is one of the specific users, retrieve all products
-            $products = $products->get();
-        } else {
-            // For other users, retrieve only products that do not have SKU restrictions
-            $products = $products->where('SKU', '!=', 'TEST')->get(); // Modify 'restricted_value' based on your logic
-        }        
-    
+        })
+        ->when(Auth::check() && (Auth::user()->email === 'pillorajem7@gmail.com' || Auth::user()->email === 'snapstockinventorychecker@gmail.com' || Auth::user()->email === 'anotheremail@example.com'), function ($query) {
+            return $query; // Retrieve all products for specific users
+        }, function ($query) {
+            return $query->where('SKU', '!=', 'TEST'); // Filter out restricted SKUs
+        })
+        ->where('Stock', '>', 0) // Exclude products with Stock of 0
+        ->get(); // Execute the query
+        
         // Group the products by Bundle
         $groupedProducts = $products->groupBy('Bundle');
     
-        return view('pages.home', compact('groupedProducts', 'search', 'carts', 'cartMessage', 'promos')); // Pass the cart message
-    }    
-    
+        return view('pages.home', compact('groupedProducts', 'search', 'carts', 'cartMessage', 'promos'));
+    }      
     
     /**
      * Show the form for creating a new resource.

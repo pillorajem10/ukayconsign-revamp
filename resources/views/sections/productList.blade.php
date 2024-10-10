@@ -52,7 +52,7 @@
                                 @csrf
                                 <input type="hidden" name="bundle_name" value="{{ $bundle }}">
                                 @foreach($items as $item)
-                                    <input type="hidden" name="products[{{ $item->SKU }}][quantity]" value="{{ $item->Bundle_Qty }}">
+                                    <input type="hidden" name="products[{{ $item->SKU }}][quantity]" value="{{ $item->Stock }}">
                                     <input type="hidden" name="products[{{ $item->SKU }}][price]" value="{{ $item->Consign }}">
                                     <input type="hidden" name="products[{{ $item->SKU }}][price_type]" value="SRP">
                                 @endforeach
@@ -65,6 +65,6 @@
         </div>
     </div>
     
-    <script src="{{ asset('js/home.js?v=3.1') }}"></script>
+    <script src="{{ asset('js/home.js?v=3.2') }}"></script>
 </body>
 </html>

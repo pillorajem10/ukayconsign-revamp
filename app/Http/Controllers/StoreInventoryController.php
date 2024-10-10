@@ -33,9 +33,9 @@ class StoreInventoryController extends Controller
     
         // Optionally add any other filters or sorting here
     
-        $inventory = $query->paginate(10);
+        $inventory = $query->get(); // Fetch all records without pagination
         return view('pages.storeInventory', compact('inventory'));
-    }    
+    }      
     
 
     /**

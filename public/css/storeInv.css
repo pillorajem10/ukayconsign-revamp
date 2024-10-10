@@ -1,0 +1,34 @@
+/* Base styles for the table */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto; /* Handle overflow */
+}
+
+/* Table header styles */
+.table thead {
+    background-color: green; /* Green header */
+    color: white; /* White text for contrast */
+}
+
+/* Table cell styles */
+.table th, .table td {
+    padding: 10px; /* Padding for cells */
+    border: 1px solid #ddd; /* Border for cells */
+    text-align: left; /* Align text to the left */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .table th, .table td {
+        padding: 5px; /* Smaller padding */
+        font-size: 14px; /* Smaller font size */
+    }
+}
+
+@media (max-width: 480px) {
+    .table th, .table td {
+        padding: 3px; /* Even smaller padding */
+        font-size: 12px; /* Smaller font size for mobile */
+    }
+}
