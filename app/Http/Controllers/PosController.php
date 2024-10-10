@@ -61,6 +61,15 @@ class PosController extends Controller
             return redirect()->route('pos.choose')->with('error', 'No SKU Specified');
         }
     
+        // Check if the store_id belongs to the authenticated user
+        $store = Store::where('id', $store_id)
+                      ->where('store_owner', auth()->user()->id)
+                      ->first();
+    
+        if (!$store) {
+            return redirect()->route('home')->with('error', 'You don\'t have authority to access this POS');
+        }
+    
         if ($request->isMethod('post')) {
             // Validate the request
             $request->validate([
@@ -97,6 +106,7 @@ class PosController extends Controller
     
         return view('pages.pos', compact('productDetails', 'storeInventoryDetails', 'stores', 'posCarts', 'selectedAction'));
     }
+    
     
     
     private function getProductDetails($barcode, $store_id)
