@@ -10,32 +10,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Hide the loading overlay after a slight delay
     setTimeout(() => {
         loadingOverlay.style.display = 'none'; // Hide overlay
-
+    
         // Check if the promo modal has been shown before
-        const hasShownPromo = localStorage.getItem('hasShownPromo');
-
-        // Show the promo modal if it hasn't been shown before
-
-        if (!hasShownPromo) {
+        const promoData = sessionStorage.getItem('promoData');
+    
+        if (!promoData || (Date.now() - JSON.parse(promoData).timestamp > 900000)) {
             promoModal.style.display = 'flex'; // Show the modal
-
-            // Hide the promo modal after 5 seconds
+    
+            // Hide the promo modal after 3 seconds
             setTimeout(() => {
                 promoModal.style.display = 'none'; // Hide the modal
-            }, 3000); // 5000 milliseconds = 5 seconds
-
-            // Set flag in local storage
-            localStorage.setItem('hasShownPromo', 'true'); 
+            }, 3000); // 3000 milliseconds = 3 seconds
+    
+            // Set flag in session storage with a timestamp
+            sessionStorage.setItem('promoData', JSON.stringify({ timestamp: Date.now() }));
         }
-
-        /*
-        promoModal.style.display = 'flex'; // Show the modal
-
-        setTimeout(() => {
-            promoModal.style.display = 'none'; // Hide the modal
-        }, 2000); // 5000 milliseconds = 5 seconds
-        */
-
+    
         // Apply slide-in classes to dashboard containers
         const dashboardContainers = document.querySelectorAll('.dashboard-container');
         dashboardContainers.forEach((container, index) => {
@@ -46,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, 100);
+    
 
     // Close modal when the close button is clicked
     closeModal.addEventListener('click', function() {
