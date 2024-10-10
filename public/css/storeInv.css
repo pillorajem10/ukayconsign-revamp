@@ -18,11 +18,58 @@
     text-align: left; /* Align text to the left */
 }
 
+/* Search form styles */
+.search-input {
+    padding: 8px; /* Padding for input */
+    border: 1px solid #ccc; /* Border for input */
+    border-radius: 4px; /* Rounded corners */
+    width: 200px; /* Fixed width */
+    margin-right: 10px; /* Space between input and button */
+}
+
+/* Search button styles */
+button {
+    padding: 8px 12px; /* Padding for button */
+    background-color: green; /* Button color */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+}
+
+/* Button hover effect */
+button:hover {
+    background-color: darkgreen; /* Darker green on hover */
+}
+
+/* Clear button styles */
+.clear-button {
+    padding: 8px 12px; /* Padding for the button */
+    background-color: lightgray; /* Background color */
+    color: black; /* Text color */
+    border: 1px solid #ccc; /* Border for the button */
+    border-radius: 4px; /* Rounded corners */
+    text-decoration: none; /* Remove underline */
+    margin-left: 10px; /* Space between search and clear buttons */
+}
+
+/* Clear button hover effect */
+.clear-button:hover {
+    background-color: darkgray; /* Darker gray on hover */
+    text-decoration: none;
+    color: black;
+}
+
+
 /* Responsive styles */
 @media (max-width: 768px) {
     .table th, .table td {
         padding: 5px; /* Smaller padding */
         font-size: 14px; /* Smaller font size */
+    }
+    .search-input {
+        width: 100%; /* Full width on smaller screens */
+        margin-bottom: 10px; /* Space below the input */
     }
 }
 

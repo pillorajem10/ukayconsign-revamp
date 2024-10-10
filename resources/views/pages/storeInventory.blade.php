@@ -4,6 +4,16 @@
 
 @section('content')
     <div>
+        <h1>Store Inventory List</h1>
+        
+        <!-- Search Input -->
+        <form method="GET" action="{{ request()->url() }}">
+            <input type="text" name="search" placeholder="Search by Product ID" class="search-input" value="{{ request()->get('search') }}" />
+            <input type="hidden" name="store_id" value="{{ request()->get('store_id') }}" />
+            <button type="submit">Search</button>
+            <a href="{{ request()->url() . '?store_id=' . request()->get('store_id') }}" class="clear-button">Clear</a>
+        </form>
+
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -29,6 +39,6 @@
             </table>
         </div>
 
-        <link rel="stylesheet" href="{{ asset('css/storeInv.css?v=3.2') }}">
+        <link rel="stylesheet" href="{{ asset('css/storeInv.css?v=3.3') }}">
     </div>
 @endsection
