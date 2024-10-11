@@ -20,6 +20,8 @@ class User extends Authenticatable
         'role',
         'verified',
         'verification_token',
+        'fname',
+        'lname',
     ];
 
     protected $hidden = [

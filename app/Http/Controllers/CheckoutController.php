@@ -45,7 +45,6 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the incoming request
         $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -55,6 +54,21 @@ class CheckoutController extends Controller
             'store_phone_number' => 'required|string|max:20',
             'store_email' => 'required|email|max:255',
         ]);
+    
+        // Retrieve the authenticated user
+        $user = Auth::user();
+    
+        // Update user's fname and lname only if they are NULL
+        if (is_null($user->fname)) {
+            $user->fname = $request->first_name;
+        }
+    
+        if (is_null($user->lname)) {
+            $user->lname = $request->last_name;
+        }
+    
+        // Save changes to the user
+        $user->save();
     
         // Retrieve the cart items for the authenticated user
         $carts = Cart::where('user_id', Auth::id())->get();
@@ -103,13 +117,13 @@ class CheckoutController extends Controller
     
             // Create the order
             $order = Order::create([
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
+                'first_name' => $user->fname,
+                'last_name' => $user->lname,
                 'user_id' => Auth::id(),
                 'products_ordered' => json_encode($productsOrdered),
                 'address' => $request->address,
                 'store_name' => $request->store_name,
-                'email' => Auth::user()->email,
+                'email' => $user->email,
                 'total_price' => $carts->sum(function ($cart) {
                     return $cart->price * $cart->quantity;
                 }),
@@ -122,7 +136,7 @@ class CheckoutController extends Controller
             Cart::where('user_id', Auth::id())->delete();
     
             // Send the order confirmation email to the user
-            Mail::to(Auth::user()->email)->send(new OrderConfirmationMail($order, $productsOrdered));
+            Mail::to($user->email)->send(new OrderConfirmationMail($order, $productsOrdered));
     
             // Send the order notification to all admins
             $adminUsers = User::where('role', 'admin')->get();
@@ -134,6 +148,5 @@ class CheckoutController extends Controller
         }
     
         return redirect()->back()->with('error', 'Your cart is empty.');
-    }
-      
+    }   
 }
