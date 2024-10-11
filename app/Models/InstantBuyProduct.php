@@ -25,10 +25,10 @@ class InstantBuyProduct extends Model
         'model',
         'store_id',
         'video',
+        'product_sku', // Added product_sku to fillable
     ];
 
     protected $casts = [
         'images' => 'array', // Keep images as an array
     ];
 }
-

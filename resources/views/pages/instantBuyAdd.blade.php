@@ -25,6 +25,16 @@
         <div class="form-row">
             <div class="form-column">
                 <div class="form-group">
+                    <label for="product_sku">Select Product</label>
+                    <select name="product_sku" id="product_sku" class="form-control" required>
+                        <option value="" disabled selected>Select a product</option>
+                        @foreach($storeInventory as $item)
+                            <option value="{{ $item->SKU }}">{{ $item->ProductID }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="product_barcode">Product Barcode</label>
                     <input type="text" name="product_barcode" id="product_barcode" class="form-control" required>
                 </div>

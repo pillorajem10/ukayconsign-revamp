@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\InstantBuyProduct;
 use App\Models\Store;
+use App\Models\StoreInventory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -33,8 +34,11 @@ class InstantBuyProductController extends Controller
             return redirect()->route('stores.index')->with('error', 'You don\'t have authority to add product for this store');
         }
     
-        return view('pages.instantBuyAdd', compact('storeId')); // Pass the storeId to the view if needed
-    }    
+        // Fetch store inventory filtered by store_id
+        $storeInventory = StoreInventory::where('store_id', $storeId)->get();
+    
+        return view('pages.instantBuyAdd', compact('storeId', 'storeInventory')); // Pass the storeId and inventory to the view
+    }  
 
     public function store(Request $request)
     {
@@ -51,6 +55,7 @@ class InstantBuyProductController extends Controller
             'model' => 'nullable|string|max:50',
             'store_id' => 'required|integer',
             'video' => 'nullable|file|mimes:mp4,avi,mov|max:51200', // Validate video file
+            'product_sku' => 'required|string|max:255', // Validate product_sku
         ]);
     
         // Initialize an array to hold binary image data
@@ -75,11 +80,13 @@ class InstantBuyProductController extends Controller
         InstantBuyProduct::create(array_merge($request->except('images', 'video'), [
             'images' => json_encode($imageData), // Store images as JSON
             'video' => $videoData, // Store single video binary
+            'product_sku' => $request->input('product_sku'), // Include product_sku
         ]));
     
         // Redirect to stores.index with success message
         return redirect()->route('stores.index')->with('success', 'Product created successfully.');
-    }       
+    }
+         
 }
 
 
