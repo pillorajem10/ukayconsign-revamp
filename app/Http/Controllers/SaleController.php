@@ -29,7 +29,7 @@ class SaleController extends Controller
 
         // Check if sales are empty
         if ($sales->isEmpty()) {
-            return redirect()->route('home')->with('error', 'Cannot get sale of this store');
+            return redirect()->route('home')->with('error', 'You haven\'t made any sale yet.');
         }
 
         return view('pages.sales', compact('sales'));
