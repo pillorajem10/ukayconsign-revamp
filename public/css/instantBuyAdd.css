@@ -1,0 +1,50 @@
+.add-product-title {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* Create two columns for the form fields */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-column {
+    flex: 0 0 48%; /* Two columns with some space between them */
+    max-width: 48%;
+}
+
+.form-column input,
+.form-column textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-primary {
+    background-color: green; /* Change button color to green */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: darkgreen; /* Darker green on hover */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 600px) {
+    .form-column {
+        flex: 0 0 100%; /* Stacks fields on smaller screens */
+        max-width: 100%;
+    }
+}

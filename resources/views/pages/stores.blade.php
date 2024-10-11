@@ -5,6 +5,21 @@
 @section('content')
 <div>
     <h1 class="store-list-title">Store List</h1>
+
+    {{-- Display success message --}}
+    @if(session('success'))
+        <div id="success-message" class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    {{-- Display error message --}}
+    @if(session('error'))
+        <div id="error-message" class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="store-table-responsive">
         <table class="store-table">
             <thead class="store-table-header">
@@ -24,7 +39,8 @@
                     <td class="store-table-cell">
                         <a href="{{ url('/store-inventory?store_id=' . $store->id) }}" class="btn btn-info">View Inventory</a>
                         <a href="{{ url('/sales?store_id=' . $store->id) }}" class="btn btn-primary">View Sales</a>
-                    </td>
+                        <a href="{{ url('/instant-buy/create?store_id=' . $store->id) }}" class="btn btn-success">Add Instant Buy</a>
+                    </td>                    
                 </tr>
                 @endforeach
             </tbody>              
