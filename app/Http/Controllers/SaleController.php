@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\Store;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -11,17 +12,26 @@ class SaleController extends Controller
     {
         // Get store_id from the query string
         $storeId = $request->input('store_id');
-    
-        // Retrieve sales records filtered by store_id if it exists
+
+        // Check if the authenticated user is the owner of the store
+        $store = Store::where('id', $storeId)
+            ->where('store_owner', auth()->user()->id)
+            ->first();
+
+        if (!$store) {
+            return redirect()->route('home')->with('error', 'You don\'t have authority to access this sales list');
+        }
+
+        // Retrieve sales records filtered by store_id
         $sales = Sale::when($storeId, function ($query) use ($storeId) {
             return $query->where('sale_made', $storeId);
         })->get();
-    
+
         // Check if sales are empty
         if ($sales->isEmpty()) {
             return redirect()->route('home')->with('error', 'Cannot get sale of this store');
         }
-    
+
         return view('pages.sales', compact('sales'));
-    }      
+    }
 }
