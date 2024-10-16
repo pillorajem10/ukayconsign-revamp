@@ -247,5 +247,45 @@ class PosController extends Controller
         // Return a JSON response with a success message
         return redirect()->route('pos.index', ['store_id' => $request->input('store_id')])
             ->with('success', 'Sale completed successfully.');
-    }   
+    }
+    
+    public function voidItem(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'product_sku' => 'required|string',
+            'store_id' => 'required|integer',
+        ]);
+
+        $userId = auth()->id();
+        $storeId = $request->input('store_id');
+        $productSku = $request->input('product_sku');
+
+        // Find the item in the PosCart
+        $posCartItem = PosCart::where('product_sku', $productSku)
+            ->where('user', $userId)
+            ->where('store_id', $storeId)
+            ->first();
+
+        if (!$posCartItem) {
+            return redirect()->route('pos.index', ['store_id' => $storeId])
+                ->with('error', 'Item not found in the cart.');
+        }
+
+        // Update stock in StoreInventory
+        $storeInventory = StoreInventory::where('SKU', $productSku)
+            ->where('store_id', $storeId)
+            ->first();
+
+        if ($storeInventory) {
+            $storeInventory->Stocks += $posCartItem->quantity; // Re-add the stock
+            $storeInventory->save();
+        }
+
+        // Remove the item from the PosCart
+        $posCartItem->delete();
+
+        return redirect()->route('pos.index', ['store_id' => $storeId])
+            ->with('success', 'Item voided successfully.');
+    }
 }

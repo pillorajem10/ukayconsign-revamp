@@ -80,16 +80,6 @@
     outline: none;
 }
 
-.form-button {
-    background-color: green;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background-color 0.3s;
-}
 
 .form-button:hover {
     background-color: #0056b3;
@@ -136,6 +126,20 @@
     background-color: #218838;
 }
 
+.void-button {
+    background-color: rgb(224, 75, 75);
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    max-width: 280px; /* Adjusted for smaller screens */
+    padding: 8px; /* Reduced padding */
+    margin: 8px 0; /* Reduced margin */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px; /* Adjusted font size */
+}
+
 /* Message Styles */
 .message {
     color: red;
@@ -172,7 +176,7 @@
 
 .styled-table th,
 .styled-table td {
-    padding: 8px; /* Reduced padding */
+    padding: 5px; /* Reduced padding */
     text-align: left;
     border: 1px solid #ddd;
 }

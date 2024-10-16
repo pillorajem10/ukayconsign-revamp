@@ -79,6 +79,7 @@
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Sub Total</th>
+                            <th>Action</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -88,12 +89,20 @@
                                 <td>{{ $cart['quantity'] }}</td>
                                 <td>{{ $cart['price'] }}</td>
                                 <td>{{ $cart['sub_total'] }}</td>
+                                <td>
+                                    <form method="POST" action="{{ route('pos.void') }}">
+                                        @csrf
+                                        <input type="hidden" name="product_sku" value="{{ $cart['product_sku'] }}">
+                                        <input type="hidden" name="store_id" value="{{ request()->input('store_id') }}">
+                                        <button type="submit" class="void-button">Void</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="3" style="text-align: right;"><strong>Total:</strong></td>
+                            <td colspan="4" style="text-align: right;"><strong>Total:</strong></td>
                             <td><strong>{{ number_format($posCarts->sum('sub_total'), 2) }}</strong></td>
                         </tr>
                     </tfoot>
@@ -123,7 +132,7 @@
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
-        <script src="{{ asset('js/pos.js?v=3.6') }}"></script>
+        <script src="{{ asset('js/pos.js?v=3.7') }}"></script>
         <script>
             // Pass PHP values to JavaScript variables
             const totalAmount = {{ json_encode($posCarts->sum('sub_total')) }};
@@ -132,5 +141,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pos.css?v=3.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/pos.css?v=3.7') }}">
 @endsection

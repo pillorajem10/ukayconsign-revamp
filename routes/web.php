@@ -79,6 +79,7 @@ Route::put('/orders/{id}/update-status', [OrderController::class, 'updateStatus'
 Route::match(['get', 'post'], '/pos', [PosController::class, 'index'])->name('pos.index');
 Route::post('/pos/sale', [PosController::class, 'completeSale'])->name('sales.store');
 Route::get('/pos/choose', [PosController::class, 'chooseStore'])->name('pos.choose');
+Route::post('/pos/void', [PosController::class, 'voidItem'])->name('pos.void');
 
 // SALES
 Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
