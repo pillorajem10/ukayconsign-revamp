@@ -23,11 +23,24 @@
     background-color: #f1f1f1; /* Highlight on hover */
 }
 
+
 /* Media Query for screens 1000px or smaller */
 @media (max-width: 1000px) {
     .store-table-cell {
         padding: 0.5rem; /* Reduced padding */
         font-size: 0.9rem; /* Smaller font size */
+    }
+
+    .store-table-cell-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem; /* Add some spacing between buttons */
+    }
+
+    .store-table-cell-actions a {
+        font-size: 0.5rem; 
+        flex-grow: 1; /* Make the buttons stretch vertically */
+        text-align: center; /* Ensure the text is centered */
     }
 
     .btn {

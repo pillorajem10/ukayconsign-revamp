@@ -36,7 +36,7 @@
         <button id="scanBarcodeButton" class="form-button">Activate Camera For Barcode</button>
 
         <div id="cameraContainer" style="display:none; position:relative;">
-            <div id="videoContainer" style="width: 100%; height: auto;"></div>
+            <div id="videoContainer" style="width: 100%"></div>
         </div>
 
         <div id="productDetails">
@@ -123,7 +123,7 @@
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
-        <script src="{{ asset('js/pos.js?v=3.4') }}"></script>
+        <script src="{{ asset('js/pos.js?v=3.5') }}"></script>
         <script>
             // Pass PHP values to JavaScript variables
             const totalAmount = {{ json_encode($posCarts->sum('sub_total')) }};
@@ -132,5 +132,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pos.css?v=3.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/pos.css?v=3.5') }}">
 @endsection

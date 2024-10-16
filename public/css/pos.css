@@ -12,7 +12,6 @@
 /* Video Container */
 #videoContainer {
     width: 100%;
-    height: auto; /* Maintain aspect ratio */
 }
 
 /* Stop Scanning Button */

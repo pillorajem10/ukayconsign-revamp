@@ -36,11 +36,11 @@
                     <td class="store-table-cell">{{ $store->store_name }}</td>
                     <td class="store-table-cell">{{ $store->store_total_earnings }}</td>
                     <td class="store-table-cell">{{ $store->store_status }}</td>
-                    <td class="store-table-cell">
+                    <td class="store-table-cell store-table-cell-actions">
                         <a href="{{ url('/store-inventory?store_id=' . $store->id) }}" class="btn btn-info">View Inventory</a>
                         <a href="{{ url('/sales?store_id=' . $store->id) }}" class="btn btn-primary">View Sales</a>
-                        <a href="{{ url('/instant-buy/create?store_id=' . $store->id) }}" class="btn btn-success">Add Instant Buy</a>
-                    </td>                    
+                        {{--<a href="{{ url('/instant-buy/create?store_id=' . $store->id) }}" class="btn btn-success">Add Instant Buy</a>--}}
+                    </td>                                      
                 </tr>
                 @endforeach
             </tbody>              
@@ -50,5 +50,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/stores.css?v=3.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/stores.css?v=3.5') }}">
 @endsection
