@@ -12,6 +12,7 @@
 /* Video Container */
 #videoContainer {
     width: 100%;
+    height: 20rem;
 }
 
 /* Stop Scanning Button */

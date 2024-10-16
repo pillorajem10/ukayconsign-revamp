@@ -36,7 +36,7 @@
         <button id="scanBarcodeButton" class="form-button">Activate Camera For Barcode</button>
 
         <div id="cameraContainer" style="display:none; position:relative;">
-            <div id="videoContainer" style="width: 100%"></div>
+            <div id="videoContainer"></div>
         </div>
 
         <div id="productDetails">
