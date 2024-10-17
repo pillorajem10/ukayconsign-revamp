@@ -30,14 +30,14 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-    
+        
         $promos = Promos::all();
         
         // Check if the user is authenticated
         if (Auth::check()) {
             // Fetch cart items for the authenticated user
             $carts = Cart::with('product')->where('user_id', Auth::id())->get();
-    
+        
             // Check if the cart is empty
             if ($carts->isEmpty()) {
                 $cartMessage = "Your cart is empty.";
@@ -58,14 +58,14 @@ class ProductController extends Controller
         }, function ($query) {
             return $query->where('SKU', '!=', 'TEST'); // Filter out restricted SKUs
         })
-        ->where('Stock', '>', 0) // Exclude products with Stock of 0
         ->get(); // Execute the query
         
         // Group the products by Bundle
         $groupedProducts = $products->groupBy('Bundle');
     
         return view('pages.home', compact('groupedProducts', 'search', 'carts', 'cartMessage', 'promos'));
-    }      
+    }
+       
     
     /**
      * Show the form for creating a new resource.
