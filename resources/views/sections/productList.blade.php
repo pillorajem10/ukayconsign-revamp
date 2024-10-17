@@ -15,6 +15,14 @@
     <div class="product-section-container">
         <div class="product-section-row mt-4">
             @foreach($products as $bundle => $items)
+                @php
+                    // Sort the items based on category
+                    $sortedItems = $items->sortBy(function($item) {
+                        $order = ['Essential', 'Signature', 'Exclusive'];
+                        return array_search($item->Category, $order);
+                    });
+                @endphp
+
                 <div class="product-section-card">
                     <div class="product-section-card-image">
                         <img src="data:image/jpeg;base64,{{ base64_encode($items->first()->Image) }}" 
@@ -35,7 +43,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($items as $item)
+                                @foreach($sortedItems as $item)
                                 <tr>
                                     <td>{{ $item->Category }}</td>
                                     <td>{{ $item->Bundle_Qty }}</td>
