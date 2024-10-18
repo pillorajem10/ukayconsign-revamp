@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     // Close modal when the close button is clicked
+    /*
     closeModal.addEventListener('click', function() {
         promoModal.style.display = 'none'; // Hide the modal immediately
     });
@@ -53,5 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show the promo modal when the button is clicked
     showPromosButton.addEventListener('click', function() {
         promoModal.style.display = 'flex'; // Show the modal
-    });
+    })
+    */
 });

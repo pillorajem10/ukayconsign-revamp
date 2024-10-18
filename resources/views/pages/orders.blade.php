@@ -41,7 +41,6 @@
                             <table class="table table-sm mt-2">
                                 <thead>
                                     <tr>
-                                        <th>Cart ID</th>
                                         <th>Bundle Name</th>
                                         <th>Category</th>
                                         <th>Quantity</th>
@@ -54,7 +53,6 @@
                                     @endphp
                                     @foreach ($products as $product)
                                         <tr>
-                                            <td>{{ $product['cart_id'] }}</td>
                                             <td>{{ $product['bundle_name'] }}</td>
                                             <td>{{ $product['category'] }}</td>
                                             <td>{{ $product['quantity'] }}</td>
@@ -106,5 +104,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=3.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=3.8') }}">
 @endsection

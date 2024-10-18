@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 100); // Adjust delay if necessary
 
     // Close modal when the close button is clicked
+
+    /*
     closeModal.addEventListener('click', function() {
         promoModal.style.display = 'none'; // Hide the modal immediately
     });
@@ -37,5 +39,6 @@ document.addEventListener('DOMContentLoaded', function() {
             promoModal.style.display = 'none'; // Hide the modal if clicking outside
         }
     });
+    */
 });
 

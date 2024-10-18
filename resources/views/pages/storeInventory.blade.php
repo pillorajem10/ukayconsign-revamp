@@ -39,6 +39,6 @@
             </table>
         </div>
 
-        <link rel="stylesheet" href="{{ asset('css/storeInv.css?v=3.7') }}">
+        <link rel="stylesheet" href="{{ asset('css/storeInv.css?v=3.8') }}">
     </div>
 @endsection

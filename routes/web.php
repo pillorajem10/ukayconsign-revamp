@@ -85,7 +85,7 @@ Route::post('/pos/void', [PosController::class, 'voidItem'])->name('pos.void');
 Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
 
 // PROMOS
-Route::get('/promos', [PromoController::class, 'index'])->name('promos.index');
+// Route::get('/promos', [PromoController::class, 'index'])->name('promos.index');
 
 // DASHBOARD
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

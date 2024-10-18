@@ -283,6 +283,17 @@
     margin-bottom: 30px;
 }
 
+.responsive-heading {
+    font-size: 1.3rem; /* Base font size */
+    line-height: 1.4; /* Line spacing */
+    margin: 1rem 0; /* Margin around heading */
+    text-align: center; /* Centered text */
+    color: #2c3e50; /* Dark blue for a formal look */
+    text-transform: uppercase; /* Uppercase for emphasis */
+    font-family: 'Roboto', sans-serif; /* Applying the formal font */
+}
+
+
 /* Responsive styles */
 @media (max-width: 1545px) {
     .product-section-card-title {
@@ -316,6 +327,17 @@
     }
 }
 
+@media (max-width: 600px) {
+    .responsive-heading {
+        font-size: 1rem; /* Smaller font size for mobile */
+        font-weight: bold;
+    }
+    .product-section-table th,
+    .product-section-table td {
+        font-size: 0.5rem; /* Set font size to 0.8rem */
+        font-weight: bold;
+    }
+}
 
 .loading-overlay {
     position: fixed;

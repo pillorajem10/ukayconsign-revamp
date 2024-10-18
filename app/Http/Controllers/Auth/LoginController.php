@@ -111,6 +111,29 @@ class LoginController extends Controller
         // Validate the registration data
         $request->validate([
             'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+        ]);
+
+        // Create a new user instance
+        $user = User::create([
+            'email' => $request->email,
+            'password' => bcrypt($request->password), // Hash the password
+            'role' => 'user', // Default role
+            'verified' => true, // Set verification status to true
+        ]);
+
+        // Log the user in
+        Auth::login($user);
+
+        return redirect()->route('home')->with('success', 'Registration successful! You are now logged in.');
+    }
+
+
+    /*public function register(Request $request)
+    {
+        // Validate the registration data
+        $request->validate([
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|min:8', // Removed confirmation requirement
         ]);
     
@@ -126,7 +149,7 @@ class LoginController extends Controller
         Mail::to($user->email)->send(new VerificationEmail($user));
     
         return redirect()->route('login')->with('success', 'You will receive an email to verify your account.');
-    }
+    }*/
     
     public function verify(Request $request, $token)
     {

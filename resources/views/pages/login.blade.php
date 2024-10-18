@@ -32,7 +32,7 @@
             </div>
         @endif
 
-        <div class="promo-modal" id="promoModal" style="display: none;">
+        {{--<div class="promo-modal" id="promoModal" style="display: none;">
             <div class="promo-modal-content">
                 <span class="close" id="closeModal">&times;</span>
                 <h2 class="welcome-message">Check out our promos for you!</h2>
@@ -50,7 +50,7 @@
                     </div>
                 @endif
             </div>
-        </div> 
+        </div> --}}
 
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -75,10 +75,10 @@
                 </div>
             </div>
         </div>
-        <script src="{{ asset('js/login.js?v=3.7') }}"></script>
+        <script src="{{ asset('js/login.js?v=3.8') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=3.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=3.8') }}">
 @endsection
