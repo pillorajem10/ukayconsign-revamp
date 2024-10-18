@@ -57,18 +57,33 @@
     margin-top: 1rem; /* Space between title and table */
     width: 100%; /* Full width */
     border-collapse: collapse; /* Collapse borders */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add a shadow for depth */
 }
 
 .product-section-table th,
 .product-section-table td {
     border: 1px solid #ccc; /* Table border */
-    padding: 2px; /* Padding inside table cells */
+    padding: 3px; /* Increased padding for better spacing */
     text-align: left; /* Align text to the left */
-    font-size: 0.8rem; /* Set font size to 0.8rem */
+    font-size: .8rem; /* Set font size to 1rem */
 }
 
 .product-section-table th {
-    background-color: #f2f2f2; /* Header background color */
+    background-color: #4CAF50; /* Header background color */
+    color: white; /* White text for better contrast */
+    font-weight: bold; /* Bold text for header */
+}
+
+.product-section-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Light gray for even rows */
+}
+
+.product-section-table tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+.product-section-table td {
+    color: #333; /* Dark gray text for cells */
 }
 
 .product-section-pagination {

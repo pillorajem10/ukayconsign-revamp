@@ -53,7 +53,7 @@
                                 </tr>
                                 @endforeach
                             </tbody>
-                        </table>
+                        </table>                        
                 
                         <div class="button-container">
                             <form class="add-to-cart-form" method="POST" action="{{ route('cart.add') }}">
