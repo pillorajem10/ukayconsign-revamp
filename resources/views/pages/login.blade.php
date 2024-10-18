@@ -68,17 +68,17 @@
                             </div>
                             <button type="submit" class="btn btn-gradient btn-block">Login</button>
                         </form>
-                        <div class="mt-3 text-center">
+                        {{--<div class="mt-3 text-center">
                             <a href="/register" class="text-decoration-none">Don't have an account? Register here</a>
-                        </div>
+                        </div>--}}
                     </div>
                 </div>
             </div>
         </div>
-        <script src="{{ asset('js/login.js?v=4.0') }}"></script>
+        <script src="{{ asset('js/login.js?v=4.1') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=4.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=4.1') }}">
 @endsection

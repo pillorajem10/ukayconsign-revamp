@@ -131,7 +131,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="/shop">
+        <a class="navbar-brand" href="/">
             <img src="{{ asset('images/USC_logo.png') }}" alt="Logo">
         </a>
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -143,10 +143,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
+                {{--<li class="nav-item">
+                    <a class="nav-link" href="/how-to-use-usc">How to use USC</a>
+                </li>--}}
+                <li class="nav-item">
+                    <a class="nav-link" href="/cart">Cart</a>
+                </li>
                 @if(Auth::check())
-                    <li class="nav-item">
-                        <a class="nav-link" href="/cart">Cart</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/orders">Orders</a>
                     </li>
@@ -167,12 +170,9 @@
                     </li>                    
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="/">Login</a>
+                        <a class="nav-link" href="/login">Login</a>
                     </li>
                 @endif
-                <li class="nav-item">
-                    <a class="nav-link" href="/how-to-use-usc">How to use USC</a>
-                </li>
             </ul>
         </div>        
     </nav>    

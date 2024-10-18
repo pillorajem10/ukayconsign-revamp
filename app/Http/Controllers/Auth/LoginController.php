@@ -76,7 +76,7 @@ class LoginController extends Controller
             if ($hasDeliveredOrders) {
                 return redirect()->intended('/dashboard'); // Redirect to dashboard if delivered orders exist
             } else {
-                return redirect('/shop'); // Redirect to shop if no delivered orders exist
+                return redirect('/'); // Redirect to shop if no delivered orders exist
             }
         }
     
@@ -99,7 +99,7 @@ class LoginController extends Controller
             if ($hasDeliveredOrders) {
                 return redirect()->route('dashboard');
             } else {
-                return redirect()->route('home');; // Redirect to shop if no delivered orders exist
+                return redirect()->route('home'); // Redirect to shop if no delivered orders exist
             }
         }
 

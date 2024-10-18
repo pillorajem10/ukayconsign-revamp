@@ -20,60 +20,105 @@ class CheckoutController extends Controller
     // Display the checkout page
     public function index()
     {
-        // Ensure user is authenticated
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Please log in to proceed to checkout.');
-        }
+        // Retrieve the user ID; use session ID if not logged in
+        $userId = Auth::check() ? Auth::id() : session()->getId();
     
-        // Retrieve the cart items for the authenticated user
-        $carts = Cart::where('user_id', Auth::id())->get();
+        // Retrieve the cart items based on user ID or session ID
+        $carts = Cart::where('user_id', $userId)->get();
     
         // Check if the cart is empty
         if ($carts->isEmpty()) {
             return redirect()->route('home')->with('error', 'Your cart is empty, there is nothing to checkout.');
         }
     
-        // Get existing store information
-        $store = Store::where('store_owner', Auth::id())->first();
+        // Get existing store information, set to null if not logged in
+        $store = Auth::check() ? Store::where('store_owner', Auth::id())->first() : null;
     
-        // Get the most recent order information
-        $latestOrder = Order::where('user_id', Auth::id())->orderBy('createdAt', 'desc')->first();
+        // Get the most recent order information, set to null if not logged in
+        $latestOrder = Auth::check() ? Order::where('user_id', Auth::id())->orderBy('createdAt', 'desc')->first() : null;
     
         return view('pages.checkout', compact('carts', 'store', 'latestOrder'));
-    }
+    }    
         
 
     public function store(Request $request)
     {
-        $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'store_name' => 'required|string|max:255',
-            'store_address' => 'required|string|max:255',
-            'store_phone_number' => 'required|string|max:20',
-            'store_email' => 'required|email|max:255',
+        // Validate request
+        if (!Auth::check()) {
+            // Validation rules for unauthenticated users
+            $request->validate([
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'address' => 'required|string|max:255',
+                'store_name' => 'required|string|max:255',
+                'store_address' => 'required|string|max:255',
+                'store_phone_number' => 'required|string|max:20',
+                'store_email' => 'required|email|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|min:8',
+            ]);
+        } else {
+            // Validation rules for authenticated users
+            $request->validate([
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
+                'address' => 'required|string|max:255',
+                'store_name' => 'required|string|max:255',
+                'store_address' => 'required|string|max:255',
+                'store_phone_number' => 'required|string|max:20',
+                'store_email' => 'required|email|max:255',
+            ]);
+        }
+        
+        // Check if user is authenticated
+        $user = Auth::user();
+        
+        // Use user ID if authenticated, otherwise use session ID
+        $userId = $user ? $user->id : session()->getId(); // Use session ID if not logged in
+    
+        // Log the user ID being used
+        \Log::info('Attempting to retrieve cart', ['user_id' => $userId]);
+    
+        // Retrieve the cart items for the user or session
+        $carts = Cart::where('user_id', $userId)->get();
+    
+        // Log the retrieved carts
+        \Log::info('Cart Retrieval', [
+            'user_id' => $userId,
+            'carts_count' => $carts->count(),
         ]);
     
-        // Retrieve the authenticated user
-        $user = Auth::user();
-    
-        // Update user's fname and lname only if they are NULL
-        if (is_null($user->fname)) {
-            $user->fname = $request->first_name;
-        }
-    
-        if (is_null($user->lname)) {
-            $user->lname = $request->last_name;
-        }
-    
-        // Save changes to the user
-        $user->save();
-    
-        // Retrieve the cart items for the authenticated user
-        $carts = Cart::where('user_id', Auth::id())->get();
-    
         if ($carts->isNotEmpty()) {
+            // Handle user registration if not authenticated
+            if (!$user) {
+                // Check if email already exists
+                if (User::where('email', $request->email)->exists()) {
+                    return redirect()->back()->with('error', 'The email address is already in use.')->withInput();
+                }
+    
+                // Create new user
+                $user = User::create([
+                    'email' => $request->email,
+                    'password' => bcrypt($request->password),
+                    'fname' => $request->first_name,
+                    'lname' => $request->last_name,
+                    'verified' => true,
+                ]);
+
+            } else {
+                // Update user's fname and lname only if they are NULL
+                if (is_null($user->fname)) {
+                    $user->fname = $request->first_name;
+                }
+    
+                if (is_null($user->lname)) {
+                    $user->lname = $request->last_name;
+                }
+    
+                // Save changes to the user
+                $user->save();
+            }
+    
             // Check for existing store by store_name
             $existingStore = Store::where('store_name', $request->store_name)->first();
     
@@ -89,7 +134,7 @@ class CheckoutController extends Controller
                 // Create new store information
                 $newStore = Store::create([
                     'store_name' => $request->store_name,
-                    'store_owner' => Auth::id(),
+                    'store_owner' => $user->id,
                     'store_address' => $request->store_address,
                     'store_phone_number' => $request->store_phone_number,
                     'store_email' => $request->store_email,
@@ -119,7 +164,7 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'first_name' => $user->fname,
                 'last_name' => $user->lname,
-                'user_id' => Auth::id(),
+                'user_id' => $user->id, // Use the newly registered user's ID
                 'products_ordered' => json_encode($productsOrdered),
                 'address' => $request->address,
                 'store_name' => $request->store_name,
@@ -133,7 +178,7 @@ class CheckoutController extends Controller
             ]);
     
             // Clear the cart for the user
-            Cart::where('user_id', Auth::id())->delete();
+            Cart::where('user_id', $userId)->delete();
     
             // Send the order confirmation email to the user
             Mail::to($user->email)->send(new OrderConfirmationMail($order, $productsOrdered));
@@ -143,10 +188,15 @@ class CheckoutController extends Controller
             foreach ($adminUsers as $admin) {
                 Mail::to($admin->email)->send(new AdminOrderNotification($order));
             }
-    
-            return redirect()->route('home')->with('success', 'Order placed successfully!');
+
+            if (!Auth::check()) {
+                Auth::login($user);
+                return redirect()->route('home')->with('success', 'Your order has been placed successfully and your account is already registered. Please note that it is subject to approval, and you will receive an email notification from us shortly.');
+            } else {
+                return redirect()->route('home')->with('success', 'Your order has been placed successfully. Please note that it is subject to approval, and you will receive an email notification from us shortly.');
+            }
         }
     
         return redirect()->back()->with('error', 'Your cart is empty.');
-    }   
+    }      
 }

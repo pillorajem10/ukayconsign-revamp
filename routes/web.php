@@ -32,19 +32,19 @@ use App\Http\Controllers\StaticPagesController;
 
 
 // Route for the home page
-Route::get('/shop', [ProductController::class, 'index'])->name('home');
+Route::get('/', [ProductController::class, 'index'])->name('home');
 
 // Auth Routes
-Route::get('/', [LoginController::class, 'showLoginForm'])->name('login'); // Show login form
-Route::post('/', [LoginController::class, 'login']); // Handle login submission
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login'); // Show login form
+Route::post('/login', [LoginController::class, 'login']); // Handle login submission
 
-Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [LoginController::class, 'register']);
+// Route::get('/register', [LoginController::class, 'showRegisterForm'])->name('register');
+// Route::post('/register', [LoginController::class, 'register']);
 Route::get('/verify/{token}', [LoginController::class, 'verify'])->name('verify');
 
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/'); // Redirect to the login page
+    return redirect('/login'); // Redirect to the login page
 })->name('logout'); // Naming the route
 
 // PRODUCT ROUTES
@@ -67,10 +67,8 @@ Route::get('/stores', [StoreController::class, 'index'])->name('stores.index');
 Route::get('/store-inventory', [StoreInventoryController::class, 'index'])->name('store-inventory.index');
 
 // Checkout Routes
-Route::middleware(['auth'])->group(function () {
-    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
-});
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
 
 // ORDERS (transactions) ROUTES
 Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');

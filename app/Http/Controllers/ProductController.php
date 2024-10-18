@@ -37,7 +37,7 @@ class ProductController extends Controller
         if (Auth::check()) {
             // Fetch cart items for the authenticated user
             $carts = Cart::with('product')->where('user_id', Auth::id())->get();
-        
+            
             // Check if the cart is empty
             if ($carts->isEmpty()) {
                 $cartMessage = "Your cart is empty.";
@@ -45,9 +45,18 @@ class ProductController extends Controller
                 $cartMessage = null; // Or set it to an empty string if you prefer
             }
         } else {
-            $carts = collect(); // Create an empty collection
-            $cartMessage = "Login first to access cart.";
+            // Fetch cart items for the guest using session ID
+            $sessionId = session()->getId();
+            $carts = Cart::with('product')->where('user_id', $sessionId)->get();
+            
+            // Check if the cart is empty
+            if ($carts->isEmpty()) {
+                $cartMessage = "Login first to access cart.";
+            } else {
+                $cartMessage = null; // Cart is not empty for the guest
+            }
         }
+        
         
         // Retrieve all products and filter based on search
         $products = Product::when($search, function ($query) use ($search) {

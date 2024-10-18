@@ -13,13 +13,11 @@ class CartController extends Controller
 {
     public function index()
     {
-        // Ensure user is authenticated
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Please log in to view your cart.');
-        }
+        // Get user ID based on authentication status
+        $userId = Auth::check() ? Auth::id() : session()->getId(); // Use session ID if not logged in
     
-        // Retrieve the cart items for the authenticated user
-        $carts = Cart::where('user_id', Auth::id())->get();
+        // Retrieve the cart items for the user
+        $carts = Cart::where('user_id', $userId)->get();
     
         // Check if there are no cart items
         if ($carts->isEmpty()) {
@@ -27,15 +25,13 @@ class CartController extends Controller
         }
     
         return view('pages.cartPage', compact('carts'));
-    }    
+    }     
 
     // ADD TO CART
     public function add(Request $request)
     {
-        // Check if the user is authenticated
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Please login first');
-        }
+        // Use session ID as user ID for unauthenticated users
+        $userId = Auth::check() ? Auth::id() : session()->getId(); // Get session ID for non-logged users
     
         // Validate incoming request
         $request->validate([
@@ -45,26 +41,22 @@ class CartController extends Controller
             'products.*.price' => 'required|numeric',
         ]);
     
-        // Get the authenticated user's ID
-        $userId = Auth::id();
+        // Set max bundle count based on user badge or as 3 for unauthenticated users
+        $maxBundleCount = (Auth::check()) ? PHP_INT_MAX : 3; // Default to 3 for non-logged users
     
-        // Retrieve the user model
-        $user = User::find($userId);
-    
-        // Set max bundle count based on user badge
-        $maxBundleCount = 0; // Initialize max bundle count
-        switch ($user->badge) {
-            case 'Silver':
-                $maxBundleCount = 3; // Max for Silver
-                break;
-            case 'Gold':
-                $maxBundleCount = 5; // Max for Gold
-                break;
-            default:
-                $maxBundleCount = PHP_INT_MAX; // No limit for other badges
+        if (Auth::check()) {
+            $user = User::find($userId);
+            switch ($user->badge) {
+                case 'Silver':
+                    $maxBundleCount = 3; // Max for Silver
+                    break;
+                case 'Gold':
+                    $maxBundleCount = 5; // Max for Gold
+                    break;
+            }
         }
     
-        // Count unique bundles in cart using the Product relationship
+        // Count unique bundles in cart using the unique user ID
         $currentBundleCount = Cart::where('user_id', $userId)
             ->with('product') // Load the product relationship
             ->select('product_sku') // Select only the product SKU
@@ -73,8 +65,8 @@ class CartController extends Controller
             ->unique('product.Bundle') // Filter unique bundles based on the product's Bundle attribute
             ->count();
     
-        // Log the user's badge, maximum bundle count, and current bundle count
-        \Log::info("User ID: $userId, Badge: {$user->badge}, Max Bundle Count: $maxBundleCount, Current Unique Bundle Count: $currentBundleCount");
+        // Log the user's badge and current bundle count
+        \Log::info("User ID: $userId, Max Bundle Count: $maxBundleCount, Current Unique Bundle Count: $currentBundleCount");
     
         // Check if user has reached the max bundle count
         if ($currentBundleCount >= $maxBundleCount) {
@@ -94,8 +86,9 @@ class CartController extends Controller
                     return redirect()->route('home')->with('error', 'You already have this bundle in your cart.');
                 }
     
+                // Create the cart entry
                 Cart::create([
-                    'user_id' => $userId,
+                    'user_id' => $userId, // Will be the session ID if not logged in
                     'product_sku' => $sku,
                     'quantity' => $product['quantity'],
                     'price_type' => $product['price_type'],
@@ -110,12 +103,16 @@ class CartController extends Controller
         }
     }
     
+    
+    
     // DELETE SELECTED CART ITEMS
     public function deleteSelected(Request $request)
     {
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Please login first');
-        }
+        /*
+            if (!Auth::check()) {
+                return redirect()->route('login')->with('error', 'Please login first');
+            }
+        */
     
         $request->validate([
             'ids' => 'required|array',

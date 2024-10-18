@@ -26,6 +26,17 @@
                 @csrf
                 <h2 class="checkout-page-form-title">Customer Information</h2>
                 
+                @if(!Auth::check())
+                    <div class="checkout-page-form-group">
+                        <label for="email" class="checkout-page-label">Email</label>
+                        <input type="email" name="email" id="email" class="checkout-page-input" value="{{ old('email') }}" required>
+                    </div>
+                    <div class="checkout-page-form-group">
+                        <label for="password" class="checkout-page-label">Password</label>
+                        <input type="password" name="password" id="password" class="checkout-page-input" required>
+                    </div>
+                @endif
+                
                 <div class="checkout-page-form-group">
                     <label for="first_name" class="checkout-page-label">First Name</label>
                     <input type="text" name="first_name" id="first_name" class="checkout-page-input" value="{{ $latestOrder->first_name ?? old('first_name') }}" required>
@@ -102,10 +113,10 @@
                 @endif
             </div>
         </div>
-        <script src="{{ asset('js/checkout.js?v=4.0') }}"></script>
+        <script src="{{ asset('js/checkout.js?v=4.1') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/checkout.css?v=4.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/checkout.css?v=4.1') }}">
 @endsection

@@ -19,56 +19,46 @@
                 </tr>
             </thead>
             <tbody class="cart-page-body">
-                @if(Auth::check())
-                    @if($carts->isEmpty())
-                        <tr>
-                            <td colspan="7" class="cart-view-empty-message">Your Cart Is Empty</td>
-                        </tr>
-                    @else
-                        @php
-                            $grandTotal = 0; // Initialize grand total
-                        @endphp
-                        @foreach($carts as $cart)
-                        @php
-                            $subtotal = $cart->price * $cart->quantity; // Calculate subtotal for the item
-                            $grandTotal += $subtotal; // Add to grand total
-                            $imageData = base64_encode($cart->product->Image); // Encode binary data to base64
-                            $imageType = 'image/png'; // Adjust based on your image type (e.g., image/jpeg, image/png, etc.)
-                        @endphp
-                        <tr class="cart-view-item" data-id="{{ $cart->id }}">
-                            <td>
-                                <input type="checkbox" class="bundle-checkbox" data-bundle="{{ $cart->product->Bundle }}" onchange="updateButtonState()" /> <!-- Checkbox -->
-                            </td>
-                            <td>
-                                <img src="data:{{ $imageType }};base64,{{ $imageData }}" alt="{{ $cart->product->Bundle }}" style="width: 50px; height: auto; border-radius: 5px;" />
-                            </td>
-                            <td class="cart-view-product-sku-value">{{ $cart->product->Bundle }}</td>
-                            <td class="cart-view-category-value">{{ $cart->product->Category ?? 'N/A' }}</td> 
-                            <td class="cart-view-price-value">₱{{ number_format($cart->price, 2) }}</td>
-                            <td class="cart-view-quantity-value">{{ $cart->quantity }}</td>
-                            <td class="cart-view-srp-value">{{ $cart->product->SRP ?? 'N/A' }}</td> 
-                            <td class="cart-view-subtotal-value">₱{{ number_format($subtotal, 2) }}</td>
-                        </tr>
-                        @endforeach
-                    @endif
-                @else
+                @if($carts->isEmpty())
                     <tr>
-                        <td colspan="7" class="cart-view-login-message" style="text-align: center; color: red;">Please log in to view your cart.</td>
+                        <td colspan="8" class="cart-view-empty-message">Your Cart Is Empty</td>
                     </tr>
+                @else
+                    @php
+                        $grandTotal = 0; // Initialize grand total
+                    @endphp
+                    @foreach($carts as $cart)
+                    @php
+                        $subtotal = $cart->price * $cart->quantity; // Calculate subtotal for the item
+                        $grandTotal += $subtotal; // Add to grand total
+                        $imageData = base64_encode($cart->product->Image); // Encode binary data to base64
+                        $imageType = 'image/png'; // Adjust based on your image type (e.g., image/jpeg, image/png, etc.)
+                    @endphp
+                    <tr class="cart-view-item" data-id="{{ $cart->id }}">
+                        <td>
+                            <input type="checkbox" class="bundle-checkbox" data-bundle="{{ $cart->product->Bundle }}" onchange="updateButtonState()" /> <!-- Checkbox -->
+                        </td>
+                        <td>
+                            <img src="data:{{ $imageType }};base64,{{ $imageData }}" alt="{{ $cart->product->Bundle }}" style="width: 50px; height: auto; border-radius: 5px;" />
+                        </td>
+                        <td class="cart-view-product-sku-value">{{ $cart->product->Bundle }}</td>
+                        <td class="cart-view-category-value">{{ $cart->product->Category ?? 'N/A' }}</td> 
+                        <td class="cart-view-price-value">₱{{ number_format($cart->price, 2) }}</td>
+                        <td class="cart-view-quantity-value">{{ $cart->quantity }}</td>
+                        <td class="cart-view-srp-value">{{ $cart->product->SRP ?? 'N/A' }}</td> 
+                        <td class="cart-view-subtotal-value">₱{{ number_format($subtotal, 2) }}</td>
+                    </tr>
+                    @endforeach
                 @endif
             </tbody>                      
             <tfoot>
                 <tr>
                     <td colspan="7" style="text-align: right; font-weight: bold;">Total:</td>
-                    <td class="cart-page-grand-total">
-                        @if(Auth::check())
-                            ₱{{ number_format($grandTotal, 2) }}
-                        @endif
-                    </td>
+                    <td class="cart-page-grand-total">₱{{ number_format($grandTotal, 2) }}</td>
                 </tr>
                 <tr>
                     <td colspan="8" style="text-align: right;">
-                        @if(Auth::check())
+                        @if(!$carts->isEmpty())
                             <button id="delete-button" class="btn btn-danger" onclick="deleteCheckedItems()" disabled>Delete Selected</button>
                             <button id="checkout-button" class="btn btn-primary" onclick="proceedToCheckout()">Proceed to Checkout</button>
                         @endif
@@ -77,9 +67,10 @@
             </tfoot>
         </table>
     </div>
+    
 
     <div class="small-screen-cart-container">
-        @if(Auth::check() && $carts->isNotEmpty())
+        @if($carts->isNotEmpty())
             @php
                 $grandTotal = 0; // Initialize grand total
             @endphp
@@ -119,12 +110,13 @@
         @else
             <div class="small-screen-cart-login-message">Please log in to view your cart.</div>
         @endif
-    </div>    
+    </div>
+     
 
     <!-- Include the cart.js file -->
-    <script src="{{ asset('js/cart.js?v=4.0') }}"></script>
+    <script src="{{ asset('js/cart.js?v=4.1') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=4.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=4.1') }}">
 @endsection

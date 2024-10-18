@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const promoModal = document.getElementById('promoModal');
     const closeModal = document.getElementById('closeModal');
     // Call the hideMessage function for the success message
-    hideMessage('success-message', 2000);
-    hideMessage('error-message', 2000);
+    hideMessage('success-message', 9000);
+    hideMessage('error-message', 9000);
 
     setTimeout(() => {
         // Check if the promo modal has been shown before
