@@ -15,6 +15,7 @@ use App\Http\Controllers\PromoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TallyController;
 use App\Http\Controllers\InstantBuyProductController;
+use App\Http\Controllers\StaticPagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,5 +98,8 @@ Route::get('/tallies', [TallyController::class, 'index'])->name('tallies.index')
 Route::get('/instant-buy/create', [InstantBuyProductController::class, 'create'])->name('instant_buy_products.create');
 Route::post('/instant-buy', [InstantBuyProductController::class, 'store'])->name('instant_buy_products.store');
 
+
+// STATIC PAGES
+Route::get('/how-to-use-usc', [StaticPagesController::class, 'howToUseUSC'])->name('how.to.use.usc');
 
 

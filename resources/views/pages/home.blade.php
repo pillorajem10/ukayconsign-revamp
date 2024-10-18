@@ -46,10 +46,10 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/home.js?v=3.8') }}"></script>
+    <script src="{{ asset('js/home.js?v=3.9') }}"></script>
 @endsection
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=3.8') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=3.9') }}">
 @endsection

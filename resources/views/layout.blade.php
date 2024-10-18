@@ -143,9 +143,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                {{--<li class="nav-item">
-                    <a class="nav-link" href="/shop">Shop</a>
-                </li>--}}
                 @if(Auth::check())
                     <li class="nav-item">
                         <a class="nav-link" href="/cart">Cart</a>
@@ -173,6 +170,9 @@
                         <a class="nav-link" href="/">Login</a>
                     </li>
                 @endif
+                <li class="nav-item">
+                    <a class="nav-link" href="/how-to-use-usc">How to use USC</a>
+                </li>
             </ul>
         </div>        
     </nav>    
