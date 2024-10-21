@@ -13,7 +13,7 @@
     </div>
 
     <div class="product-section-container">
-        <div class="product-section-row mt-4">
+        <div class="product-section-row">
             @foreach($products as $bundle => $items)
                 @php
                     // Sort the items based on category
@@ -30,31 +30,33 @@
                             alt="Image of {{ $bundle }} product bundle">
                     </div>
                     <div class="product-section-card-body">
-                        <h5 class="product-section-card-title">{{ $bundle }}</h5>
-                        
-                        <table class="product-section-table">
-                            <thead>
-                                <tr>
-                                    <th>Category</th>
-                                    <th>QTY</th>
-                                    <th>Consign Price/Pc</th>
-                                    <th>SRP</th>
-                                    <th>Potential Profit</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($sortedItems as $item)
-                                <tr>
-                                    <td>{{ $item->Category }}</td>
-                                    <td>{{ $item->Bundle_Qty }}</td>
-                                    <td>{{ $item->Consign }}</td>
-                                    <td>{{ $item->SRP }}</td>
-                                    <td>{{ $item->PotentialProfit }}</td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>                        
-                
+                        <div><h5 class="product-section-card-title">{{ $bundle }}</h5></div>
+
+                        <div>
+                            <table class="product-section-table">
+                                <thead>
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>QTY</th>
+                                        <th>Consign Price/Pc</th>
+                                        <th>SRP</th>
+                                        <th>Potential Profit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($sortedItems as $item)
+                                    <tr>
+                                        <td>{{ $item->Category }}</td>
+                                        <td>{{ $item->Bundle_Qty }}</td>
+                                        <td>{{ $item->Consign }}</td>
+                                        <td>{{ $item->SRP }}</td>
+                                        <td>{{ $item->PotentialProfit }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
                         <div class="button-container">
                             <form class="add-to-cart-form" method="POST" action="{{ route('cart.add') }}">
                                 @csrf
@@ -73,6 +75,6 @@
         </div>
     </div>
     
-    <script src="{{ asset('js/home.js?v=3.1') }}"></script>
+    <script src="{{ asset('js/home.js?v=4.3') }}"></script>
 </body>
 </html>

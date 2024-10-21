@@ -20,5 +20,6 @@ class Store extends Model
         'store_email',
         'store_total_earnings',
         'store_status', 
+        'store_fb_link', 
     ];    
 }

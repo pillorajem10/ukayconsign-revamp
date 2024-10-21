@@ -96,5 +96,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/instantBuyAdd.css?v=4.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/instantBuyAdd.css?v=4.3') }}">
 @endsection

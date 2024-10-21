@@ -22,6 +22,12 @@ class User extends Authenticatable
         'verification_token',
         'fname',
         'lname',
+        'estimated_items_sold_per_month', // Corrected field name
+        'fb_link',             // Added fb_link
+        'phone_number',        // Added phone_number
+        'government_id_card',  // Updated field name
+        'proof_of_billing',    // Added proof_of_billing
+        'selfie_uploaded',     // Added selfie_uploaded
     ];
 
     protected $hidden = [

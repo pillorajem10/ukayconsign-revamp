@@ -15,7 +15,7 @@
         </div>
     @endif
 
-    @if (!Auth::check()) <!-- Check if the user is not authenticated -->
+    @if (!Auth::check()) 
         <div class="new-join-user-manual">
             <div class="youtube-video-container">
                 <iframe src="https://www.youtube.com/embed/FT26GnIORbs" frameborder="0" allowfullscreen></iframe>
@@ -65,9 +65,9 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/home.js?v=4.2') }}"></script>
+    <script src="{{ asset('js/home.js?v=4.3') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=4.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=4.3') }}">
 @endsection

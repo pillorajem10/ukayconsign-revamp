@@ -45,6 +45,9 @@ class CheckoutController extends Controller
     {
         // Validate request
         if (!Auth::check()) {
+            \Log::info('Incoming request data NOT AUTHENTICATED', [
+                'request_data' => $request->all(),
+            ]);
             // Validation rules for unauthenticated users
             $request->validate([
                 'first_name' => 'required|string|max:255',
@@ -53,10 +56,36 @@ class CheckoutController extends Controller
                 'store_name' => 'required|string|max:255',
                 'store_address' => 'required|string|max:255',
                 'store_phone_number' => 'required|string|max:20',
-                'store_email' => 'required|email|max:255',
-                'email' => 'required|email|unique:users,email',
+                'phone_number' => 'required|string|max:20',
+                // 'store_email' => 'required|email|max:255',
+                'store_fb_link' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email|max:255',
                 'password' => 'required|min:8',
-            ]);
+                'estimated_items_sold_per_month' => 'nullable|integer|min:0', // Add validation for this field
+                'fb_link' => 'nullable|string|max:255',
+                'government_id_card' => 'required|file|mimes:jpg,png,pdf|max:2048',
+                'proof_of_billing' => 'required|file|mimes:jpg,png,pdf|max:2048',
+                'selfie_uploaded' => 'required|file|mimes:jpg,png|max:2048',
+            ], [
+                'first_name.required' => 'First name is required.',
+                'last_name.required' => 'Last name is required.',
+                'address.required' => 'Address is required.',
+                'store_name.required' => 'Store name is required.',
+                'store_address.required' => 'Store address is required.',
+                'store_phone_number.required' => 'Store phone number is required.',
+                'phone_number.required' => 'Phone number is required.',
+                // 'store_email.required' => 'Store email is required.',
+                'store_fb_link.required' => 'Store Facebook link is required.',
+                'email.required' => 'Email is required.',
+                'email.unique' => 'This email is already registered.',
+                'password.required' => 'Password is required.',
+                'password.min' => 'Password must be at least 8 characters.',
+                'estimated_items_sold_per_month.integer' => 'Estimated items sold must be a number.',
+                'estimated_items_sold_per_month.min' => 'Estimated items sold must be at least 0.',
+                'government_id_card.required' => 'Government ID card is required.',
+                'proof_of_billing.required' => 'Proof of billing is required.',
+                'selfie_uploaded.required' => 'Selfie upload is required.',
+            ]);            
         } else {
             // Validation rules for authenticated users
             $request->validate([
@@ -66,9 +95,10 @@ class CheckoutController extends Controller
                 'store_name' => 'required|string|max:255',
                 'store_address' => 'required|string|max:255',
                 'store_phone_number' => 'required|string|max:20',
-                'store_email' => 'required|email|max:255',
+                // 'store_email' => 'required|email|max:255',
+                'store_fb_link' => 'required|string|max:255',
             ]);
-        }
+        }        
         
         // Check if user is authenticated
         $user = Auth::user();
@@ -76,17 +106,11 @@ class CheckoutController extends Controller
         // Use user ID if authenticated, otherwise use session ID
         $userId = $user ? $user->id : session()->getId(); // Use session ID if not logged in
     
-        // Log the user ID being used
-        \Log::info('Attempting to retrieve cart', ['user_id' => $userId]);
     
         // Retrieve the cart items for the user or session
         $carts = Cart::where('user_id', $userId)->get();
     
         // Log the retrieved carts
-        \Log::info('Cart Retrieval', [
-            'user_id' => $userId,
-            'carts_count' => $carts->count(),
-        ]);
     
         if ($carts->isNotEmpty()) {
             // Handle user registration if not authenticated
@@ -103,8 +127,13 @@ class CheckoutController extends Controller
                     'fname' => $request->first_name,
                     'lname' => $request->last_name,
                     'verified' => true,
-                ]);
-
+                    'fb_link' => $request->fb_link,
+                    'phone_number' => $request->phone_number,
+                    'estimated_items_sold_per_month' => $request->estimated_items_sold_per_month,
+                    'government_id_card' => file_get_contents($request->file('government_id_card')->getRealPath()), // Read file as binary
+                    'proof_of_billing' => file_get_contents($request->file('proof_of_billing')->getRealPath()), // Read file as binary
+                    'selfie_uploaded' => file_get_contents($request->file('selfie_uploaded')->getRealPath()), // Read file as binary
+                ]);                              
             } else {
                 // Update user's fname and lname only if they are NULL
                 if (is_null($user->fname)) {
@@ -127,7 +156,8 @@ class CheckoutController extends Controller
                 $existingStore->update([
                     'store_address' => $request->store_address,
                     'store_phone_number' => $request->store_phone_number,
-                    'store_email' => $request->store_email,
+                    // 'store_email' => $request->store_email,
+                    'store_fb_link' => $request->store_fb_link,
                 ]);
                 $storeId = $existingStore->id; // Get the existing store ID
             } else {
@@ -136,8 +166,9 @@ class CheckoutController extends Controller
                     'store_name' => $request->store_name,
                     'store_owner' => $user->id,
                     'store_address' => $request->store_address,
+                    'store_fb_link' => $request->store_fb_link,
                     'store_phone_number' => $request->store_phone_number,
-                    'store_email' => $request->store_email,
+                    // 'store_email' => $request->store_email,
                     'store_total_earnings' => 0,
                     'store_status' => 'active',
                 ]);

@@ -14,6 +14,8 @@
     display: flex; /* Use flexbox for the row */
     flex-wrap: wrap; /* Allow wrapping of columns */
     justify-content: center; /* Center the columns */
+    align-items: stretch;
+    gap: 8px;
 }
 
 .product-section-card {
@@ -21,8 +23,7 @@
     border: 1px solid #ccc; /* Add a border */
     border-radius: 10px; /* Round the corners */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add a shadow */
-    transition: transform 0.2s; /* Smooth transition for hover effect */
-    margin: 10px; /* Space between cards */
+    transition: transform 0.2s; /* Smooth transition for hover effect */ /* Space between cards */
     overflow: hidden; /* Prevent content overflow */
     transform: translateY(20px);
     opacity: 0;
@@ -50,8 +51,11 @@
 
 .product-section-card-title {
     text-align: center; /* Center the title */
+    font-size: .8rem;
+    font-weight: bold;
     margin: 10px 0; /* Space above and below the title */
 }
+
 
 .product-section-table {
     margin-top: 1rem; /* Space between title and table */
@@ -63,7 +67,6 @@
 .product-section-table th,
 .product-section-table td {
     border: 1px solid #ccc; /* Table border */
-    padding: 3px; /* Increased padding for better spacing */
     text-align: left; /* Align text to the left */
     font-size: .8rem; /* Set font size to 1rem */
 }
@@ -86,10 +89,11 @@
     color: #333; /* Dark gray text for cells */
 }
 
+/*
 .product-section-pagination {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: space-between;
+    align-items: stretch;
     margin-top: 20px;
 }
 
@@ -97,7 +101,7 @@
     list-style: none;
     padding: 0;
     display: flex;
-    gap: 10px; /* Space between items */
+    gap: 10px; /* Space between items 
 }
 
 .product-section-pagination-list li {
@@ -108,13 +112,13 @@
 .product-section-pagination-list span {
     display: inline-block;
     padding: 5px;
-    border: 1px solid #28a745; /* Green border color */
-    border-radius: 4px; /* Rounded corners */
+    border: 1px solid #28a745; /* Green border color 
+    border-radius: 4px; /* Rounded corners 
     text-decoration: none;
-    color: #28a745; /* Green link color */
+    color: #28a745; /* Green link color 
     transition: background-color 0.3s, color 0.3s;
 }
-
+*/
 .product-section-link:hover {
     background-color: #28a745; /* Green background on hover */
     color: white; /* White text color on hover */
@@ -150,9 +154,8 @@
     padding: 10px 20px; /* Add some padding */
     text-align: center; /* Center the text */
     text-decoration: none; /* Remove underline */
-    display: inline-block; /* Make the button inline-block */
     font-size: 16px; /* Increase font size */
-    margin: 4px 2px; /* Add some margin */
+    margin-top: 1rem;
     cursor: pointer; /* Pointer cursor on hover */
     border-radius: 5px; /* Rounded corners */
     transition: background-color 0.3s; /* Smooth transition */
@@ -323,7 +326,7 @@
 /* Responsive styles */
 @media (max-width: 1545px) {
     .product-section-card-title {
-        font-size: 1rem;
+        font-size: .8rem;
         font-weight: bold;
     }
 
