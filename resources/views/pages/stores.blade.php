@@ -50,5 +50,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/stores.css?v=4.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/stores.css?v=4.2') }}">
 @endsection

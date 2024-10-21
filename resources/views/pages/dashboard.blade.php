@@ -183,11 +183,11 @@
             </div>           
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=4.1') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=4.2') }}"></script>
     </div>
 @endsection
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=4.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=4.2') }}">
 @endsection
