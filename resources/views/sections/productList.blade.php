@@ -75,6 +75,6 @@
         </div>
     </div>
     
-    <script src="{{ asset('js/home.js?v=4.3') }}"></script>
+    <script src="{{ asset('js/home.js?v=4.4') }}"></script>
 </body>
 </html>

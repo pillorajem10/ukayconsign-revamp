@@ -107,8 +107,31 @@
                     <input type="url" name="store_fb_link" id="store_fb_link" class="checkout-page-input" value="{{ old('store_fb_link') }}">
                 </div>
                 
-                <button type="submit" class="checkout-page-btn">Proceed to Place Order</button>
+                <div class="checkout-page-form-group">
+                    <input type="checkbox" id="terms" class="checkout-page-checkbox">
+                    <label for="terms" class="checkout-page-label">I have read and agree to the <a href="#terms-conditions" target="_blank">terms and conditions</a>.</label>
+                </div>
+
+                <button type="submit" id="submit-button" class="checkout-page-btn" disabled>Proceed to Place Order</button>
             </form>
+
+            <!-- Modal for Terms and Conditions -->
+            <div id="terms-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-button" onclick="closeModal()">&times;</span>
+                    <h2>Terms and Conditions</h2>
+                    <ul>
+                        <li><strong>Approval:</strong> All orders must be approved by admins.</li>
+                        <li><strong>Payment:</strong> Payment must be made on time; late payments will result in item retrieval.</li>
+                        <li><strong>Responsibility:</strong> Users are responsible for consigned items; Ukay Supplier Consign is not liable for losses.</li>
+                        <li><strong>Returns:</strong> Unsold items must be returned at the user's expense.</li>
+                        <li><strong>Compliance:</strong> Items must meet quality and legal standards.</li>
+                        <li><strong>Acceptance:</strong> Using the service means accepting these terms.</li>
+                    </ul>
+                </div>
+            </div>
+                      
+
 
             <div class="checkout-page-cart-summary">
                 <h2 class="checkout-page-summary-title">Order Summary</h2>
@@ -151,10 +174,10 @@
                 @endif
             </div>
         </div>
-        <script src="{{ asset('js/checkout.js?v=4.3') }}"></script>
+        <script src="{{ asset('js/checkout.js?v=4.4') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/checkout.css?v=4.3') }}">
+    <link rel="stylesheet" href="{{ asset('css/checkout.css?v=4.4') }}">
 @endsection
