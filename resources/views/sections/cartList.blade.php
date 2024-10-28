@@ -48,7 +48,7 @@
             <tr>
                 <td colspan="7" style="text-align: right;">
                     <button id="delete-button" class="btn btn-danger" onclick="deleteCheckedItems()" disabled>Delete Selected</button>
-                    <button id="checkout-button" class="btn btn-primary" onclick="proceedToCheckout()">Proceed to Checkout</button>
+                    <button id="checkout-button" class="btn btn-primary" onclick="proceedToCheckout()">Place Consignment</button>
                 </td>
             </tr>
             @endif

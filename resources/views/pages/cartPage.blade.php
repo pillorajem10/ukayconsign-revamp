@@ -60,7 +60,7 @@
                     <td colspan="8" style="text-align: right;">
                         @if(!$carts->isEmpty())
                             <button id="delete-button" class="btn btn-danger" onclick="deleteCheckedItems()" disabled>Delete Selected</button>
-                            <button id="checkout-button" class="btn btn-primary" onclick="proceedToCheckout()">Proceed to Checkout</button>
+                            <button id="checkout-button" class="btn btn-primary" onclick="proceedToCheckout()">Place Consignment</button>
                         @endif
                     </td>
                 </tr>
@@ -105,7 +105,7 @@
     
             <div class="small-screen-cart-actions">
                 <button id="delete-button-small" class="btn btn-danger" onclick="deleteCheckedItemsSmallScreen()" disabled>Delete Selected</button>
-                <button id="checkout-button-small" class="btn btn-primary" onclick="proceedToCheckout()">Proceed to Checkout</button>
+                <button id="checkout-button-small" class="btn btn-primary" onclick="proceedToCheckout()">Place Consignment</button>
             </div>
         @else
             <div class="small-screen-cart-login-message">Please log in to view your cart.</div>

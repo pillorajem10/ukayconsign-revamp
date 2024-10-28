@@ -141,6 +141,10 @@
     pointer-events: none; /* Prevent interaction */
 }
 
+.home-header {
+    padding: 5rem;
+}
+
 .product-section-active {
     background-color: white; /* Active page background */
     color: white; /* Active page text color */

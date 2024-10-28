@@ -35,6 +35,11 @@
         </div>
     @endif
 
+    <div class="home-header">
+        <center><h1>Order Now, Earn First, Pay Later<h1></center>
+        <hr/>
+    </div>
+
     {{--<div class="promo-modal" id="promoModal" style="display: none;">
         <div class="promo-modal-content">
             <span class="close" id="closeModal">&times;</span>
