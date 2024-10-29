@@ -10,6 +10,7 @@ function hideMessage(elementId, duration) {
 document.addEventListener('DOMContentLoaded', function() {
     const promoModal = document.getElementById('promoModal');
     const closeModal = document.getElementById('closeModal');
+    
     // Call the hideMessage function for the success message
     hideMessage('success-message', 9000);
     hideMessage('error-message', 9000);
@@ -21,31 +22,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show the promo modal if it hasn't been shown before
         if (!promoData || (Date.now() - JSON.parse(promoData).timestamp > 900000)) {
             promoModal.style.display = 'flex'; // Show the modal
-    
+
             // Hide the promo modal after 3 seconds
             setTimeout(() => {
                 promoModal.style.display = 'none'; // Hide the modal
             }, 3000); // 3000 milliseconds = 3 seconds
-    
+
             // Set flag in session storage with a timestamp
             sessionStorage.setItem('promoData', JSON.stringify({ timestamp: Date.now() }));
         }
     }, 100); // Adjust delay if necessary
-
-    // Close modal when the close button is clicked
-
-    /*
-    closeModal.addEventListener('click', function() {
-        promoModal.style.display = 'none'; // Hide the modal immediately
-    });
-
-    // Close modal when clicking outside of it
-    promoModal.addEventListener('click', function(event) {
-        if (event.target === promoModal) {
-            promoModal.style.display = 'none'; // Hide the modal if clicking outside
-        }
-    });
-    */
 
     const cards = document.querySelectorAll('.product-section-card');
 
@@ -63,8 +49,53 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Function to handle modal opening
+function openImageModal(imgElement) {
+    const detailsImages = JSON.parse(imgElement.getAttribute('data-details-images'));
+    
+    // Log the detailsImages to the console
+    console.log(detailsImages);
 
+    const modalImagesContainer = document.getElementById('modalImagesContainer');
+    modalImagesContainer.innerHTML = ''; // Clear previous images
+
+    // Create and append images to the modal
+    detailsImages.forEach((image) => {
+        const img = document.createElement('img');
+        img.src = 'data:image/jpeg;base64,' + image; // Remove quotes around image
+        img.className = 'modal-image'; // Add class for styling
+        modalImagesContainer.appendChild(img);
+    });
+    
+    // Show the modal
+    const imageModal = document.getElementById('imageModal');
+    imageModal.style.display = 'block'; // Show the modal
+}
+
+
+// Close modal functionality
+document.getElementById('closeModal').addEventListener('click', function() {
+    document.getElementById('imageModal').style.display = 'none'; // Hide the modal
+});
+
+window.onclick = function(event) {
+    const modal = document.getElementById('imageModal');
+    if (event.target === modal) {
+        modal.style.display = 'none'; // Hide the modal if clicking outside
+    }
+};
+
+// Handle loading overlay
 window.onload = function() {
     document.body.classList.remove('loading');
     document.getElementById('loadingOverlay').style.display = 'none';
 };
+
+// Additional listener for product images
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.open-modal').forEach(img => {
+        img.addEventListener('click', function() {
+            openImageModal(this); // Call the modal opening function
+        });
+    });
+});

@@ -397,3 +397,65 @@
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
+
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+}
+
+.modal-content {
+    display: flex; /* Use flexbox */
+    flex-direction: row; /* Align items in a row */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Center items vertically */
+    position: relative; /* Position relative for the close button */
+    margin: 10% auto; /* Center the modal vertically and horizontally */
+    padding: 20px;
+    max-width: 90%; /* Responsive max width */
+    max-height: 80%; /* Responsive max height */
+    overflow: auto; /* Enable scroll for overflow */
+    background-color: white; /* Background color for content */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.modal-images {
+    display: flex; /* Flexbox for image container */
+    flex-wrap: wrap; /* Wrap images if necessary */
+    justify-content: center; /* Center images */
+    gap: 1rem; /* Spacing between images */
+}
+
+.modal-image {
+    width: 15rem; /* Fixed width for images */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 4px; /* Optional: Rounded corners for images */
+}
+
+/* Close button */
+.close {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 15px; /* Adjust as needed */
+    font-size: 28px;
+    font-weight: bold;
+    color: #aaa;
+    cursor: pointer;
+    z-index: 1001; /* Ensure it's above modal content */
+}
+
+.close:hover,
+.close:focus {
+    color: black; /* Change color on hover */
+    text-decoration: none;
+    cursor: pointer;
+}
+
+

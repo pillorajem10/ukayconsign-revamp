@@ -6,6 +6,7 @@
     <meta name="description" content="Explore our wide range of products including categories, pricing, and potential profits.">
     <meta name="keywords" content="products, pricing, potential profit, categories">
     <meta name="author" content="Ukay Supplier">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css') }}">
 </head>
 <body class="loading">
     <div class="loading-overlay" id="loadingOverlay">
@@ -21,14 +22,22 @@
                         $order = ['Essential', 'Signature', 'Exclusive'];
                         return array_search($item->Category, $order);
                     });
+                
+                    // Log details images for each sorted item in the bundle
+                    foreach ($sortedItems as $item) {
+                        $detailsImages = json_decode($item->details_images) ?? []; // Default to an empty array if null
+                        \Log::info('Details Images for SKU: ' . $item->SKU, ['details_images' => $detailsImages]);
+                    }
                 @endphp
-
+        
                 <div class="product-section-card">
                     <div class="product-section-card-image">
                         <img src="data:image/jpeg;base64,{{ base64_encode($items->first()->Image) }}" 
-                            class="product-section-card-img" 
-                            alt="Image of {{ $bundle }} product bundle">
-                    </div>
+                            class="product-section-card-img open-modal" 
+                            alt="Image of {{ $bundle }} product bundle"
+                            data-details-images='{{ json_encode(json_decode($items->first()->details_images) ?? []) }}' 
+                            onclick="openImageModal(this)">
+                    </div>                    
                     <div class="product-section-card-body">
                         <div><h5 class="product-section-card-title">{{ $bundle }}</h5></div>
 
@@ -74,7 +83,15 @@
             @endforeach                              
         </div>
     </div>
-    
+
+    <!-- Modal Structure -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <div class="modal-images" id="modalImagesContainer"></div>
+        </div>
+    </div>
+
     <script src="{{ asset('js/home.js?v=4.5') }}"></script>
 </body>
 </html>
