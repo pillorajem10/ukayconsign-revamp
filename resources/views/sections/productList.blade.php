@@ -33,11 +33,10 @@
                 <div class="product-section-card">
                     <div class="product-section-card-image">
                             <img src="data:image/jpeg;base64,{{ base64_encode($items->first()->Image) }}" 
-                            class="product-section-card-img open-modal" 
-                            alt="Image of {{ $items->first()->Bundle }} product bundle"
-                            data-details-images='{{ json_encode(json_decode($items->first()->details_images) ?? []) }}' 
-                            data-bundle="{{ $items->first()->Bundle }}" 
-                            onclick="openImageModal(this)">
+                                class="product-section-card-img open-modal" 
+                                alt="Image of {{ $items->first()->Bundle }} product bundle"
+                                data-details-images='{{ json_encode(json_decode($items->first()->details_images) ?? []) }}' 
+                                data-bundle="{{ $items->first()->Bundle }}">
                     </div>                    
                     <div class="product-section-card-body">
                         <div><h5 class="product-section-card-title">{{ $bundle }}</h5></div>
@@ -76,7 +75,15 @@
                                     @endforeach
                                     <button type="submit" class="product-section-add-to-cart-btn">Add Bundle to Cart</button>
                                 </form>
-                            </div>
+                                
+                                <!-- Add Show Bundle Samples Button -->
+                                <button type="button" class="product-section-show-samples-btn" 
+                                        onclick="openImageModal(this)" 
+                                        data-details-images='{{ json_encode(json_decode($items->first()->details_images) ?? []) }}'
+                                        data-bundle="{{ $items->first()->Bundle }}">
+                                    View Product
+                                </button>
+                            </div>                            
                         </div>
                     </div>
                 </div>    

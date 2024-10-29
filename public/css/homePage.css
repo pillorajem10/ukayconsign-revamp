@@ -180,6 +180,26 @@
     background-color: #45a049; /* Darker green on hover */
 }
 
+.product-section-show-samples-btn {
+    background-color: transparent; /* Transparent background */
+    color: #4CAF50; /* Green text */
+    border: 2px solid #4CAF50; /* Green border */
+    padding: 10px 20px; /* Add some padding */
+    text-align: center; /* Center the text */
+    text-decoration: none; /* Remove underline */
+    font-size: 16px; /* Increase font size */
+    margin-top: 1rem;
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+}
+
+.product-section-show-samples-btn:hover {
+    background-color: #4CAF50; /* Green background on hover */
+    color: white; /* White text on hover */
+}
+
+
 /*----HOME PAGE----*/
 
 .home-page-cont {
