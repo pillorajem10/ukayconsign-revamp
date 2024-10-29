@@ -338,88 +338,6 @@
     height: 20rem;
 }
 
-/* Responsive styles */
-@media (max-width: 1545px) {
-    .product-section-card-title {
-        font-size: .8rem;
-        font-weight: bold;
-    }
-
-    .welcome-header {
-        font-size: 1.5rem;
-    }
-
-    .cart-cont {
-        display: none;
-    }
-
-    .prodlist-cont {
-        width: 100%;
-    }
-    
-}
-
-@media (min-width: 989px) {
-    .menu-icon {
-        display: none;
-    } 
-}
-
-
-@media (max-width: 760px) {
-    .promo-modal-content {
-        height: 30rem;
-    }
-
-    .promo-image {
-        max-width: 100%; /* Adjust size as needed */
-        margin: 10px; /* Space around each image */
-        border-radius: 8px; /* Rounded corners */
-    }
-}
-
-@media (max-width: 600px) {
-    .responsive-heading {
-        font-size: 1rem; /* Smaller font size for mobile */
-        font-weight: bold;
-    }
-    .product-section-table th,
-    .product-section-table td {
-        font-size: 0.5rem; /* Set font size to 0.8rem */
-        font-weight: bold;
-    }
-
-    .home-header {
-        font-size: 1.5rem;
-    }
-}
-
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999; /* Ensure it is on top of other content */
-}
-
-.loading-spinner {
-    border: 8px solid rgba(0, 0, 0, 0.1);
-    border-left-color: green;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
 /* Modal styles */
 .modal {
     display: none; /* Hidden by default */
@@ -485,5 +403,95 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+
+/* Responsive styles */
+@media (max-width: 1545px) {
+    .product-section-card-title {
+        font-size: .8rem;
+        font-weight: bold;
+    }
+
+    .welcome-header {
+        font-size: 1.5rem;
+    }
+
+    .cart-cont {
+        display: none;
+    }
+
+    .prodlist-cont {
+        width: 100%;
+    }
+    
+}
+
+@media (min-width: 989px) {
+    .menu-icon {
+        display: none;
+    } 
+}
+
+
+@media (max-width: 760px) {
+    .promo-modal-content {
+        height: 30rem;
+    }
+
+    .promo-image {
+        max-width: 100%; /* Adjust size as needed */
+        margin: 10px; /* Space around each image */
+        border-radius: 8px; /* Rounded corners */
+    }
+}
+
+@media (max-width: 600px) {
+    .responsive-heading {
+        font-size: 1rem; /* Smaller font size for mobile */
+        font-weight: bold;
+    }
+    .product-section-table th,
+    .product-section-table td {
+        font-size: 0.5rem; /* Set font size to 0.8rem */
+        font-weight: bold;
+    }
+
+    .home-header {
+        font-size: 1.5rem;
+    }
+
+    .modal-header {
+        font-size: 1rem;
+        font-weight: bolder;
+    }
+    
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure it is on top of other content */
+}
+
+.loading-spinner {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-left-color: green;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 
 

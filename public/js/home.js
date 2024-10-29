@@ -52,25 +52,28 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to handle modal opening
 function openImageModal(imgElement) {
     const detailsImages = JSON.parse(imgElement.getAttribute('data-details-images'));
-    
-    // Log the detailsImages to the console
-    console.log(detailsImages);
-
     const modalImagesContainer = document.getElementById('modalImagesContainer');
+    const modalHeader = document.querySelector('.modal-header');
+    
     modalImagesContainer.innerHTML = ''; // Clear previous images
 
+    // Set the modal header with the bundle name
+    const bundleName = imgElement.getAttribute('data-bundle');
+    modalHeader.textContent = 'Bundle Product Samples For: ' + bundleName;
+
     // Create and append images to the modal
-    detailsImages.forEach((image) => {
+    detailsImages.forEach(image => {
         const img = document.createElement('img');
-        img.src = 'data:image/jpeg;base64,' + image; // Remove quotes around image
+        img.src = 'data:image/jpeg;base64,' + image; // Correctly set the image source
         img.className = 'modal-image'; // Add class for styling
         modalImagesContainer.appendChild(img);
     });
-    
+
     // Show the modal
     const imageModal = document.getElementById('imageModal');
     imageModal.style.display = 'block'; // Show the modal
 }
+
 
 
 // Close modal functionality

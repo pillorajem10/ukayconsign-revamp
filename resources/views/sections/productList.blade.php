@@ -32,10 +32,11 @@
         
                 <div class="product-section-card">
                     <div class="product-section-card-image">
-                        <img src="data:image/jpeg;base64,{{ base64_encode($items->first()->Image) }}" 
+                            <img src="data:image/jpeg;base64,{{ base64_encode($items->first()->Image) }}" 
                             class="product-section-card-img open-modal" 
-                            alt="Image of {{ $bundle }} product bundle"
+                            alt="Image of {{ $items->first()->Bundle }} product bundle"
                             data-details-images='{{ json_encode(json_decode($items->first()->details_images) ?? []) }}' 
+                            data-bundle="{{ $items->first()->Bundle }}" 
                             onclick="openImageModal(this)">
                     </div>                    
                     <div class="product-section-card-body">
@@ -87,12 +88,13 @@
     <div id="imageModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
-            <h2 class="modal-header">Bundle Product Samples</h2>
+            <h2 class="modal-header">Bundle Product Samples For: </h2> <!-- Header updated dynamically -->
             <div class="modal-images" id="modalImagesContainer"></div>
         </div>
     </div>
+
     
 
-    <script src="{{ asset('js/home.js?v=4.6') }}"></script>
+    <script src="{{ asset('js/home.js?v=4.7') }}"></script>
 </body>
 </html>
