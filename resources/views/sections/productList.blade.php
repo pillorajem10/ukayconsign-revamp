@@ -6,7 +6,7 @@
     <meta name="description" content="Explore our wide range of products including categories, pricing, and potential profits.">
     <meta name="keywords" content="products, pricing, potential profit, categories">
     <meta name="author" content="Ukay Supplier">
-    <link rel="stylesheet" href="{{ asset('css/homePage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=4.7') }}">
 </head>
 <body class="loading">
     <div class="loading-overlay" id="loadingOverlay">
