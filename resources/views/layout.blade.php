@@ -15,6 +15,10 @@
     <link rel="icon" href="{{ asset('images/USC.ico') }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="canonical" href="{{ url()->current() }}">
     <script>
         window.Laravel = {
@@ -147,22 +151,30 @@
                     <a class="nav-link" href="/how-to-use-usc">How to use USC</a>
                 </li>--}}
                 <li class="nav-item">
-                    <a class="nav-link" href="/cart">Cart</a>
-                </li>
+                    <a class="nav-link" href="/cart">
+                        <i class="fas fa-shopping-cart box menu-icon"></i> Cart
+                    </a>
+                </li>                   
                 @if(Auth::check())
                     <li class="nav-item">
-                        <a class="nav-link" href="/orders">Orders</a>
+                        <a class="nav-link" href="/orders">
+                            <i class="fas fa-box menu-icon"></i> Orders
+                        </a>                        
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/dashboard">Dashboard</a>
+                        <a class="nav-link" href="/dashboard">
+                            <i class="fas fa-tachometer-alt box menu-icon"></i> Dashboard
+                        </a>                        
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/pos/choose">POS</a>
+                        <a class="nav-link" href="/pos/choose">
+                            <i class="fas fa-cash-register box menu-icon"></i> POS
+                        </a>                        
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}" 
                            onclick="event.preventDefault(); localStorage.removeItem('hasShownPromo'); document.getElementById('logout-form').submit();">
-                            <i class="exit-to-app-icon"></i> Logout
+                           <i class="fas fa-sign-out-alt box menu-icon"></i>Logout
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
@@ -170,7 +182,9 @@
                     </li>                    
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">Login</a>
+                        <a class="nav-link" href="/login">
+                            <i class="fas fa-sign-in-alt box menu-icon"></i> Login
+                        </a>                        
                     </li>
                 @endif
             </ul>

@@ -15,7 +15,11 @@
     flex-wrap: wrap; /* Allow wrapping of columns */
     justify-content: center; /* Center the columns */
     align-items: stretch;
-    gap: 8px;
+    gap: 20px;
+}
+
+.menu-icon {
+    margin-right: 1rem;
 }
 
 .product-section-card {
@@ -68,7 +72,9 @@
 .product-section-table td {
     border: 1px solid #ccc; /* Table border */
     text-align: left; /* Align text to the left */
-    font-size: .8rem; /* Set font size to 1rem */
+    font-size: .7rem; /* Set font size to 1rem */
+    padding: 5px;
+    font-weight: bold;
 }
 
 .product-section-table th {
@@ -142,7 +148,12 @@
 }
 
 .home-header {
-    padding: 5rem;
+    padding: 3rem;
+    font-family: "Bungee", sans-serif;
+    font-weight: 400;
+    font-size: 48px;
+    font-style: normal;
+    text-align: center;
 }
 
 .product-section-active {
@@ -348,6 +359,13 @@
     
 }
 
+@media (min-width: 989px) {
+    .menu-icon {
+        display: none;
+    } 
+}
+
+
 @media (max-width: 760px) {
     .promo-modal-content {
         height: 30rem;
@@ -369,6 +387,10 @@
     .product-section-table td {
         font-size: 0.5rem; /* Set font size to 0.8rem */
         font-weight: bold;
+    }
+
+    .home-header {
+        font-size: 1.5rem;
     }
 }
 
@@ -412,10 +434,6 @@
 }
 
 .modal-content {
-    display: flex; /* Use flexbox */
-    flex-direction: row; /* Align items in a row */
-    justify-content: center; /* Center items horizontally */
-    align-items: center; /* Center items vertically */
     position: relative; /* Position relative for the close button */
     margin: 10% auto; /* Center the modal vertically and horizontally */
     padding: 20px;
@@ -424,6 +442,16 @@
     overflow: auto; /* Enable scroll for overflow */
     background-color: white; /* Background color for content */
     border-radius: 8px; /* Rounded corners */
+}
+
+.modal-header {
+    text-align: center; /* Center the text */
+    margin: 0; /* Remove default margin */
+    padding: 1rem 0; /* Add some padding */
+    margin-bottom: 1rem;
+    font-size: 1.5rem; /* Adjust font size */
+    color: #333; /* Set text color */
+    border-bottom: 1px solid #ccc; /* Optional: Bottom border */
 }
 
 .modal-images {

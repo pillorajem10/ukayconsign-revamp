@@ -40,8 +40,8 @@
                     </div>                    
                     <div class="product-section-card-body">
                         <div><h5 class="product-section-card-title">{{ $bundle }}</h5></div>
-
-                        <div>
+                
+                        <div class="table-container"> <!-- Added a container for flex alignment -->
                             <table class="product-section-table">
                                 <thead>
                                     <tr>
@@ -64,22 +64,21 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
-
-                        <div class="button-container">
-                            <form class="add-to-cart-form" method="POST" action="{{ route('cart.add') }}">
-                                @csrf
-                                <input type="hidden" name="bundle_name" value="{{ $bundle }}">
-                                @foreach($items as $item)
-                                    <input type="hidden" name="products[{{ $item->SKU }}][quantity]" value="{{ $item->Bundle_Qty }}">
-                                    <input type="hidden" name="products[{{ $item->SKU }}][price]" value="{{ $item->Consign }}">
-                                    <input type="hidden" name="products[{{ $item->SKU }}][price_type]" value="SRP">
-                                @endforeach
-                                <button type="submit" class="product-section-add-to-cart-btn">Add Bundle to Cart</button>
-                            </form>
+                            <div class="button-container"> <!-- Moved button container here -->
+                                <form class="add-to-cart-form" method="POST" action="{{ route('cart.add') }}">
+                                    @csrf
+                                    <input type="hidden" name="bundle_name" value="{{ $bundle }}">
+                                    @foreach($items as $item)
+                                        <input type="hidden" name="products[{{ $item->SKU }}][quantity]" value="{{ $item->Bundle_Qty }}">
+                                        <input type="hidden" name="products[{{ $item->SKU }}][price]" value="{{ $item->Consign }}">
+                                        <input type="hidden" name="products[{{ $item->SKU }}][price_type]" value="SRP">
+                                    @endforeach
+                                    <button type="submit" class="product-section-add-to-cart-btn">Add Bundle to Cart</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>                   
+                </div>    
             @endforeach                              
         </div>
     </div>
@@ -88,10 +87,12 @@
     <div id="imageModal" class="modal">
         <div class="modal-content">
             <span class="close" id="closeModal">&times;</span>
+            <h2 class="modal-header">Bundle Product Samples</h2>
             <div class="modal-images" id="modalImagesContainer"></div>
         </div>
     </div>
+    
 
-    <script src="{{ asset('js/home.js?v=4.5') }}"></script>
+    <script src="{{ asset('js/home.js?v=4.6') }}"></script>
 </body>
 </html>

@@ -36,9 +36,9 @@
     @endif
 
     <div class="home-header">
-        <center><h1>Order Now, Earn First, Pay Later<h1></center>
-        <hr/>
+        Order Now, Earn First, Pay Later
     </div>
+    <hr/>
 
     {{--<div class="promo-modal" id="promoModal" style="display: none;">
         <div class="promo-modal-content">
@@ -70,9 +70,9 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/home.js?v=4.5') }}"></script>
+    <script src="{{ asset('js/home.js?v=4.6') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=4.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=4.6') }}">
 @endsection
