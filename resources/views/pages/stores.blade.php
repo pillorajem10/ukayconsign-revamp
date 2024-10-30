@@ -39,7 +39,8 @@
                     <td class="store-table-cell store-table-cell-actions">
                         <a href="{{ url('/store-inventory?store_id=' . $store->id) }}" class="btn btn-info">View Inventory</a>
                         <a href="{{ url('/sales?store_id=' . $store->id) }}" class="btn btn-primary">View Sales</a>
-                        {{--<a href="{{ url('/instant-buy/create?store_id=' . $store->id) }}" class="btn btn-success">Add Instant Buy</a>--}}
+                        <a href="{{ url('/instant-buy/create?store_id=' . $store->id) }}" class="btn btn-success">Add Instant Buy</a>
+                        <a href="{{ url('/instant-buy?store_id=' . $store->id) }}" class="btn btn-success">View Instant Buy List</a>
                     </td>                                      
                 </tr>
                 @endforeach

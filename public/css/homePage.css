@@ -18,10 +18,6 @@
     gap: 20px;
 }
 
-.menu-icon {
-    margin-right: 1rem;
-}
-
 .product-section-card {
     width: 17rem; /* Set the width of the card */
     border: 1px solid #ccc; /* Add a border */
@@ -445,13 +441,6 @@
     }
     
 }
-
-@media (min-width: 989px) {
-    .menu-icon {
-        display: none;
-    } 
-}
-
 
 @media (max-width: 760px) {
     .promo-modal-content {

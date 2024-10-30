@@ -93,6 +93,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/tallies', [TallyController::class, 'index'])->name('tallies.index');
 
 // INSTANT BUY 
+Route::get('/instant-buy', [InstantBuyProductController::class, 'index'])->name('instantBuy.index');
 Route::get('/instant-buy/create', [InstantBuyProductController::class, 'create'])->name('instant_buy_products.create');
 Route::post('/instant-buy', [InstantBuyProductController::class, 'store'])->name('instant_buy_products.store');
 

@@ -15,30 +15,55 @@ class InstantBuyProductController extends Controller
         $this->middleware('auth'); // Require authentication for all methods in this controller
     }
 
-    public function create(Request $request)
+    public function index(Request $request)
     {
         // Get the store_id from the URL
         $storeId = $request->query('store_id');
-    
+
         // Check if store_id is present
         if (!$storeId) {
             return redirect()->route('stores.index')->with('error', 'No store ID specified');
         }
-    
+
         // Find the store by store_id
         $store = Store::where('id', $storeId)
             ->where('store_owner', auth()->user()->id)
             ->first();
-    
+
+        if (!$store) {
+            return redirect()->route('stores.index')->with('error', 'You don\'t have authority to view products for this store');
+        }
+
+        // Fetch instant buy products filtered by store_id
+        $products = InstantBuyProduct::where('store_id', $storeId)->get();
+
+        return view('pages.instantBuyList', compact('products', 'storeId')); // Pass products and storeId to the view
+    }
+
+    public function create(Request $request)
+    {
+        // Get the store_id from the URL
+        $storeId = $request->query('store_id');
+
+        // Check if store_id is present
+        if (!$storeId) {
+            return redirect()->route('stores.index')->with('error', 'No store ID specified');
+        }
+
+        // Find the store by store_id
+        $store = Store::where('id', $storeId)
+            ->where('store_owner', auth()->user()->id)
+            ->first();
+
         if (!$store) {
             return redirect()->route('stores.index')->with('error', 'You don\'t have authority to add product for this store');
         }
-    
+
         // Fetch store inventory filtered by store_id
         $storeInventory = StoreInventory::where('store_id', $storeId)->get();
-    
+
         return view('pages.instantBuyAdd', compact('storeId', 'storeInventory')); // Pass the storeId and inventory to the view
-    }  
+    }
 
     public function store(Request $request)
     {
@@ -57,36 +82,37 @@ class InstantBuyProductController extends Controller
             'video' => 'nullable|file|mimes:mp4,avi,mov|max:51200', // Validate video file
             'product_sku' => 'required|string|max:255', // Validate product_sku
         ]);
-    
-        // Initialize an array to hold binary image data
-        $imageData = [];
-    
+
+        // Initialize an array to hold Base64 image data
+        $base64Images = [];
+
         // Loop through each uploaded image
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                if (count($imageData) < 6) {
-                    $imageData[] = file_get_contents($image->getRealPath());
+                if (count($base64Images) < 6) {
+                    $imageData = file_get_contents($image->getRealPath());
+                    $base64Images[] = base64_encode($imageData); // Convert to Base64
                 }
             }
         }
-    
-        // Handle video upload (only one video)
+
+        // Handle video upload (no changes made here)
         $videoData = null;
         if ($request->hasFile('video')) {
             $videoData = file_get_contents($request->file('video')->getRealPath());
         }
-    
+
         // Create a new InstantBuyProduct with images and video
         InstantBuyProduct::create(array_merge($request->except('images', 'video'), [
-            'images' => json_encode($imageData), // Store images as JSON
+            'images' => json_encode($base64Images), // Store images as JSON (Base64 encoded)
             'video' => $videoData, // Store single video binary
             'product_sku' => $request->input('product_sku'), // Include product_sku
         ]));
-    
+
         // Redirect to stores.index with success message
         return redirect()->route('stores.index')->with('success', 'Product created successfully.');
     }
-         
 }
+
 
 

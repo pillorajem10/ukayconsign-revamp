@@ -130,6 +130,10 @@
             padding: 10px;
             width: 100%;
         }
+
+        .menu-icon {
+            margin-right: .5rem;
+        }
     </style>
     @yield('styles')
 </head>
