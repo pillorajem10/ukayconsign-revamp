@@ -4,6 +4,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const closeModal = document.getElementById('closeModal');
     const showPromosButton = document.getElementById('showPromosButton');
 
+    document.getElementById('storeSelect').addEventListener('change', function() {
+        const storeId = this.value;
+    
+        // Optionally, you can submit a form or fetch data using AJAX to get updated monthly data
+        // For simplicity, let's assume you're refreshing the page with the selected store
+        window.location.href = `?store_id=${storeId}`; // Redirect with the selected store ID
+    });
+    
+
     // Show the loading overlay when the page starts loading
     loadingOverlay.style.display = 'flex'; // Ensure it's visible and centered
 
@@ -56,4 +65,42 @@ document.addEventListener('DOMContentLoaded', function() {
         promoModal.style.display = 'flex'; // Show the modal
     })
     */
+
+    const ctx = document.getElementById('monthlySalesChart').getContext('2d');
+    console.log('MONTHLY DATAAA', monthlyData);
+    const monthlySalesChart = new Chart(ctx, {
+        type: 'bar', // or 'line' for a line chart
+        data: {
+            labels: [
+                'Jan', 'Feb', 'Mar', 'Apr', 'May', 
+                'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 
+                'Nov', 'Dec'
+            ],
+            datasets: [{
+                label: 'Total Sales (₱)',
+                data: monthlyData.map(value => parseFloat(value).toFixed(2)),
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Total Sales (₱)'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Months'
+                    }
+                }
+            }
+        }
+    });
 });

@@ -180,10 +180,33 @@
                         <a href="/tallies" class="btn btn-success">View Tallies</a>
                     </div>
                 @endif
-            </div>           
+            </div>
+            
+            <div class="dashboard-container">
+                <h2 class="welcome-message">Monthly Sales Totals</h2>
+            
+                <!-- Store Selection Dropdown -->
+                <div class="form-group">
+                    <label for="storeSelect">Select Store:</label>
+                    <select id="storeSelect" class="form-control" name="store_id">
+                        <option value="">All Stores</option>
+                        @foreach($stores as $store)
+                            <option value="{{ $store->id }}" {{ (isset($selectedStoreId) && $selectedStoreId == $store->id) ? 'selected' : '' }}>
+                                {{ $store->store_name }}
+                            </option>
+                        @endforeach
+                    </select>                    
+                </div>
+            
+                <canvas id="monthlySalesChart"></canvas>
+            </div>            
         </div>
 
         <script src="{{ asset('js/dashboard.js?v=4.7') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const monthlyData = @json(array_values($monthlyData));
+        </script>        
     </div>
 @endsection
 

@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $this->middleware('auth'); // Require authentication for all methods in this controller
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user(); // Fetch all user details
     
@@ -28,6 +28,8 @@ class DashboardController extends Controller
     
         // Fetch stores for the authenticated user
         $stores = Store::where('store_owner', $user->id)->get(); // Filter stores by the authenticated user's ID
+
+        $selectedStoreId = $request->input('store_id', '');
     
         // Initialize an array to hold earnings data
         $storeEarnings = [];
@@ -92,7 +94,50 @@ class DashboardController extends Controller
             ->whereIn('store_id', $stores->pluck('id'))
             ->get(); // Retrieve tallies for yesterday
     
-        // Return the dashboard view with the user's details, promos, stores, most sold products, orders, earnings, and tallies
-        return view('pages.dashboard', compact('user', 'promos', 'stores', 'mostSoldProducts', 'orders', 'storeEarnings', 'tallies'));
-    }                
+        $monthlyData = [];
+    
+        // Check if a store is selected
+        if ($selectedStoreId) {
+            $store = Store::where('id', $selectedStoreId)
+                ->where('store_owner', $user->id)
+                ->first();
+    
+            if (!$store) {
+                return redirect()->route('home')->with('error', 'You don\'t have authority to access this store');
+            }
+    
+            // Fetch monthly totals for the selected store
+            $monthlyTotals = Sale::selectRaw('SUM(total) as total, MONTH(createdAt) as month')
+                ->where('sale_made', $selectedStoreId) // Filter by selected store
+                ->whereYear('createdAt', date('Y')) // Current year
+                ->groupBy('month')
+                ->orderBy('month')
+                ->get()
+                ->keyBy('month');
+    
+            // Create an array for all months
+            $monthlyData = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $monthlyData[$i] = $monthlyTotals->has($i) ? $monthlyTotals[$i]->total : 0;
+            }
+        } else {
+            // Fetch monthly totals for all stores
+            $monthlyTotals = Sale::selectRaw('SUM(total) as total, MONTH(createdAt) as month')
+                ->whereIn('sale_made', $stores->pluck('id')->toArray()) // Filter by user's stores
+                ->whereYear('createdAt', date('Y')) // Current year
+                ->groupBy('month')
+                ->orderBy('month')
+                ->get()
+                ->keyBy('month');
+    
+            // Create an array for all months
+            $monthlyData = [];
+            for ($i = 1; $i <= 12; $i++) {
+                $monthlyData[$i] = $monthlyTotals->has($i) ? $monthlyTotals[$i]->total : 0;
+            }
+        }
+    
+        // Return the dashboard view with the user's details, promos, stores, most sold products, orders, earnings, tallies, and monthly data
+        return view('pages.dashboard', compact('user', 'promos', 'stores', 'mostSoldProducts', 'orders', 'storeEarnings', 'tallies', 'monthlyData', 'selectedStoreId'));
+    }              
 }
