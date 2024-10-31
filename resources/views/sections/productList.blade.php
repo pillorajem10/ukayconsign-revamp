@@ -102,6 +102,6 @@
 
     
 
-    <script src="{{ asset('js/home.js?v=4.7') }}"></script>
+    <script src="{{ asset('js/home.js?v=4.8') }}"></script>
 </body>
 </html>

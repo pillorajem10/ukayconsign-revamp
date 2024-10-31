@@ -49,11 +49,11 @@
                 </div>
             </div>
         </div>
-        <script src="{{ asset('js/registration.js?v=4.7') }}"></script>
+        <script src="{{ asset('js/registration.js?v=4.8') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=4.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=4.8') }}">
 @endsection
 
