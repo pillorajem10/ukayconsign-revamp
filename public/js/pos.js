@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const cameraContainer = document.getElementById('cameraContainer');
     const videoContainer = document.getElementById('videoContainer');
     const barcodeForm = document.getElementById('barcodeForm');
-    
+
     // Function to hide messages after a specified duration
     function hideMessage(elementId, duration) {
         const messageElement = document.getElementById(elementId);
@@ -24,11 +24,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const changeGroup = document.getElementById('change_group');
 
         if (modeOfPayment.value === 'Cash') {
-            refNumberGroup.style.display = 'none'; // Show Ref #
+            refNumberGroup.style.display = 'none'; // Hide Ref #
             amountPaidGroup.style.display = 'block'; // Show Amount Paid
             changeGroup.style.display = 'block'; // Show Change
         } else if (modeOfPayment.value === 'eWallet') {
-            refNumberGroup.style.display = 'block'; // Hide Ref #
+            refNumberGroup.style.display = 'block'; // Show Ref #
             amountPaidGroup.style.display = 'none'; // Hide Amount Paid
             changeGroup.style.display = 'none'; // Hide Change
         }
@@ -45,14 +45,23 @@ document.addEventListener('DOMContentLoaded', function() {
     // Function to update selected action when the form is submitted
     function updateSelectedAction() {
         const actionSelect = document.getElementById('actionSelect');
-        document.getElementById('actionInput').value = actionSelect.value;
+        const actionInput = document.getElementById('actionInput'); // Ensure this element is defined
+        const storeInventoryDetails = document.getElementById('storeInventoryDetails'); // Define this
+        const posCartDetails = document.getElementById('posCartDetails'); // Define this
 
-        if (actionSelect.value === 'pos') {
-            storeInventoryDetails.style.display = 'none'; // Assume storeInventoryDetails is defined
-            posCartDetails.style.display = 'block'; // Assume posCartDetails is defined
-        } else {
-            storeInventoryDetails.style.display = 'block';
-            posCartDetails.style.display = 'none';
+        if (actionSelect && actionInput) {
+            actionInput.value = actionSelect.value;
+
+            // Ensure storeInventoryDetails and posCartDetails are defined
+            if (storeInventoryDetails && posCartDetails) {
+                if (actionSelect.value === 'pos') {
+                    storeInventoryDetails.style.display = 'none'; // Hide inventory details
+                    posCartDetails.style.display = 'block'; // Show POS cart details
+                } else {
+                    storeInventoryDetails.style.display = 'block'; // Show inventory details
+                    posCartDetails.style.display = 'none'; // Hide POS cart details
+                }
+            }
         }
     }
 
@@ -120,5 +129,11 @@ document.addEventListener('DOMContentLoaded', function() {
     if (modeOfPayment) {
         togglePaymentFields(); // Initial toggle
         modeOfPayment.addEventListener('change', togglePaymentFields);
+    }
+
+    // Attach event listener for action select change
+    const actionSelect = document.getElementById('actionSelect');
+    if (actionSelect) {
+        actionSelect.addEventListener('change', updateSelectedAction); // Add event listener for action select
     }
 });
