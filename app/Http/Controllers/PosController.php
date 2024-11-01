@@ -189,6 +189,7 @@ class PosController extends Controller
         $sale->cx_type = $request->cx_type;
         $sale->sale_made = $request->store_id;
         $sale->ordered_items = $request->ordered_items;
+        $sale->ref_number_ewallet = $request->ref_number_ewallet;
         $sale->processed_by = auth()->id(); // Set the ID of the user processing the sale
         $sale->date_of_transaction = now(); // Set the current timestamp
     
@@ -288,4 +289,40 @@ class PosController extends Controller
         return redirect()->route('pos.index', ['store_id' => $storeId])
             ->with('success', 'Item voided successfully.');
     }
+
+    public function applyDiscount(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'product_sku' => 'required|string',
+            'store_id' => 'required|integer',
+            'discount' => 'required|numeric|min:0',
+        ]);
+    
+        // Find the item in the PosCart
+        $posCartItem = PosCart::where('product_sku', $request->product_sku)
+            ->where('user', auth()->id())
+            ->where('store_id', $request->store_id)
+            ->first();
+    
+        if (!$posCartItem) {
+            return redirect()->route('pos.index', ['store_id' => $request->store_id])
+                ->with('error', 'Item not found in the cart.');
+        }
+    
+        // Check if the discount exceeds the original total
+        if ($request->discount >= $posCartItem->orig_total) {
+            return redirect()->route('pos.index', ['store_id' => $request->store_id])
+                ->with('error', 'Discount cannot be bigger than the original total.');
+        }
+    
+        // Update the discount
+        $posCartItem->discount = $request->discount;
+        $posCartItem->sub_total = max(0, $posCartItem->orig_total - $posCartItem->discount); // Recalculate sub_total
+        $posCartItem->save();
+    
+        return redirect()->route('pos.index', ['store_id' => $request->store_id])
+            ->with('success', 'Discount applied successfully.');
+    }    
 }
+

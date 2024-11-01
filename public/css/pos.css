@@ -194,6 +194,37 @@
     background-color: #ddd;
 }
 
+/* Styles for the discount form */
+.discount-form {
+    display: flex; /* Use flexbox for alignment */
+    flex-direction: column; /* Stack elements vertically */
+    align-items: flex-start; /* Align items to the start */
+}
+
+.discount-input {
+    width: 100%; /* Set a fixed width for the input */
+    padding: 2px; /* Add some padding */
+    margin-bottom: 5px; /* Add space below the input */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 12px; /* Font size */
+}
+
+.apply-discount-button {
+    padding: 5px 10px; /* Padding for the button */
+    background-color: #28a745; /* Green background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.apply-discount-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+
 /* Responsive Styles */
 @media screen and (max-width: 500px) {
     body {
@@ -211,6 +242,25 @@
     }
 
     .styled-table {
-        font-size: 12px; /* Smaller table font */
+        font-size: 9px; /* Smaller table font */
+        font-weight: bold;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 2px; /* Reduced padding */
+    }
+
+    .apply-discount-button {
+        padding: 3px 5px; /* Padding for the button */
+    }
+
+    .discount-input {
+        padding: 0; /* Add some padding */
+        padding-top: 5px; /* Add some padding */
+        padding-bottom: 5px; /* Add some padding */
+        padding-right: -10px; /* Add some padding */
+        font-size: 8px; /* Font size */
+        font-weight: bold;
     }
 }

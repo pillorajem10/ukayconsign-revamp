@@ -70,10 +70,10 @@
                 </tbody>                
             </table>
         @endif
-        <script src="{{ asset('js/tallies.js?v=4.8') }}"></script>
+        <script src="{{ asset('js/tallies.js?v=4.9') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/tallies.css?v=4.8') }}">
+    <link rel="stylesheet" href="{{ asset('css/tallies.css?v=4.9') }}">
 @endsection

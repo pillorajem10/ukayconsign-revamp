@@ -75,10 +75,10 @@
                 </div>
             </div>
         </div>
-        <script src="{{ asset('js/login.js?v=4.8') }}"></script>
+        <script src="{{ asset('js/login.js?v=4.9') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=4.8') }}">
+    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=4.9') }}">
 @endsection

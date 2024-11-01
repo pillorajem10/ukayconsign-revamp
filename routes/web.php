@@ -79,6 +79,8 @@ Route::match(['get', 'post'], '/pos', [PosController::class, 'index'])->name('po
 Route::post('/pos/sale', [PosController::class, 'completeSale'])->name('sales.store');
 Route::get('/pos/choose', [PosController::class, 'chooseStore'])->name('pos.choose');
 Route::post('/pos/void', [PosController::class, 'voidItem'])->name('pos.void');
+Route::post('/pos/apply-discount', [PosController::class, 'applyDiscount'])->name('pos.applyDiscount'); // Add this line
+
 
 // SALES
 Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
