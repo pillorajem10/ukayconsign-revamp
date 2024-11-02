@@ -4,6 +4,9 @@
 
 @section('content')
     <div>
+        <h1>Sales Report</h1>
+
+        <!-- Store selection form -->
         <form id="storeForm" method="GET" class="mb-4 form-inline">
             <div class="form-group">
                 <label for="storeSelect" class="form-label">Select Store:</label>
@@ -29,7 +32,7 @@
         </form>
 
         <!-- Canvas for the sales chart -->
-        <div class="all-charts-container">
+        <div class="all-charts-container ">
             <div class="chart-container">
                 <canvas id="salesChart"></canvas>
             </div>
@@ -38,18 +41,24 @@
             <div class="chart-container">
                 <canvas id="orderedItemsChart"></canvas>
             </div>
+    
+            <!-- Canvas for the quantity per product bundle chart -->
+            <div class="chart-container">
+                <canvas id="quantityChart"></canvas>
+            </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-            // Pass the monthly sales data and ordered items sales data to JavaScript
+            // Pass the monthly sales data, ordered items sales data, and quantities data to JavaScript
             const monthlySales = @json($monthlySales);
             const orderedItemsSales = @json($orderedItemsSales);
+            const quantityPerBundle = @json($quantityPerBundle);
         </script>
-        <script src="{{ asset('js/reports.js?v=5.2') }}"></script>
+        <script src="{{ asset('js/reports.js?v=5.1') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/reports.css?v=5.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/reports.css?v=5.1') }}">
 @endsection

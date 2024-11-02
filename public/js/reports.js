@@ -44,4 +44,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Quantity per Product Bundle Chart
+    const ctxQuantity = document.getElementById('quantityChart').getContext('2d');
+    const quantityChart = new Chart(ctxQuantity, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(quantityPerBundle), // Using product_bundle_id as labels
+            datasets: [{
+                label: 'Quantity per Product Bundle',
+                data: Object.values(quantityPerBundle),
+                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
 });

@@ -39,6 +39,10 @@
     overflow: auto; /* Allow scrolling if needed */
 }
 
+.card-body {
+    border-radius: 1rem;
+}
+
 .promo-images {
     display: flex;
     flex-wrap: wrap; /* Wrap to next line if necessary */

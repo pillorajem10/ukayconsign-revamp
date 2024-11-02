@@ -6,7 +6,7 @@
     <meta name="description" content="Explore our wide range of products including categories, pricing, and potential profits.">
     <meta name="keywords" content="products, pricing, potential profit, categories">
     <meta name="author" content="Ukay Supplier">
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=5.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=5.3') }}">
 </head>
 <body class="loading">
     <div class="loading-overlay" id="loadingOverlay">
@@ -85,7 +85,7 @@
                                         <input type="hidden" name="products[{{ $item->SKU }}][price]" value="{{ $item->Consign }}">
                                         <input type="hidden" name="products[{{ $item->SKU }}][price_type]" value="SRP">
                                     @endforeach
-                                    <button type="submit" class="product-section-add-to-cart-btn">Add Bundle to Cart</button>
+                                    <button type="submit" class="product-section-add-to-cart-btn">Add to Cart</button>
                                 </form>
                                 
                                 <!-- Add Show Bundle Samples Button -->
@@ -114,6 +114,6 @@
 
     
 
-    <script src="{{ asset('js/home.js?v=5.2') }}"></script>
+    <script src="{{ asset('js/home.js?v=5.3') }}"></script>
 </body>
 </html>

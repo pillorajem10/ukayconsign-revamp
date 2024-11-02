@@ -33,6 +33,7 @@ class ReportController extends Controller
         // Initialize arrays to hold monthly sales data
         $monthlySales = [];
         $orderedItemsSales = [];
+        $quantityPerBundle = []; // New array to hold quantities per product bundle
     
         // Prepare the query for total sales based on the selected store
         $query = Sale::whereYear('date_of_transaction', Carbon::now()->year);
@@ -78,6 +79,7 @@ class ReportController extends Controller
         foreach ($orderedItemsData as $sale) {
             $items = json_decode($sale->ordered_items, true);
             foreach ($items as $item) {
+                // Calculate subtotal
                 $bundleId = $item['product_bundle_id'];
                 $subTotal = (float)$item['sub_total'];
     
@@ -85,10 +87,15 @@ class ReportController extends Controller
                     $orderedItemsSales[$bundleId] = 0;
                 }
                 $orderedItemsSales[$bundleId] += $subTotal;
+    
+                // Sum quantities per product bundle ID
+                if (!isset($quantityPerBundle[$bundleId])) {
+                    $quantityPerBundle[$bundleId] = 0;
+                }
+                $quantityPerBundle[$bundleId] += $item['quantity']; // Add quantity
             }
         }
     
-        return view('pages.reports', compact('stores', 'monthlySales', 'orderedItemsSales'));
+        return view('pages.reports', compact('stores', 'monthlySales', 'orderedItemsSales', 'quantityPerBundle'));
     }
-    
 }

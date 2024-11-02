@@ -1,7 +1,7 @@
 .chart-container {
     width: 100%;
     height: auto; /* Adjust height as needed */
-    max-width: 50rem; /* Space above the chart */
+    max-width: 40rem; /* Space above the chart */
     border: 1px solid #ddd; /* Optional border for visibility */
     padding: 10px; /* Padding around the canvas */
     background-color: #f9f9f9; /* Light background for contrast */

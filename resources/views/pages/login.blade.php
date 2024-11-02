@@ -8,8 +8,6 @@
     </div>
 
     <div class="container mt-5">
-        <h1 class="text-center mb-4">Login</h1>
-
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -56,6 +54,7 @@
             <div class="col-md-6">
                 <div class="card shadow-lg rounded login-card">
                     <div class="card-body">
+                        <h3 class="text-center mb-4">Login</h3>
                         <form method="POST" action="{{ route('login') }}" onsubmit="showLoading()">
                             @csrf
                             <div class="form-group">
@@ -75,10 +74,10 @@
                 </div>
             </div>
         </div>
-        <script src="{{ asset('js/login.js?v=5.2') }}"></script>
+        <script src="{{ asset('js/login.js?v=5.3') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=5.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/loginPage.css?v=5.3') }}">
 @endsection

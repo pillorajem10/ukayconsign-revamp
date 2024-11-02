@@ -50,16 +50,6 @@
             </h2>
         </div>
     </div>--}}
-    
-    {{--<h1 class="welcome-header">
-        Welcome{{ Auth::check() ? ', ' . (Auth::user()->fname ?? Auth::user()->email) : '' }}
-    </h1> --}}  
-
-    @if (Auth::check()) <!-- Check if the user is not authenticated -->
-        <h1 class="welcome-header">
-            Welcome{{ Auth::check() ? ', ' . (Auth::user()->fname ?? Auth::user()->email) : '' }}
-        </h1>
-    @endif
 
     <div class="home-page-cont">
         <div class="prodlist-cont">
@@ -70,9 +60,9 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/home.js?v=5.2') }}"></script>
+    <script src="{{ asset('js/home.js?v=5.3') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=5.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=5.3') }}">
 @endsection
