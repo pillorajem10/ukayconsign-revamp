@@ -6,7 +6,7 @@
     <meta name="description" content="Explore our wide range of products including categories, pricing, and potential profits.">
     <meta name="keywords" content="products, pricing, potential profit, categories">
     <meta name="author" content="Ukay Supplier">
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=5.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=5.2') }}">
 </head>
 <body class="loading">
     <div class="loading-overlay" id="loadingOverlay">
@@ -54,15 +54,27 @@
                                 </thead>
                                 <tbody>
                                     @foreach($sortedItems as $item)
-                                    <tr>
-                                        <td>{{ $item->Category }}</td>
-                                        <td>{{ $item->Bundle_Qty }}</td>
-                                        <td>{{ $item->Consign }}</td>
-                                        <td>{{ $item->SRP }}</td>
-                                        <td>{{ $item->PotentialProfit }}</td>
-                                    </tr>
+                                        <tr>
+                                            <td>{{ $item->Category }}</td>
+                                            <td>{{ $item->Bundle_Qty }}</td>
+                                            <td>{{ $item->Consign }}</td>
+                                            <td>{{ $item->SRP }}</td>
+                                            <td>{{ $item->PotentialProfit }}</td>
+                                        </tr>
                                     @endforeach
+                                
+                                    <!-- Add empty rows if there are less than 3 items -->
+                                    @for ($i = $sortedItems->count(); $i < 3; $i++)
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                    @endfor
                                 </tbody>
+                                
                             </table>
                             <div class="button-container"> <!-- Moved button container here -->
                                 <form class="add-to-cart-form" method="POST" action="{{ route('cart.add') }}">
@@ -102,6 +114,6 @@
 
     
 
-    <script src="{{ asset('js/home.js?v=5.1') }}"></script>
+    <script src="{{ asset('js/home.js?v=5.2') }}"></script>
 </body>
 </html>

@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\User;
 use App\Models\Promos;
 use App\Models\Tally;
 use App\Models\Store;
 use App\Models\Sale;
 use App\Models\Order;
+
 use Carbon\Carbon;
 
 class DashboardController extends Controller

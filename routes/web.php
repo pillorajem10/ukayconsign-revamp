@@ -16,6 +16,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TallyController;
 use App\Http\Controllers\InstantBuyProductController;
 use App\Http\Controllers\StaticPagesController;
+use App\Http\Controllers\ReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,8 +100,12 @@ Route::get('/instant-buy', [InstantBuyProductController::class, 'index'])->name(
 Route::get('/instant-buy/create', [InstantBuyProductController::class, 'create'])->name('instant_buy_products.create');
 Route::post('/instant-buy', [InstantBuyProductController::class, 'store'])->name('instant_buy_products.store');
 
+// REPORTS
+Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 
 // STATIC PAGES
 Route::get('/how-to-use-usc', [StaticPagesController::class, 'howToUseUSC'])->name('how.to.use.usc');
+
+
 
 

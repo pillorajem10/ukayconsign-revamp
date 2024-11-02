@@ -1,0 +1,46 @@
+.chart-container {
+    width: 100%;
+    height: auto; /* Adjust height as needed */
+    max-width: 50rem; /* Space above the chart */
+    border: 1px solid #ddd; /* Optional border for visibility */
+    padding: 10px; /* Padding around the canvas */
+    background-color: #f9f9f9; /* Light background for contrast */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    margin-top: 20px; /* Space above the chart */
+}
+
+/* Additional styles for the form */
+.form-inline {
+    display: flex;
+    align-items: center; /* Align items vertically */
+}
+
+.form-group {
+    margin-right: 15px; /* Space between the label and select */
+}
+
+.form-label {
+    margin-right: 10px; /* Space between label and select */
+    font-weight: bold; /* Bold label for better visibility */
+}
+
+.form-select {
+    width: 200px; /* Fixed width for the select element */
+    padding: 8px; /* Padding inside the select for better touch targets */
+    border: 1px solid #ccc; /* Border for the select */
+    border-radius: 4px; /* Rounded corners */
+    background-color: #fff; /* White background */
+    transition: border-color 0.3s; /* Smooth transition for focus */
+}
+
+.form-select:focus {
+    border-color: #007bff; /* Change border color on focus */
+    outline: none; /* Remove default outline */
+}
+
+.all-charts-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}

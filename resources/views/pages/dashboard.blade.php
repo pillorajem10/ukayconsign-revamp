@@ -199,10 +199,14 @@
                 </div>
             
                 <canvas id="monthlySalesChart"></canvas>
+
+                <div class="text-center mt-3">
+                    <a href="/reports" class="btn btn-success">View Reports</a>
+                </div>
             </div>            
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=5.1') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=5.2') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const monthlyData = @json(array_values($monthlyData));
@@ -212,5 +216,5 @@
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=5.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=5.2') }}">
 @endsection
