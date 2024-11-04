@@ -30,12 +30,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         font: {
                             size: 10 // Font size for x-axis labels
                         },
-                        // Disable decimal values
                         callback: function(value) {
                             return Number.isInteger(value) ? value : '';
                         }
                     },
-                    // Set step size to ensure whole numbers
                     min: 0,
                     max: Math.max(...Object.values(monthlySales)), // Set max to the maximum sales value
                     stepSize: 1 // Step size to ensure integers
@@ -147,6 +145,60 @@ document.addEventListener('DOMContentLoaded', function() {
                     min: 0,
                     max: Math.max(...Object.values(quantityPerBundle)), // Set max to the maximum quantity
                     stepSize: 1
+                },
+                y: {
+                    ticks: {
+                        font: {
+                            size: 10 // Font size for y-axis labels
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 10 // Font size for legend labels
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Truncate labels for daily sales chart
+    const dailySalesLabels = Object.keys(dailySales).map(label => truncateLabel(label, 10));
+
+    // Daily Sales Chart
+    const ctxDailySales = document.getElementById('dailySalesChart').getContext('2d');
+    const dailySalesChart = new Chart(ctxDailySales, {
+        type: 'bar', // Vertical bar chart
+        data: {
+            labels: dailySalesLabels, // Truncated labels
+            datasets: [{
+                label: 'Daily Sales Subtotal',
+                data: Object.values(dailySales),
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y', // Set to horizontal
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 10 // Font size for x-axis labels
+                        },
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : '';
+                        }
+                    },
+                    min: 0,
+                    max: Math.max(...Object.values(dailySales)), // Set max to the maximum daily sales value
+                    stepSize: 1 // Step size to ensure integers
                 },
                 y: {
                     ticks: {
