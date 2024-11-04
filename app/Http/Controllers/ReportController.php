@@ -19,6 +19,11 @@ class ReportController extends Controller
         $selectedStoreId = $request->input('store_id', '');
         $selectedMonth = $request->input('month', '');
     
+        // If no store is selected and the user has stores, set the default to the first store's ID
+        if (empty($selectedStoreId) && $stores->isNotEmpty()) {
+            $selectedStoreId = $stores->first()->id; // Set default store to the first store owned by the user
+        }
+    
         // Check if the selected store ID is valid and belongs to the user
         if ($selectedStoreId && $selectedStoreId !== 'all') {
             $store = Store::where('id', $selectedStoreId)
@@ -40,7 +45,7 @@ class ReportController extends Controller
     
         if ($selectedStoreId === 'all') {
             $query->whereIn('sale_made', $stores->pluck('id')->toArray());
-        } elseif ($selectedStoreId) {
+        } else {
             $query->where('sale_made', $selectedStoreId);
         }
     
@@ -64,7 +69,7 @@ class ReportController extends Controller
     
         if ($selectedStoreId === 'all') {
             $orderedItemsQuery->whereIn('sale_made', $stores->pluck('id')->toArray());
-        } elseif ($selectedStoreId) {
+        } else {
             $orderedItemsQuery->where('sale_made', $selectedStoreId);
         }
     
@@ -98,4 +103,5 @@ class ReportController extends Controller
     
         return view('pages.reports', compact('stores', 'monthlySales', 'orderedItemsSales', 'quantityPerBundle'));
     }
+    
 }
