@@ -8,6 +8,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\UscReturnController;
 use App\Http\Controllers\StoreInventoryController;
 use App\Http\Controllers\PosController;
 use App\Http\Controllers\SaleController;
@@ -106,6 +107,8 @@ Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 // STATIC PAGES
 Route::get('/how-to-use-usc', [StaticPagesController::class, 'howToUseUSC'])->name('how.to.use.usc');
 
-
+// RETURN REQUEST
+Route::get('/usc-returns/create', [UscReturnController::class, 'create'])->name('usc-returns.create');
+Route::post('/usc-returns', [UscReturnController::class, 'store'])->name('usc-returns.store');
 
 
