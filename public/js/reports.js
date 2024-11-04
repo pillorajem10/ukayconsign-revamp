@@ -1,10 +1,18 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Function to truncate labels
+    function truncateLabel(label, maxLength) {
+        return label.length > maxLength ? label.substring(0, maxLength) + '...' : label;
+    }
+
+    // Truncate labels for the sales chart
+    const salesLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(label => truncateLabel(label, 3));
+
     // Sales Chart
     const ctxSales = document.getElementById('salesChart').getContext('2d');
     const salesChart = new Chart(ctxSales, {
-        type: 'bar',
+        type: 'bar', // Vertical bar chart
         data: {
-            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            labels: salesLabels,
             datasets: [{
                 label: 'Total Sales',
                 data: Object.values(monthlySales),
@@ -14,20 +22,53 @@ document.addEventListener('DOMContentLoaded', function() {
             }]
         },
         options: {
+            indexAxis: 'y', // Set to horizontal
             scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 10 // Font size for x-axis labels
+                        },
+                        // Disable decimal values
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : '';
+                        }
+                    },
+                    // Set step size to ensure whole numbers
+                    min: 0,
+                    max: Math.max(...Object.values(monthlySales)), // Set max to the maximum sales value
+                    stepSize: 1 // Step size to ensure integers
+                },
                 y: {
-                    beginAtZero: true
+                    ticks: {
+                        font: {
+                            size: 10 // Font size for y-axis labels
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 10 // Font size for legend labels
+                        }
+                    }
                 }
             }
         }
     });
 
+    // Truncate labels for ordered items chart
+    const orderedItemsLabels = Object.keys(orderedItemsSales).map(label => truncateLabel(label, 10));
+
     // Ordered Items Chart
     const ctxOrderedItems = document.getElementById('orderedItemsChart').getContext('2d');
     const orderedItemsChart = new Chart(ctxOrderedItems, {
-        type: 'bar',
+        type: 'bar', // Vertical bar chart
         data: {
-            labels: Object.keys(orderedItemsSales), // Using product_bundle_id as labels
+            labels: orderedItemsLabels, // Truncated labels
             datasets: [{
                 label: 'Ordered Items Subtotal',
                 data: Object.values(orderedItemsSales),
@@ -37,20 +78,51 @@ document.addEventListener('DOMContentLoaded', function() {
             }]
         },
         options: {
+            indexAxis: 'y', // Set to horizontal
             scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 10 // Font size for x-axis labels
+                        },
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : '';
+                        }
+                    },
+                    min: 0,
+                    max: Math.max(...Object.values(orderedItemsSales)), // Set max to the maximum subtotal
+                    stepSize: 1
+                },
                 y: {
-                    beginAtZero: true
+                    ticks: {
+                        font: {
+                            size: 10 // Font size for y-axis labels
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 10 // Font size for legend labels
+                        }
+                    }
                 }
             }
         }
     });
 
+    // Truncate labels for quantity chart
+    const quantityLabels = Object.keys(quantityPerBundle).map(label => truncateLabel(label, 10));
+
     // Quantity per Product Bundle Chart
     const ctxQuantity = document.getElementById('quantityChart').getContext('2d');
     const quantityChart = new Chart(ctxQuantity, {
-        type: 'bar',
+        type: 'bar', // Vertical bar chart
         data: {
-            labels: Object.keys(quantityPerBundle), // Using product_bundle_id as labels
+            labels: quantityLabels, // Truncated labels
             datasets: [{
                 label: 'Quantity per Product Bundle',
                 data: Object.values(quantityPerBundle),
@@ -60,9 +132,37 @@ document.addEventListener('DOMContentLoaded', function() {
             }]
         },
         options: {
+            indexAxis: 'y', // Set to horizontal
             scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 10 // Font size for x-axis labels
+                        },
+                        callback: function(value) {
+                            return Number.isInteger(value) ? value : '';
+                        }
+                    },
+                    min: 0,
+                    max: Math.max(...Object.values(quantityPerBundle)), // Set max to the maximum quantity
+                    stepSize: 1
+                },
                 y: {
-                    beginAtZero: true
+                    ticks: {
+                        font: {
+                            size: 10 // Font size for y-axis labels
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 10 // Font size for legend labels
+                        }
+                    }
                 }
             }
         }

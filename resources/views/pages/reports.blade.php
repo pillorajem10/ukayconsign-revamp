@@ -55,10 +55,10 @@
             const orderedItemsSales = @json($orderedItemsSales);
             const quantityPerBundle = @json($quantityPerBundle);
         </script>
-        <script src="{{ asset('js/reports.js?v=5.1') }}"></script>
+        <script src="{{ asset('js/reports.js?v=5.4') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/reports.css?v=5.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/reports.css?v=5.4') }}">
 @endsection
