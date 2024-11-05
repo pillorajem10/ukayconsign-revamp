@@ -6,7 +6,7 @@
     <meta name="description" content="Explore our wide range of products including categories, pricing, and potential profits.">
     <meta name="keywords" content="products, pricing, potential profit, categories">
     <meta name="author" content="Ukay Supplier">
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=5.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=5.6') }}">
 </head>
 <body class="loading">
     <div class="loading-overlay" id="loadingOverlay">
@@ -114,6 +114,6 @@
 
     
 
-    <script src="{{ asset('js/home.js?v=5.5') }}"></script>
+    <script src="{{ asset('js/home.js?v=5.6') }}"></script>
 </body>
 </html>

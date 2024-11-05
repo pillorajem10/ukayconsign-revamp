@@ -41,6 +41,7 @@
                         <a href="{{ url('/sales?store_id=' . $store->id) }}" class="btn btn-primary">View Sales</a>
                         <a href="{{ url('/instant-buy/create?store_id=' . $store->id) }}" class="btn btn-success">Add Instant Buy</a>
                         <a href="{{ url('/instant-buy?store_id=' . $store->id) }}" class="btn btn-success">View Instant Buy List</a>
+                        <a href="{{ url('/usc-returns?store_id=' . $store->id) }}" class="btn btn-warning">View Return List</a>
                     </td>                                      
                 </tr>
                 @endforeach
@@ -51,5 +52,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/stores.css?v=5.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/stores.css?v=5.6') }}">
 @endsection

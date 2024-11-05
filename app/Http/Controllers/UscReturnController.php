@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\UscReturn;
 use App\Models\Store;
-use App\Models\StoreInventory;
 use App\Models\Product;
+use App\Models\StoreInventory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -43,7 +43,6 @@ class UscReturnController extends Controller
     
         return view('pages.returnRequest', compact('productSku', 'storeId', 'storeName', 'productName'));
     }    
-    
 
     // Store a newly created return
     public function store(Request $request)
@@ -73,5 +72,33 @@ class UscReturnController extends Controller
     
         return redirect()->route('store-inventory.index', ['store_id' => $request->store_id])
             ->with('success', 'Return request submitted successfully!');
-    }       
+    }
+
+    // Index method to list all return requests filtered by store_id
+    public function index(Request $request)
+    {
+        // Ensure the user is authenticated
+        $authId = Auth::id();
+    
+        // Get the store_id from the request (from URL or form data)
+        $storeId = $request->input('store_id');
+    
+        // Fetch the store the user owns, or deny access if it's not their store
+        $store = Store::where('id', $storeId)
+                      ->where('store_owner', $authId)
+                      ->first();
+    
+        if (!$store) {
+            return redirect()->route('home')->with('error', 'You don\'t have the authority to access that store.');
+        }
+    
+        // Fetch return requests filtered by store_id and paginate (limit 10)
+        $returns = UscReturn::with(['user', 'store', 'product'])
+                            ->where('store_id', $storeId)
+                            ->paginate(10);  // 10 items per page
+    
+        // Pass the returns data and storeId to the view
+        return view('pages.returnRequestList', compact('returns', 'storeId'));
+    }    
 }
+

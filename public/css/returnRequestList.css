@@ -1,0 +1,63 @@
+/* General Table Styles */
+.return-request-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.return-request-table th,
+.return-request-table td {
+    padding: 12px;
+    text-align: left;
+}
+
+.return-request-table th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: bold;
+}
+
+.return-request-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.return-request-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Cell Styles */
+.table-cell {
+    font-size: 14px;
+    color: #495057;
+}
+
+.table-cell.status-processing {
+    background-color: #ffc107;
+    color: #fff;
+    font-weight: bold;
+}
+
+.table-cell.status-approved {
+    background-color: #28a745;
+    color: #fff;
+    font-weight: bold;
+}
+
+.table-cell.status-rejected {
+    background-color: #dc3545;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Responsive Table */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+    .return-request-table th,
+    .return-request-table td {
+        padding: 8px;
+    }
+}

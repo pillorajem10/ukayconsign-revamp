@@ -110,5 +110,7 @@ Route::get('/how-to-use-usc', [StaticPagesController::class, 'howToUseUSC'])->na
 // RETURN REQUEST
 Route::get('/usc-returns/create', [UscReturnController::class, 'create'])->name('usc-returns.create');
 Route::post('/usc-returns', [UscReturnController::class, 'store'])->name('usc-returns.store');
+Route::get('/usc-returns', [UscReturnController::class, 'index'])->name('usc-returns.index');
+
 
 
