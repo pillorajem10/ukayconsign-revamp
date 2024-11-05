@@ -52,50 +52,24 @@ class StoreInventoryController extends Controller
           
     
     /**
-     * Show the form for creating a new resource.
+     * 
      */
-    public function create()
+    public function update(Request $request, $id)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+        // Validate the request input
+        $request->validate([
+            'SPR' => 'required|numeric', // Example validation for SPR
+        ]);
+    
+        // Find the inventory item by ID
+        $inventoryItem = StoreInventory::findOrFail($id);
+    
+        // Update the SPR field
+        $inventoryItem->SPR = $request->input('SPR');
+        $inventoryItem->save(); // Save the updated record
+    
+        // Redirect back to the store inventory page with a success message
+        return redirect()->route('store-inventory.index', ['store_id' => $request->store_id])
+            ->with('success', 'SRP Updated successfully');
+    }    
 }

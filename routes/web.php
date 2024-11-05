@@ -67,6 +67,7 @@ Route::get('/stores', [StoreController::class, 'index'])->name('stores.index');
 
 // STORE INVENTORY ROUTES
 Route::get('/store-inventory', [StoreInventoryController::class, 'index'])->name('store-inventory.index');
+Route::put('/store-inventory/{id}', [StoreInventoryController::class, 'update'])->name('store-inventory.update');
 
 // Checkout Routes
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
