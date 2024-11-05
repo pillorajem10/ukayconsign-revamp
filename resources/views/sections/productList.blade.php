@@ -59,7 +59,9 @@
                                             <td>{{ $item->Bundle_Qty }}</td>
                                             <td>{{ $item->Consign }}</td>
                                             <td>{{ $item->SRP }}</td>
-                                            <td>{{ $item->PotentialProfit }}</td>
+                                            <td>
+                                                {{ ($item->SRP - $item->Consign) * $item->Bundle_Qty }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 
