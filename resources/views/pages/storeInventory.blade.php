@@ -76,7 +76,7 @@
         </div>
 
         <!-- Link to JS and CSS with cache-busting version -->
-        <script src="{{ asset('js/storeInv.js?v=6.0') }}"></script>
-        <link rel="stylesheet" href="{{ asset('css/storeInv.css?v=6.0') }}">
+        <script src="{{ asset('js/storeInv.js?v=6.1') }}"></script>
+        <link rel="stylesheet" href="{{ asset('css/storeInv.css?v=6.1') }}">
     </div>
 @endsection

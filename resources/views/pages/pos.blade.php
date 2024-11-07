@@ -202,8 +202,18 @@
                             <!-- Interest Field -->
                             <div class="form-group" id="interest_group">
                                 <label for="interest">Interest:</label>
-                                <input type="text" name="interest" class="form-input" placeholder="Enter Customer's Interest (Optional)">
+                                <select name="interest" class="form-input">
+                                    <option value="" selected disabled>Select Customer's Interest (Optional)</option>
+                                    <option value="Shoes">Shoes</option>
+                                    <option value="Shirts">Shirts</option>
+                                    <option value="Caps">Caps</option>
+                                    <option value="Bags">Bags</option>
+                                    <option value="Hoodies">Hoodies</option>
+                                    <option value="Shorts">Shorts</option>
+                                    <option value="Pants">Pants</option>
+                                </select>
                             </div>
+                            
                             
                             <!-- Remarks Field -->
                             <div class="form-group" id="remarks_group">
@@ -221,7 +231,7 @@
         </div>        
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
-        <script src="{{ asset('js/pos.js?v=6.0') }}"></script>
+        <script src="{{ asset('js/pos.js?v=6.1') }}"></script>
         <script>
             // Pass PHP values to JavaScript variables
             const totalAmount = {{ json_encode($posCarts->sum('sub_total')) }};
@@ -230,5 +240,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pos.css?v=6.0') }}">
+    <link rel="stylesheet" href="{{ asset('css/pos.css?v=6.1') }}">
 @endsection

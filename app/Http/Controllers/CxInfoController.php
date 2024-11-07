@@ -7,6 +7,7 @@ use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\EmailBlastMail; // Make sure to create this Mailable
+use Illuminate\Support\Facades\Auth;
 
 class CxInfoController extends Controller
 {
@@ -17,7 +18,7 @@ class CxInfoController extends Controller
 
     public function index(Request $request)
     {
-        $authId = auth()->id();
+        $authId = Auth::id();
         
         // Check if store_id is provided in the request
         if (!$request->filled('store_id')) {
@@ -28,17 +29,27 @@ class CxInfoController extends Controller
         $store = Store::where('id', $request->store_id)
                       ->where('store_owner', $authId)
                       ->first();
-        
+    
         if (!$store) {
             return redirect()->route('home')->with('error', 'You don\'t have the authority to access this store.');
         }
     
-        // Filter CxInfo by store_id
-        $cxInfos = CxInfo::where('store_id', $request->store_id)->get();
+        // Get the filter value from the request
+        $interestFilter = $request->input('interest_filter');
     
-        // Pass the CxInfo data to the view
+        // Filter CxInfo by store_id and optionally by interest
+        $cxInfosQuery = CxInfo::where('store_id', $request->store_id);
+    
+        if ($interestFilter) {
+            $cxInfosQuery->where('interest', $interestFilter);
+        }
+    
+        $cxInfos = $cxInfosQuery->get();
+    
+        // Pass the CxInfo data and store info to the view
         return view('pages.cxInfos', compact('cxInfos', 'store'));
     }
+        
 
     public function sendBlastEmails(Request $request)
     {
@@ -56,8 +67,17 @@ class CxInfoController extends Controller
                              ->with('error', 'Store not found or you do not have permission to send an email blast.');
         }
     
-        // Retrieve all the customers associated with this store
-        $cxInfos = CxInfo::where('store_id', $store->id)->get();
+        // Start building the query to get customers associated with this store
+        $cxInfosQuery = CxInfo::where('store_id', $store->id);
+    
+        // Apply the interest filter if it exists in the request
+        if ($request->has('interest_filter') && $request->interest_filter) {
+            // Only filter if the interest_filter is set (not empty)
+            $cxInfosQuery->where('interest', $request->interest_filter);
+        }
+    
+        // Retrieve the filtered customer data
+        $cxInfos = $cxInfosQuery->get();
     
         // Loop through all customers and send the email blast
         foreach ($cxInfos as $cxInfo) {
@@ -69,7 +89,6 @@ class CxInfoController extends Controller
         // Redirect with a success message
         return redirect()->route('cxInfos.index', ['store_id' => $store->id])
                          ->with('success', 'Email blast sent successfully!');
-    }
-    
+    }      
 }
 

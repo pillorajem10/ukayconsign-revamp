@@ -21,3 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+document.getElementById('interest_filter').addEventListener('change', function() {
+    document.getElementById('filterForm').submit();
+});

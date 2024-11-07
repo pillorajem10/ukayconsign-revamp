@@ -4,6 +4,38 @@
     background-color: #f9f9f9;
 }
 
+.filter-container {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.filter-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group {
+    margin-right: 15px;
+    margin-bottom: 10px;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-select, .form-input, .form-control {
+    width: 200px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
 /* Page Title */
 .page-title {
     font-size: 2rem;
