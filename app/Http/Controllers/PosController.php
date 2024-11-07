@@ -10,6 +10,7 @@ use App\Models\Sale;
 use App\Models\User;
 use App\Models\StoreInventory;
 use App\Models\Store;
+use App\Models\CxInfo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +25,11 @@ class PosController extends Controller
     {
         $this->middleware('auth'); // Require authentication for all methods in this controller
     }
+
+
+
+
+
 
     public function chooseStore()
     {
@@ -45,6 +51,11 @@ class PosController extends Controller
     
         return view('pages.chooseStorePos', compact('stores'));
     }      
+
+
+
+
+
 
     public function index(Request $request)
     {
@@ -107,8 +118,11 @@ class PosController extends Controller
         return view('pages.pos', compact('productDetails', 'storeInventoryDetails', 'stores', 'posCarts', 'selectedAction'));
     }
     
-    
-    
+
+
+
+
+
     private function getProductDetails($barcode, $store_id)
     {
         // Search for the barcode number
@@ -143,6 +157,11 @@ class PosController extends Controller
         return ['error' => 'No items are detected on this barcode.'];
     }
     
+
+
+
+
+
     private function addToPosCart($storeInventoryDetails)
     {
         $existingCart = PosCart::where('product_sku', $storeInventoryDetails->SKU)
@@ -174,14 +193,43 @@ class PosController extends Controller
         }
     }
     
-    
+
+
+
+
 
     public function completeSale(Request $request)
     {
+        // If the payment method is "Interest", only save CxInfo and exit
+        if ($request->mode_of_payment === 'Interest') {
+            // Check if all customer details are empty or null before saving CxInfo
+            if ($request->customer_name || $request->customer_email || $request->customer_number) {
+                // Create a new CxInfo record with customer details
+                $cxInfo = new CxInfo();
+                $cxInfo->cx_name = $request->customer_name;
+                $cxInfo->email = $request->customer_email;
+                $cxInfo->phone_number = $request->customer_number;
+                $cxInfo->cx_type = $request->cx_type;
+                $cxInfo->interest = $request->interest; // Optionally, add interest if provided
+                $cxInfo->remarks = $request->remarks; // Optionally, add remarks if provided
+                $cxInfo->store_id = $request->store_id; // Associate with the store
+                
+                // Save the CxInfo record
+                $cxInfo->save();
+            }
+        
+            // Return a response indicating the sale was skipped but the customer info was saved
+            return redirect()->route('pos.index', ['store_id' => $request->input('store_id')])
+                ->with('success', 'Interest customer info saved successfully.');
+        }
+
+        // If mode_of_payment is not "Interest", proceed with the usual sale flow
+
         // Create a new sale record
         $sale = new Sale();
         $sale->customer_name = $request->customer_name;
         $sale->customer_number = $request->customer_number;
+        $sale->customer_email = $request->customer_email; // Set customer_email
         $sale->total = $request->total;
         $sale->mode_of_payment = $request->mode_of_payment;
         $sale->amount_paid = $request->amount_paid;
@@ -192,33 +240,50 @@ class PosController extends Controller
         $sale->ref_number_ewallet = $request->ref_number_ewallet;
         $sale->processed_by = auth()->id(); // Set the ID of the user processing the sale
         $sale->date_of_transaction = now(); // Set the current timestamp
-    
+        $sale->platform = $request->platform; // Set the platform (new field)
+        
         // Save the sale record
         $sale->save();
-    
+        
+        // Check if all customer details are empty or null before saving CxInfo
+        if ($request->customer_name || $request->customer_email || $request->customer_number) {
+            // Create a new CxInfo record with customer details
+            $cxInfo = new CxInfo();
+            $cxInfo->cx_name = $request->customer_name;
+            $cxInfo->email = $request->customer_email;
+            $cxInfo->phone_number = $request->customer_number;
+            $cxInfo->cx_type = $request->cx_type;
+            $cxInfo->interest = $request->interest; // Optionally, add interest if provided
+            $cxInfo->remarks = $request->remarks; // Optionally, add remarks if provided
+            $cxInfo->store_id = $request->store_id; // Associate with the store
+            
+            // Save the CxInfo record
+            $cxInfo->save();
+        }
+
         // Clear the PosCart for the user
         PosCart::where('user', auth()->id())->delete();
-    
+        
         // Decode ordered_items from JSON string to an array
         $orderedItems = json_decode($request->ordered_items, true);
-    
+        
         // Deduct the stock for each ordered item
         foreach ($orderedItems as $item) {
             $sku = $item['product_sku']; // Get the SKU from ordered items
             $quantity = $item['quantity']; // Assuming you have quantity in ordered items
-    
+        
             // Find the StoreInventory record
             $storeInventory = StoreInventory::where('sku', $sku)
                 ->where('store_id', $request->store_id) // Ensure you're checking the correct store
                 ->first();
-    
+        
             // If the inventory record exists, deduct the quantity
             if ($storeInventory) {
                 $storeInventory->Stocks -= $quantity; // Deduct the quantity
                 $storeInventory->save(); // Save the changes
             }
         }
-    
+        
         // Update the store's total earnings
         $store = Store::find($request->store_id); // Find the store by ID
         if ($store) {
@@ -244,12 +309,18 @@ class PosController extends Controller
                 }
             }
         }        
-    
+        
         // Return a JSON response with a success message
         return redirect()->route('pos.index', ['store_id' => $request->input('store_id')])
             ->with('success', 'Sale completed successfully.');
     }
+
     
+
+
+
+
+
     public function voidItem(Request $request)
     {
         // Validate the request
@@ -289,6 +360,11 @@ class PosController extends Controller
         return redirect()->route('pos.index', ['store_id' => $storeId])
             ->with('success', 'Item voided successfully.');
     }
+
+
+
+
+
 
     public function applyDiscount(Request $request)
     {

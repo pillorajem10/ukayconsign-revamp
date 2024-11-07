@@ -53,12 +53,12 @@
                 </div>
             
                 <!-- Show Promos Button -->
-                <div class="text-center mt-3">
+                {{--<div class="text-center mt-3">
                     <button id="showPromosButton" class="btn btn-info">Check Our Promos</button>
-                </div>
+                </div>--}}
             </div>                                                 
 
-            <div class="dashboard-container">
+            {{--<div class="dashboard-container">
                 <h2 class="welcome-message">Top 5 Most Sold Products (All stores combined)</h2>
                 @if(empty($mostSoldProducts))
                     <p>No sales data available.</p>
@@ -72,7 +72,7 @@
                         @endforeach
                     </ul>
                 @endif
-            </div>     
+            </div>--}}     
             
             <div class="dashboard-container">
                 <h2 class="welcome-message">Your Orders</h2>
@@ -128,32 +128,31 @@
 
             <div class="dashboard-container">
                 <h2 class="welcome-message">Your Stores</h2>
+                
                 @if($stores->isEmpty())
                     <p>No stores found.</p>
                 @else
                     <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Total Earnings (Overall)</th>
-                            </tr>
-                        </thead>
                         <tbody>
                             @foreach($stores as $store)
                                 <tr>
                                     <td>{{ $store->store_name }}</td>
-                                    <td>₱{{ number_format($store->store_total_earnings, 2) }}</td>
+                                    <td class="text-center">
+                                        <!-- View Customers Button -->
+                                        <a href="{{ route('cxInfos.index', ['store_id' => $store->id]) }}" class="btn btn-info">View Customers</a>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 @endif
+            
                 <div class="text-center mt-3">
                     <a href="/stores" class="btn btn-success">Manage Stores</a>
                 </div>
-            </div>          
+            </div>                     
 
-            <div class="dashboard-container">
+            {{--<div class="dashboard-container">
                 <p class="welcome-message">Tallies Yesterday</p>
                 @if($tallies->isEmpty())
                     <p class="no-tallies-message">No tallies available for yesterday.</p>
@@ -180,7 +179,7 @@
                         <a href="/tallies" class="btn btn-success">View Tallies</a>
                     </div>
                 @endif
-            </div>
+            </div>--}}
             
             <div class="dashboard-container">
                 <h2 class="welcome-message">Monthly Sales Totals</h2>
@@ -206,7 +205,7 @@
             </div>            
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=5.7') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=5.8') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const monthlyData = @json(array_values($monthlyData));
@@ -216,5 +215,5 @@
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=5.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=5.8') }}">
 @endsection

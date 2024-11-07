@@ -51,5 +51,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/returnRequestList.css?v=5.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/returnRequestList.css?v=5.8') }}">
 @endsection

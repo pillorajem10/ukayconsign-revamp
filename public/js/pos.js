@@ -22,17 +22,30 @@ document.addEventListener('DOMContentLoaded', function() {
         const refNumberGroup = document.getElementById('ref_number_group');
         const amountPaidGroup = document.getElementById('amount_paid_group');
         const changeGroup = document.getElementById('change_group');
-
+        const interestGroup = document.getElementById('interest_group');
+        const remarksGroup = document.getElementById('remarks_group');
+    
         if (modeOfPayment.value === 'Cash') {
             refNumberGroup.style.display = 'none'; // Hide Ref #
+            interestGroup.style.display = 'none'; // Hide Amount Paid
+            remarksGroup.style.display = 'none'; // Hide Change
             amountPaidGroup.style.display = 'block'; // Show Amount Paid
             changeGroup.style.display = 'block'; // Show Change
         } else if (modeOfPayment.value === 'eWallet') {
             refNumberGroup.style.display = 'block'; // Show Ref #
             amountPaidGroup.style.display = 'none'; // Hide Amount Paid
             changeGroup.style.display = 'none'; // Hide Change
+            interestGroup.style.display = 'none'; // Hide Amount Paid
+            remarksGroup.style.display = 'none'; // Hide Change
+        } else if (modeOfPayment.value === 'Interest') {
+            refNumberGroup.style.display = 'none'; // Hide Ref #
+            amountPaidGroup.style.display = 'none'; // Hide Amount Paid
+            changeGroup.style.display = 'none'; // Hide Change
+            remarksGroup.style.display = 'block'; // Hide Ref #
+            interestGroup.style.display = 'block'; // Hide Amount Paid
         }
     }
+    
 
     // Function to calculate change based on the amount paid and total
     function calculateChange() {

@@ -16,6 +16,7 @@ class Sale extends Model
     protected $fillable = [
         'customer_name',
         'customer_number',
+        'customer_email', // Add customer_email here
         'total',
         'mode_of_payment',
         'date_of_transaction',
@@ -27,6 +28,7 @@ class Sale extends Model
         'processed_by',
         'createdAt',
         'cx_type',
+        'platform',
     ];
 
     protected $casts = [

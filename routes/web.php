@@ -14,6 +14,7 @@ use App\Http\Controllers\PosController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CxInfoController;
 use App\Http\Controllers\TallyController;
 use App\Http\Controllers\InstantBuyProductController;
 use App\Http\Controllers\StaticPagesController;
@@ -112,6 +113,9 @@ Route::get('/how-to-use-usc', [StaticPagesController::class, 'howToUseUSC'])->na
 Route::get('/usc-returns/create', [UscReturnController::class, 'create'])->name('usc-returns.create');
 Route::post('/usc-returns', [UscReturnController::class, 'store'])->name('usc-returns.store');
 Route::get('/usc-returns', [UscReturnController::class, 'index'])->name('usc-returns.index');
+
+// CX INFOS
+Route::get('/cx-infos', [CxInfoController::class, 'index'])->name('cxInfos.index');
 
 
 

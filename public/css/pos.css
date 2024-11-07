@@ -224,6 +224,13 @@
     background-color: #218838; /* Darker green on hover */
 }
 
+.form-cont {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+
 
 /* Responsive Styles */
 @media screen and (max-width: 500px) {
