@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\CxInfo;
 use App\Models\Store;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\EmailBlastMail; // Make sure to create this Mailable
 
 class CxInfoController extends Controller
 {
@@ -15,13 +15,9 @@ class CxInfoController extends Controller
         $this->middleware('auth'); // Require authentication for all methods in this controller
     }
 
-
-
-
-
     public function index(Request $request)
     {
-        $authId = Auth::id();
+        $authId = auth()->id();
         
         // Check if store_id is provided in the request
         if (!$request->filled('store_id')) {
@@ -42,5 +38,38 @@ class CxInfoController extends Controller
     
         // Pass the CxInfo data to the view
         return view('pages.cxInfos', compact('cxInfos', 'store'));
-    }    
+    }
+
+    public function sendBlastEmails(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'subject' => 'required|string|max:255',
+            'body' => 'required|string',
+        ]);
+    
+        // Retrieve the store using the store_id from the request
+        $store = Store::find($request->input('store_id'));  // Use the store_id from the request
+    
+        if (!$store) {
+            return redirect()->route('cxInfos.index')
+                             ->with('error', 'Store not found or you do not have permission to send an email blast.');
+        }
+    
+        // Retrieve all the customers associated with this store
+        $cxInfos = CxInfo::where('store_id', $store->id)->get();
+    
+        // Loop through all customers and send the email blast
+        foreach ($cxInfos as $cxInfo) {
+            if ($cxInfo->email) { // Only send email if the customer has an email address
+                Mail::to($cxInfo->email)->send(new EmailBlastMail($request->subject, $request->body, $store->store_name));
+            }
+        }
+    
+        // Redirect with a success message
+        return redirect()->route('cxInfos.index', ['store_id' => $store->id])
+                         ->with('success', 'Email blast sent successfully!');
+    }
+    
 }
+

@@ -116,6 +116,6 @@ Route::get('/usc-returns', [UscReturnController::class, 'index'])->name('usc-ret
 
 // CX INFOS
 Route::get('/cx-infos', [CxInfoController::class, 'index'])->name('cxInfos.index');
-
+Route::post('/send-blast-emails', [CxInfoController::class, 'sendBlastEmails'])->name('sendBlastEmails');
 
 

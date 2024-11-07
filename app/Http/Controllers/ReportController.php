@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth'); // Require authentication for all methods in this controller
+    }
+
+    
     public function index(Request $request)
     {
         $user = Auth::user(); // Fetch authenticated user
