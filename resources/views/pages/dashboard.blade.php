@@ -11,6 +11,18 @@
         <div class="loading-spinner" id="loadingSpinner"></div>
     </div>
 
+    @if(session('success'))
+        <div id="success-message" class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div id="error-message" class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="dashboard-page">
         {{--<div class="promo-modal" id="promoModal" style="display: none;">
             <div class="promo-modal-content">
@@ -139,7 +151,7 @@
                                     <td>{{ $store->store_name }}</td>
                                     <td class="text-center">
                                         <!-- View Customers Button -->
-                                        <a href="{{ route('cxInfos.index', ['store_id' => $store->id]) }}" class="btn btn-info">View Customers</a>
+                                        <a href="{{ route('tallies.index', ['store_id' => $store->id]) }}" class="btn btn-info">View Earnings</a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -152,7 +164,7 @@
                 </div>
             </div>                     
 
-            <div class="dashboard-container">
+            {{--<div class="dashboard-container">
                 <p class="welcome-message">Tallies Yesterday</p>
                 @if($tallies->isEmpty())
                     <p class="no-tallies-message">No tallies available for yesterday.</p>
@@ -179,7 +191,7 @@
                         <a href="/tallies" class="btn btn-success">View Tallies</a>
                     </div>
                 @endif
-            </div>
+            </div>--}}
             
             <div class="dashboard-container">
                 <h2 class="welcome-message">Monthly Sales Totals</h2>
@@ -188,9 +200,9 @@
                 <div class="form-group">
                     <label for="storeSelect">Select Store:</label>
                     <select id="storeSelect" class="form-control" name="store_id">
-                        <option value="">All Stores</option>
                         @foreach($stores as $store)
-                            <option value="{{ $store->id }}" {{ (isset($selectedStoreId) && $selectedStoreId == $store->id) ? 'selected' : '' }}>
+                            <option value="{{ $store->id }}" 
+                                {{ (isset($selectedStoreId) && $selectedStoreId == $store->id) ? 'selected' : '' }}>
                                 {{ $store->store_name }}
                             </option>
                         @endforeach
@@ -198,14 +210,10 @@
                 </div>
             
                 <canvas id="monthlySalesChart"></canvas>
-
-                <div class="text-center mt-3">
-                    <a href="/reports" class="btn btn-success">View Reports</a>
-                </div>
-            </div>            
+            </div>                      
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=6.1') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=6.2') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const monthlyData = @json(array_values($monthlyData));
@@ -215,5 +223,5 @@
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=6.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=6.2') }}">
 @endsection

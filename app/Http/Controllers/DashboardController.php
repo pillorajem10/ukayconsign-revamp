@@ -31,7 +31,7 @@ class DashboardController extends Controller
         // Fetch stores for the authenticated user
         $stores = Store::where('store_owner', $user->id)->get(); // Filter stores by the authenticated user's ID
 
-        $selectedStoreId = $request->input('store_id', '');
+        $selectedStoreId = $request->input('store_id', $stores->first()->id ?? null);  // Use first store if no store is selected
     
         // Initialize an array to hold earnings data
         $storeEarnings = [];
@@ -103,11 +103,11 @@ class DashboardController extends Controller
             $store = Store::where('id', $selectedStoreId)
                 ->where('store_owner', $user->id)
                 ->first();
-    
+
             if (!$store) {
                 return redirect()->route('home')->with('error', 'You don\'t have authority to access this store');
             }
-    
+
             // Fetch monthly totals for the selected store
             $monthlyTotals = Sale::selectRaw('SUM(total) as total, MONTH(createdAt) as month')
                 ->where('sale_made', $selectedStoreId) // Filter by selected store
@@ -116,7 +116,7 @@ class DashboardController extends Controller
                 ->orderBy('month')
                 ->get()
                 ->keyBy('month');
-    
+
             // Create an array for all months
             $monthlyData = [];
             for ($i = 1; $i <= 12; $i++) {
@@ -131,7 +131,7 @@ class DashboardController extends Controller
                 ->orderBy('month')
                 ->get()
                 ->keyBy('month');
-    
+
             // Create an array for all months
             $monthlyData = [];
             for ($i = 1; $i <= 12; $i++) {

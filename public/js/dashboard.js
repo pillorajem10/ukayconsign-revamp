@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const ctx = document.getElementById('monthlySalesChart').getContext('2d');
     console.log('MONTHLY DATAAA', monthlyData);
     const monthlySalesChart = new Chart(ctx, {
-        type: 'bar', // or 'line' for a line chart
+        type: 'bar', // Keep the bar chart type
         data: {
             labels: [
                 'Jan', 'Feb', 'Mar', 'Apr', 'May', 
@@ -86,15 +86,16 @@ document.addEventListener('DOMContentLoaded', function() {
         },
         options: {
             responsive: true,
+            indexAxis: 'y', // Set the index axis to 'y' for horizontal bars
             scales: {
-                y: {
+                x: {
                     beginAtZero: true,
                     title: {
                         display: true,
                         text: 'Total Sales (₱)'
                     }
                 },
-                x: {
+                y: {
                     title: {
                         display: true,
                         text: 'Months'
@@ -102,5 +103,5 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
-    });
+    });       
 });

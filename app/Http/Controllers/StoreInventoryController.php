@@ -25,7 +25,7 @@ class StoreInventoryController extends Controller
         
         // Check if store_id is provided in the request
         if (!$request->filled('store_id')) {
-            return redirect()->route('home')->with('error', 'Store id not found.');
+            return redirect()->route('dashboard')->with('error', 'Store id not found.');
         }
     
         $query = StoreInventory::query();
@@ -36,7 +36,7 @@ class StoreInventoryController extends Controller
                       ->first();
     
         if (!$store) {
-            return redirect()->route('home')->with('error', 'You don\'t have the authority to access that store.');
+            return redirect()->route('dashboard')->with('error', 'You don\'t have the authority to access that store.');
         }
     
         $query->where('store_id', $request->store_id);

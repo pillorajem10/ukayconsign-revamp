@@ -19,6 +19,7 @@ use App\Http\Controllers\TallyController;
 use App\Http\Controllers\InstantBuyProductController;
 use App\Http\Controllers\StaticPagesController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SaleBreakdownController;
 
 /*
 |--------------------------------------------------------------------------
@@ -117,5 +118,8 @@ Route::get('/usc-returns', [UscReturnController::class, 'index'])->name('usc-ret
 // CX INFOS
 Route::get('/cx-infos', [CxInfoController::class, 'index'])->name('cxInfos.index');
 Route::post('/send-blast-emails', [CxInfoController::class, 'sendBlastEmails'])->name('sendBlastEmails');
+
+// SALE BREAKDOWN
+Route::get('/sale-breakdown', [SaleBreakdownController::class, 'index'])->name('saleBreakdown.index');
 
 

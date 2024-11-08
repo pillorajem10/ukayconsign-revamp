@@ -24,7 +24,7 @@ class UscReturnController extends Controller
                       ->first();
     
         if (!$store) {
-            return redirect()->route('home')->with('error', 'You don\'t have the authority to access that store.');
+            return redirect()->route('dashboard')->with('error', 'You don\'t have the authority to access that store.');
         }
     
         // Check if the SKU exists in the StoreInventory for the specified store
@@ -89,7 +89,7 @@ class UscReturnController extends Controller
                       ->first();
     
         if (!$store) {
-            return redirect()->route('home')->with('error', 'You don\'t have the authority to access that store.');
+            return redirect()->route('dashboard')->with('error', 'You don\'t have the authority to access that store.');
         }
     
         // Fetch return requests filtered by store_id and paginate (limit 10)

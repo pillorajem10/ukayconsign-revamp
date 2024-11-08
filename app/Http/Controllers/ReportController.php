@@ -38,7 +38,7 @@ class ReportController extends Controller
                 ->first();
 
             if (!$store) {
-                return redirect()->route('home')->with('error', 'You don\'t have authority to access this sales list');
+                return redirect()->route('dashboard')->with('error', 'You don\'t have authority to access this sales list');
             }
         }
 
