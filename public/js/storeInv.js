@@ -16,6 +16,6 @@ function toggleEdit(id) {
         // Hide the form and show the text
         form.style.display = "none";
         textSpan.style.display = "inline";
-        editButton.innerHTML = "Edit"; // Change button text back to "Edit"
+        editButton.innerHTML = "Edit Retail Price"; // Change button text back to "Edit"
     }
 }

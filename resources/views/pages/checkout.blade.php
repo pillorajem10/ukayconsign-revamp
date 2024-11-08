@@ -60,7 +60,7 @@
                     </div>
                     <div class="checkout-page-form-group">
                         <label for="fb_link" class="checkout-page-label">Facebook Link</label>
-                        <input type="url" name="fb_link" id="fb_link" class="checkout-page-input" value="{{ old('fb_link') }}">
+                        <input type="url" name="fb_link" id="fb_link" class="checkout-page-input" value="{{ old('fb_link') }}" required>
                     </div>
                     <div class="checkout-page-form-group">
                         <label for="phone_number" class="checkout-page-label">Phone Number</label>
@@ -80,7 +80,7 @@
                     </div>
                     <div class="checkout-page-form-group">
                         <label for="estimated_items_sold_per_month" class="checkout-page-label">Estimated Items Sold Per Month</label>
-                        <input type="number" name="estimated_items_sold_per_month" id="estimated_items_sold_per_month" class="checkout-page-input" value="{{ old('estimated_items_sold_per_month') }}" min="0">
+                        <input type="number" name="estimated_items_sold_per_month" id="estimated_items_sold_per_month" class="checkout-page-input" value="{{ old('estimated_items_sold_per_month') }}" min="0" required>
                     </div>
                 @endif
                 
@@ -104,7 +104,7 @@
                 </div>--}}
                 <div class="checkout-page-form-group">
                     <label for="store_fb_link" class="checkout-page-label">Store Facebook Link</label>
-                    <input type="url" name="store_fb_link" id="store_fb_link" class="checkout-page-input" value="{{ old('store_fb_link') }}">
+                    <input type="url" name="store_fb_link" id="store_fb_link" class="checkout-page-input" value="{{ old('store_fb_link') }}" required>
                 </div>
                 
                 <div class="checkout-page-form-group">

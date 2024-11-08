@@ -152,7 +152,7 @@
                 </div>
             </div>                     
 
-            {{--<div class="dashboard-container">
+            <div class="dashboard-container">
                 <p class="welcome-message">Tallies Yesterday</p>
                 @if($tallies->isEmpty())
                     <p class="no-tallies-message">No tallies available for yesterday.</p>
@@ -179,7 +179,7 @@
                         <a href="/tallies" class="btn btn-success">View Tallies</a>
                     </div>
                 @endif
-            </div>--}}
+            </div>
             
             <div class="dashboard-container">
                 <h2 class="welcome-message">Monthly Sales Totals</h2>

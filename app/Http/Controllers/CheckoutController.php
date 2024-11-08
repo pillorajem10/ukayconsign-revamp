@@ -63,9 +63,9 @@ class CheckoutController extends Controller
                 'password' => 'required|min:8',
                 'estimated_items_sold_per_month' => 'nullable|integer|min:0', // Add validation for this field
                 'fb_link' => 'nullable|string|max:255',
-                'government_id_card' => 'required|file|mimes:jpg,png,pdf|max:2048',
-                'proof_of_billing' => 'required|file|mimes:jpg,png,pdf|max:2048',
-                'selfie_uploaded' => 'required|file|mimes:jpg,png|max:2048',
+                'government_id_card' => 'required|file|mimes:jpg,png,pdf|max:5048',
+                'proof_of_billing' => 'required|file|mimes:jpg,png,pdf|max:5048',
+                'selfie_uploaded' => 'required|file|mimes:jpg,png|max:5048',
             ], [
                 'first_name.required' => 'First name is required.',
                 'last_name.required' => 'Last name is required.',
