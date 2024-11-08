@@ -1,0 +1,5 @@
+.chart-container {
+    max-width: 500px; /* Set your desired max-width */
+    width: 100%;
+    margin: 0 auto; /* Optional: centers the container */
+}

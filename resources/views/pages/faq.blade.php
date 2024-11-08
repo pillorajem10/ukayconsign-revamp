@@ -34,5 +34,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/faq.css?v=6.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/faq.css?v=6.3') }}">
 @endsection

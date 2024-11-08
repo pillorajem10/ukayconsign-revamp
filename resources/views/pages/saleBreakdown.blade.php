@@ -29,6 +29,17 @@
         @else
             <p>No breakdown data available for this store.</p>
         @endif
+
+        <!-- Chart.js Pie Chart -->
+        <div class="chart-container">
+            <canvas id="salesPieChart"></canvas>
+        </div>
+
+        <!-- Pass breakdown data to JS using a data attribute -->
+        <div id="breakdownData" data-breakdown="{{ json_encode($breakdown) }}" style="display: none;"></div>
+
+        <script src="{{ asset('js/sale-breakdown.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </div>
 @endsection
 
@@ -36,6 +47,3 @@
     <link rel="stylesheet" href="{{ asset('css/sale-breakdown.css') }}">
 @endsection
 
-@section('scripts')
-    <script src="{{ asset('js/sale-breakdown.js') }}"></script>
-@endsection
