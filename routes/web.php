@@ -105,7 +105,7 @@ Route::get('/instant-buy/create', [InstantBuyProductController::class, 'create']
 Route::post('/instant-buy', [InstantBuyProductController::class, 'store'])->name('instant_buy_products.store');
 
 // REPORTS
-Route::get('/reports', [ReportController::class, 'index'])->name('reports');
+// Route::get('/reports', [ReportController::class, 'index'])->name('reports');
 
 // STATIC PAGES
 Route::get('/how-to-use-usc', [StaticPagesController::class, 'howToUseUSC'])->name('how.to.use.usc');
