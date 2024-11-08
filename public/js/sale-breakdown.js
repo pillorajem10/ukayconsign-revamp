@@ -15,8 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
             data: data,
             backgroundColor: [
                 '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#FF9F40', 
-                '#9966FF', '#FF6F61', '#C2C2C2', '#8B008B', '#A9A9A9'
-            ],
+                '#9966FF', '#FF6F61', '#C2C2C2', '#8B008B', '#A9A9A9', 
+                '#00FF7F', '#FFD700', '#F08080', '#D2691E', '#4682B4', 
+                '#8A2BE2', '#FF4500', '#2E8B57', '#A52A2A', '#20B2AA', 
+                '#0000FF', '#FF1493', '#FFD700', '#8B4513', '#C71585', 
+                '#20B2AA', '#7B68EE', '#FF6347', '#DDA0DD', '#ADFF2F',
+                '#FF8C00', '#3CB371', '#B22222', '#FF69B4', '#9400D3',
+                '#00FA9A', '#008B8B', '#A52A2A', '#800080', '#00BFFF'
+            ],            
             borderColor: '#fff',
             borderWidth: 1
         }]
