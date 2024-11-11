@@ -6,6 +6,10 @@
     <div>
         <h1>Request Return</h1>
 
+        <div class="mb-3">
+            <a href="{{ route('store-inventory.index', ['store_id' => request('store_id')]) }}" class="btn btn-secondary">Back to Inventory</a>
+        </div>
+
         <form action="{{ route('usc-returns.store') }}" method="POST">
             @csrf
             <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">

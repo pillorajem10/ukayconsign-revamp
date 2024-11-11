@@ -6,6 +6,10 @@
     <div class="sales-container">
         <h2 class="page-title">Sales Records</h2>
 
+        <div class="back-to-dashboard">
+            <a href="{{ route('stores.index') }}" class="btn btn-secondary">Back to Stores</a>
+        </div>
+        
         <!-- Filter Form -->
         <div class="filter-form-container">
             <form action="{{ url('sales') }}" method="GET" class="filter-form">
@@ -86,5 +90,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/saleDetails.css?v=6.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/saleDetails.css?v=6.6') }}">
 @endsection

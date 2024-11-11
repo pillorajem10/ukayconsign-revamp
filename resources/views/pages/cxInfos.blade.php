@@ -41,8 +41,11 @@
             </form>
         </div>
 
-        <!-- Button to trigger the modal -->
-        <div class="text-center mt-4">
+        <div class="back-to-dashboard">
+            <a href="{{ route('stores.index') }}" class="btn btn-secondary">Back to Stores</a>
+        </div>
+
+        <div class="mt-4">
             <button class="btn btn-primary" id="openEmailBlastModal">Write Email Blast</button>
         </div>
 
@@ -115,10 +118,10 @@
         </div>
               
         
-        <script src="{{ asset('js/cxInfos.js?v=6.5') }}"></script>
+        <script src="{{ asset('js/cxInfos.js?v=6.6') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/cxInfos.css?v=6.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/cxInfos.css?v=6.6') }}">
 @endsection

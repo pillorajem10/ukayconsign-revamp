@@ -15,6 +15,10 @@
             </div>
         @endif
 
+        <div class="back-to-dashboard">
+            <a href="{{ route('stores.index') }}" class="btn btn-secondary">Back to Stores</a>
+        </div>
+
         <div class="table-responsive">
             <table class="table table-striped table-hover return-request-table">
                 <thead class="table-header">
@@ -51,5 +55,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/returnRequestList.css?v=6.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/returnRequestList.css?v=6.6') }}">
 @endsection

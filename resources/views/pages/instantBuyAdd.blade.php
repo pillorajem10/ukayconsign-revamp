@@ -6,6 +6,10 @@
 <div>
     <h1 class="add-product-title">Add Instant Buy Product</h1>
 
+    <div class="back-to-dashboard">
+        <a href="{{ route('stores.index') }}" class="btn btn-secondary">Back to Stores</a>
+    </div>
+
     {{-- Display success and error messages --}}
     @if(session('success'))
         <div class="alert alert-success">
@@ -96,5 +100,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/instantBuyAdd.css?v=6.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/instantBuyAdd.css?v=6.6') }}">
 @endsection

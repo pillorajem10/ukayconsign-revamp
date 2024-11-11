@@ -85,10 +85,10 @@
             const quantityPerBundle = @json($quantityPerBundle);
             const dailySales = @json($dailySales); // New daily sales data
         </script>
-        <script src="{{ asset('js/reports.js?v=6.5') }}"></script>
+        <script src="{{ asset('js/reports.js?v=6.6') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/reports.css?v=6.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/reports.css?v=6.6') }}">
 @endsection

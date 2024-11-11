@@ -5,6 +5,11 @@
 @section('content')
     <div class="instant-buy-container">
         <h1 class="instant-buy-title">Instant Buy Products</h1>
+        
+        <div class="back-to-dashboard">
+            <a href="{{ route('stores.index') }}" class="btn btn-secondary">Back to Stores</a>
+        </div>
+
         <div class="table-responsive"> <!-- Added a wrapper for scrolling -->
             <table class="instant-buy-table">
                 <thead>
@@ -48,5 +53,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/instantBuyList.css?v=6.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/instantBuyList.css?v=6.6') }}">
 @endsection

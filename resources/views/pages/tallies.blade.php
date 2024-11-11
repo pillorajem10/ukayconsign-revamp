@@ -6,7 +6,10 @@
     <div class="tallies-container">
         <p class="welcome-message">Earnings of {{ $store->store_name }}</p>
 
-        <!-- Filter Dropdown -->
+        <div class="back-to-dashboard">
+            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+        
         <form method="GET" action="{{ route('tallies.index') }}" class="mb-3">
             <div class="form-row align-items-center">
                 <div class="col-auto">
@@ -75,7 +78,7 @@
             </div>
         @endif
 
-        <script src="{{ asset('js/tallies.js?v=6.5') }}"></script>
+        <script src="{{ asset('js/tallies.js?v=6.6') }}"></script>
     </div>
 
     <nav aria-label="Page navigation">
@@ -87,5 +90,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/tallies.css?v=6.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/tallies.css?v=6.6') }}">
 @endsection

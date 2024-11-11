@@ -6,6 +6,10 @@
     <div class="sale-breakdown-container">
         <h1>Sale Breakdown</h1>
 
+        <div class="mb-3">
+            <a href="{{ route('tallies.index', ['store_id' => request('store_id')]) }}" class="btn btn-secondary">Back To Earnings</a>
+        </div>
+
         <!-- Display Sale Breakdown Table -->
         @if(count($breakdown) > 0)
             <div class="table-responsive">
@@ -38,12 +42,12 @@
         <!-- Pass breakdown data to JS using a data attribute -->
         <div id="breakdownData" data-breakdown="{{ json_encode($breakdown) }}" style="display: none;"></div>
 
-        <script src="{{ asset('js/sale-breakdown.js?v=6.5') }}"></script>
+        <script src="{{ asset('js/sale-breakdown.js?v=6.6') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/sale-breakdown.css?v=6.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/sale-breakdown.css?v=6.6') }}">
 @endsection
 

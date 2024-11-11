@@ -4,6 +4,10 @@
 
 @section('content')
     <div>
+        <div class="back-to-dashboard">
+            <a href="{{ route('dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+        
         <h1 class="text-center mb-4">Orders</h1>
 
         <div class="row">
@@ -104,5 +108,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=6.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=6.6') }}">
 @endsection
