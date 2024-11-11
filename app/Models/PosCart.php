@@ -22,6 +22,7 @@ class PosCart extends Model
         'discount',
         'user',
         'store_id', // New field added
+        'barcode_numbers', // Add this field to the fillable array
     ];
 
     protected $casts = [
@@ -30,6 +31,7 @@ class PosCart extends Model
         'sub_total' => 'decimal:2',
         'orig_total' => 'decimal:2',
         'discount' => 'decimal:2',
+        'barcode_numbers' => 'array', // Cast it to array if you're saving it as a JSON-like structure
     ];
 
     public $timestamps = false; // Set to true if you have created_at and updated_at columns

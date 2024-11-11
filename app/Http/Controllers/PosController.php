@@ -101,7 +101,22 @@ class PosController extends Controller
     
             // If the selected action is "POS", add the product to the PosCart
             if ($selectedAction === 'pos') {
-                $this->addToPosCart($storeInventoryDetails);
+                $barcode = ProductBarcode::where('barcode_number', $request->barcode_number)
+                                         ->first();
+                if ($barcode) {
+                    if ($barcode->is_used) {
+                        return redirect()->route('pos.index', ['store_id' => $store_id])->with('error', 'Barcode has already been used.');
+                    }
+                    
+                    $barcode->is_used = true;
+                    $barcode->save(); // Save the updated barcode
+                } else {
+                    return redirect()->route('pos.index', ['store_id' => $store_id])->with('error', 'Barcode not found.');
+                }
+
+    
+                // Pass the barcode_number when calling addToPosCart
+                $this->addToPosCart($storeInventoryDetails, $request->barcode_number);
             }
         }
     
@@ -117,6 +132,7 @@ class PosController extends Controller
     
         return view('pages.pos', compact('productDetails', 'storeInventoryDetails', 'stores', 'posCarts', 'selectedAction'));
     }
+    
     
 
 
@@ -162,7 +178,7 @@ class PosController extends Controller
 
 
 
-    private function addToPosCart($storeInventoryDetails)
+    private function addToPosCart($storeInventoryDetails, $barcodeNumber)
     {
         $existingCart = PosCart::where('product_sku', $storeInventoryDetails->SKU)
             ->where('user', auth()->id())
@@ -174,6 +190,12 @@ class PosController extends Controller
             $existingCart->quantity += 1; // Increment by 1
             $existingCart->orig_total = $existingCart->quantity * $existingCart->price; // Update total
             $existingCart->sub_total = max(0, $existingCart->orig_total - $existingCart->discount); // Update sub-total
+    
+            // Append the new barcode number to the barcode_numbers field
+            $barcodeNumbers = json_decode($existingCart->barcode_numbers, true); // Decode the existing barcode numbers into an array
+            $barcodeNumbers[] = $barcodeNumber; // Add the new barcode number
+            $existingCart->barcode_numbers = json_encode($barcodeNumbers); // Encode back into JSON and save
+    
             $existingCart->save(); // Save the updated cart
         } else {
             // If it doesn't exist, create a new PosCart entry
@@ -189,9 +211,14 @@ class PosController extends Controller
             $posCart->discount = 0;
             $posCart->store_id = $storeInventoryDetails->store_id;
     
+            // Initialize barcode_numbers as an array with the first barcode number
+            $posCart->barcode_numbers = json_encode([$barcodeNumber]);
+    
             $posCart->save(); // Save the new cart entry
         }
     }
+    
+    
     
 
 
@@ -328,38 +355,50 @@ class PosController extends Controller
             'product_sku' => 'required|string',
             'store_id' => 'required|integer',
         ]);
-
+    
         $userId = auth()->id();
         $storeId = $request->input('store_id');
         $productSku = $request->input('product_sku');
-
+    
         // Find the item in the PosCart
         $posCartItem = PosCart::where('product_sku', $productSku)
             ->where('user', $userId)
             ->where('store_id', $storeId)
             ->first();
-
+    
         if (!$posCartItem) {
             return redirect()->route('pos.index', ['store_id' => $storeId])
                 ->with('error', 'Item not found in the cart.');
         }
-
+    
         // Update stock in StoreInventory
         $storeInventory = StoreInventory::where('SKU', $productSku)
             ->where('store_id', $storeId)
             ->first();
-
+    
         if ($storeInventory) {
             $storeInventory->Stocks += $posCartItem->quantity; // Re-add the stock
             $storeInventory->save();
         }
-
+    
+        // Loop through the barcode_numbers and set is_used to false for each barcode
+        $barcodeNumbers = json_decode($posCartItem->barcode_numbers, true); // Decode the barcode_numbers array
+        foreach ($barcodeNumbers as $barcodeNumber) {
+            $barcode = ProductBarcode::where('barcode_number', $barcodeNumber)->first();
+            
+            if ($barcode) {
+                $barcode->is_used = false; // Set is_used to false
+                $barcode->save(); // Save the updated barcode
+            }
+        }
+    
         // Remove the item from the PosCart
         $posCartItem->delete();
-
+    
         return redirect()->route('pos.index', ['store_id' => $storeId])
             ->with('success', 'Item voided successfully.');
     }
+    
 
 
 
