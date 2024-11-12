@@ -1,0 +1,91 @@
+/* General container styling */
+.billing-breakdown-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Title styling */
+.billing-breakdown-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Billing information section */
+.billing-info {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+.billing-info p {
+    margin: 5px 0;
+}
+
+/* Breakdown section title */
+.breakdown-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+/* Table Styling */
+.table-container {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.billing-breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.billing-breakdown-table th, .billing-breakdown-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.billing-breakdown-table th {
+    background-color: #f8f9fa;
+    color: #495057;
+    font-weight: bold;
+}
+
+.billing-breakdown-table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.billing-breakdown-table tr:hover {
+    background-color: #e9ecef;
+}
+
+/* No records message */
+.no-records {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .billing-breakdown-title {
+        font-size: 1.5rem;
+    }
+
+    .billing-info {
+        font-size: 1rem;
+    }
+
+    .billing-breakdown-table th, .billing-breakdown-table td {
+        padding: 2px;
+        font-size: 0.7rem;
+    }
+
+    .billing-breakdown-table th {
+        font-size: 1rem;
+    }
+
+}
