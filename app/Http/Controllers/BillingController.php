@@ -105,6 +105,9 @@ class BillingController extends Controller
             'proof_of_payment' => 'nullable|file|mimes:jpg,jpeg,png,pdf,docx|max:10240', // Max 10MB
         ]);
 
+        // Set the status to "Pending"
+        $billing->status = 'Pending';
+
         // Update the payment platform field
         $billing->payment_platform = $validated['payment_platform'];
 
@@ -123,6 +126,6 @@ class BillingController extends Controller
         $billing->save();
 
         // Redirect back with a success message
-        return redirect()->route('billings.index')->with('success', 'Proof of payment uploaded successfully.');
+        return redirect()->route('billings.index')->with('success', 'Proof of payment uploaded and status set to Pending.');
     }
 }
