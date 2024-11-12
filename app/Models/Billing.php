@@ -23,6 +23,8 @@ class Billing extends Model
         'total_bill',
         'billing_breakdown',  // Added this field to the fillable array
         'sales_date_range',   // Add the sales_date_range field here
+        'payment_platform',   // New field for payment platform
+        'proof_of_payment',   // New field for proof of payment (binary data)
     ];
 
     // Relationship with the User model (if applicable)

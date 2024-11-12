@@ -58,6 +58,56 @@
     background-color: #f1f1f1;
 }
 
+.action-btns {
+    display: flex;
+    gap: 10px;
+}
+
+/* General styling for action buttons */
+.action-btn {
+    display: inline-block; /* Allow buttons to sit side by side */
+    padding: 10px 20px; /* Add padding for larger buttons */
+    margin: 5px; /* Space out the buttons */
+    font-size: 14px; /* Set the font size */
+    text-align: center; /* Center text inside the button */
+    text-decoration: none; /* Remove underline from links */
+    border-radius: 5px; /* Rounded corners for a modern look */
+    transition: all 0.3s ease; /* Smooth hover effect */
+}
+
+/* Default style for 'View Breakdown' button */
+.action-btn:first-child {
+    background-color: #4CAF50; /* Green background for View Breakdown */
+    color: white; /* White text */
+    border: 2px solid #4CAF50; /* Border color matching the background */
+}
+
+.action-btn:last-child {
+    background-color: white; /* White background */
+    color: #28a745; /* Green font color */
+    border: 2px solid #28a745; /* Green border */
+}
+
+
+/* Hover effect for both buttons */
+.action-btn:hover {
+    opacity: 0.8; /* Slightly reduce opacity on hover */
+    transform: translateY(-3px); /* Lift the button a bit on hover */
+    text-decoration: none; /* Remove underline from links */
+}
+
+/* Active state for when the button is clicked */
+.action-btn:active {
+    transform: translateY(0); /* Button goes back to normal when clicked */
+}
+
+/* Focus state for accessibility */
+.action-btn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Custom focus outline */
+}
+
+
 /* Responsive Design for screens below 600px */
 @media (max-width: 600px) {
     .billing-container {
@@ -79,10 +129,15 @@
     }
 
     .billing-table th {
-        font-size: 1.1rem;
+        font-size: .7rem;
     }
 
     .billing-table td {
-        font-size: 0.95rem;
+        font-size: 0.7rem;
+    }
+
+    .action-btn {
+        font-size: 10px;
+        padding: 2px;
     }
 }

@@ -241,7 +241,7 @@
             </div>                      
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=6.7') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=6.8') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const monthlyData = @json(array_values($monthlyData));
@@ -251,5 +251,5 @@
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=6.7') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=6.8') }}">
 @endsection

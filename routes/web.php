@@ -126,5 +126,9 @@ Route::get('/sale-breakdown', [SaleBreakdownController::class, 'index'])->name('
 // BILLING
 Route::get('/billings', [BillingController::class, 'index'])->name('billings.index');
 Route::get('/billings/{id}', [BillingController::class, 'show'])->name('billings.show');
+Route::get('/billings/{id}/upload-proof', [BillingController::class, 'showUploadProofOfPayment'])->name('billings.showUploadProofOfPayment');
+Route::put('/billings/{id}/update-payment', [BillingController::class, 'updatePayment'])->name('billings.updatePayment');
+
+
 
 
