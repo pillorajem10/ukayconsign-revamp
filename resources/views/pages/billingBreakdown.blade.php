@@ -5,6 +5,10 @@
 @section('content')
     <div class="billing-breakdown-container">
         <h1 class="billing-breakdown-title">Billing Breakdown for Billing ID: {{ $billing->id }}</h1>
+
+        <div class="back-to-dashboard">
+            <a href="{{ route('billings.index') }}" class="btn btn-secondary">Back To Billings</a>
+        </div>
         
         <div class="billing-info">
             <p><strong>Issued On:</strong> {{ $billing->bill_issued }}</p>

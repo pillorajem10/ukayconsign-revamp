@@ -19,8 +19,8 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Status</th>
                             <th>Total Bill</th>
+                            <th>Status</th>
                             <th>Issued On</th>
                             <th>Action</th> <!-- Added a column for the action -->
                         </tr>
@@ -29,9 +29,9 @@
                         @foreach ($billings as $billing)
                             <tr>
                                 <td>{{ $billing->id }}</td>
-                                <td>{{ $billing->status }}</td>
                                 <td>₱{{ number_format($billing->total_bill, 2) }}</td>
-                                <td>{{ $billing->bill_issued }}</td>
+                                <td>{{ $billing->status }}</td>
+                                <td>{{ \Carbon\Carbon::parse($billing->bill_issued)->format('M. d, Y') }}</td>
                                 <td>
                                     <!-- "View Breakdown" button which links to the 'show' route -->
                                     <a href="{{ route('billings.show', $billing->id) }}" class="btn btn-primary">View Breakdown</a>
