@@ -111,6 +111,34 @@
                 <div class="text-center mt-3">
                     <a href="/orders" class="btn btn-success">Check Orders</a>
                 </div>
+            </div>
+            
+            <div class="dashboard-container billing-container">
+                <h2 class="welcome-message">Your Latest Billing</h2>
+                
+                @if($billings->isEmpty())
+                    <p>No billing records available.</p>
+                @else
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Total</th>
+                                <th>Issued On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($billings as $billing)
+                                <tr>
+                                    <td>₱{{ number_format($billing->total_bill, 2) }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($billing->bill_issued)->format('M d, Y') }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @endif
+                <div class="text-center mt-3">
+                    <a href="/billings" class="btn btn-success">Check Billings</a>
+                </div>
             </div>            
         </div>
 

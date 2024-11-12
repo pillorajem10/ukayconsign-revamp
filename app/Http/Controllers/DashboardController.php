@@ -11,6 +11,7 @@ use App\Models\Tally;
 use App\Models\Store;
 use App\Models\Sale;
 use App\Models\Order;
+use App\Models\Billing;
 
 use Carbon\Carbon;
 
@@ -30,7 +31,7 @@ class DashboardController extends Controller
     
         // Fetch stores for the authenticated user
         $stores = Store::where('store_owner', $user->id)->get(); // Filter stores by the authenticated user's ID
-
+    
         $selectedStoreId = $request->input('store_id', $stores->first()->id ?? null);  // Use first store if no store is selected
     
         // Initialize an array to hold earnings data
@@ -58,7 +59,11 @@ class DashboardController extends Controller
             ->get(); // Retrieve the filtered sales
     
         // Fetch orders for the authenticated user
-        $orders = Order::where('user_id', $user->id)->get(); // Filter orders by user ID
+        $orders = Order::where('user_id', $user->id)
+               ->orderBy('createdAt', 'desc') // Sort by the 'created_at' column in descending order
+               ->take(5) // Limit to the 5 most recent orders
+               ->get(); // Retrieve the orders
+
     
         // Initialize an array to count occurrences of each product
         $productCounts = [];
@@ -103,11 +108,11 @@ class DashboardController extends Controller
             $store = Store::where('id', $selectedStoreId)
                 ->where('store_owner', $user->id)
                 ->first();
-
+    
             if (!$store) {
                 return redirect()->route('home')->with('error', 'You don\'t have authority to access this store');
             }
-
+    
             // Fetch monthly totals for the selected store
             $monthlyTotals = Sale::selectRaw('SUM(total) as total, MONTH(createdAt) as month')
                 ->where('sale_made', $selectedStoreId) // Filter by selected store
@@ -116,7 +121,7 @@ class DashboardController extends Controller
                 ->orderBy('month')
                 ->get()
                 ->keyBy('month');
-
+    
             // Create an array for all months
             $monthlyData = [];
             for ($i = 1; $i <= 12; $i++) {
@@ -131,7 +136,7 @@ class DashboardController extends Controller
                 ->orderBy('month')
                 ->get()
                 ->keyBy('month');
-
+    
             // Create an array for all months
             $monthlyData = [];
             for ($i = 1; $i <= 12; $i++) {
@@ -139,7 +144,15 @@ class DashboardController extends Controller
             }
         }
     
-        // Return the dashboard view with the user's details, promos, stores, most sold products, orders, earnings, tallies, and monthly data
-        return view('pages.dashboard', compact('user', 'promos', 'stores', 'mostSoldProducts', 'orders', 'storeEarnings', 'tallies', 'monthlyData', 'selectedStoreId'));
-    }              
+        // Fetch the latest 5 billing records for the authenticated user
+        $billings = Billing::where('user_id', $user->id)
+            ->latest() // Order by latest first
+            ->limit(5) // Limit to 5 records
+            ->get(); 
+    
+        // Return the dashboard view with the user's details, promos, stores, most sold products, orders, earnings, tallies, monthly data, and billings
+        return view('pages.dashboard', compact(
+            'user', 'promos', 'stores', 'mostSoldProducts', 'orders', 'storeEarnings', 'tallies', 'monthlyData', 'selectedStoreId', 'billings'
+        ));
+    }                
 }

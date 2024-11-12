@@ -1,0 +1,88 @@
+/* General styles for the Billing page */
+.billing-container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.billing-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.no-records {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* Table container with scrollable overflow */
+.table-container {
+    overflow-x: auto;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.billing-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    margin-top: 1rem;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.billing-table th, .billing-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e2e2e2;
+    font-size: 1.1rem;
+}
+
+.billing-table th {
+    background-color: green;
+    color: #fff;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+}
+
+.billing-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.billing-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Responsive Design for screens below 600px */
+@media (max-width: 600px) {
+    .billing-container {
+        padding: 10px;
+    }
+
+    .billing-title {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .no-records {
+        font-size: 1rem;
+    }
+
+    .billing-table th, .billing-table td {
+        padding: 8px;
+        font-size: 1rem;
+    }
+
+    .billing-table th {
+        font-size: 1.1rem;
+    }
+
+    .billing-table td {
+        font-size: 0.95rem;
+    }
+}

@@ -20,6 +20,7 @@ use App\Http\Controllers\InstantBuyProductController;
 use App\Http\Controllers\StaticPagesController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SaleBreakdownController;
+use App\Http\Controllers\BillingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -121,5 +122,9 @@ Route::post('/send-blast-emails', [CxInfoController::class, 'sendBlastEmails'])-
 
 // SALE BREAKDOWN
 Route::get('/sale-breakdown', [SaleBreakdownController::class, 'index'])->name('saleBreakdown.index');
+
+// BILLING
+Route::get('/billings', [BillingController::class, 'index'])->name('billings.index');
+Route::get('/billings/{id}', [BillingController::class, 'show'])->name('billings.show');
 
 

@@ -20,6 +20,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \App\Console\Commands\SaveTally::class,
+        \App\Console\Commands\CreateBillings::class,
+        \App\Console\Commands\CreateBillings2::class,
     ];
 
     /**
