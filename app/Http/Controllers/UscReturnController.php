@@ -99,6 +99,63 @@ class UscReturnController extends Controller
     
         // Pass the returns data and storeId to the view
         return view('pages.returnRequestList', compact('returns', 'storeId'));
-    }    
+    } 
+    
+    public function receivedBackItems($returnId, Request $request)
+    {
+        // Get the authenticated user ID
+        $authId = Auth::id();
+        
+        // Get the store_id from the request (from URL or form data)
+        $storeId = $request->input('store_id');
+        
+        // Fetch the store the user owns, or deny access if it's not their store
+        $store = Store::where('id', $storeId)
+                      ->where('store_owner', $authId)
+                      ->first();
+        
+        // If the store does not exist or does not belong to the user, deny access
+        if (!$store) {
+            return redirect()->route('dashboard')->with('error', 'You don\'t have the authority to access that store.');
+        }
+    
+        // Get the return by ID
+        $return = UscReturn::findOrFail($returnId);
+    
+        // Ensure the return status is valid to update
+        if ($return->return_status != 'Shipped Back To Store') {
+            return redirect()->route('usc-returns.index', ['store_id' => $return->store_id])
+                             ->with('error', 'The return is not in a valid state for receiving back.');
+        }
+    
+        // Update the return status to "Received By Store"
+        $return->return_status = 'Received By Store';
+        $return->save();
+    
+        // Update inventory (add the quantity back to store inventory)
+        $storeId = $return->store_id;
+        $productSku = $return->product_sku;
+        $quantityToAdd = $return->quantity;
+    
+        // Find the inventory record for the store and product SKU
+        $inventory = StoreInventory::where('store_id', $storeId)
+                                    ->where('SKU', $productSku)
+                                    ->first();
+    
+        // If inventory record is found, add back the return quantity
+        if ($inventory) {
+            $inventory->Stocks += $quantityToAdd;
+            $inventory->save();  // Save updated inventory
+        } else {
+            // If no inventory record found, return an error message
+            return redirect()->route('usc-returns.index', ['store_id' => $return->store_id])
+                             ->with('error', 'Inventory record not found.');
+        }
+    
+        // Redirect back with a success message
+        return redirect()->route('usc-returns.index', ['store_id' => $return->store_id])
+                         ->with('success', 'Return received and inventory updated successfully.');
+    }
+    
 }
 

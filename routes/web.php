@@ -115,6 +115,7 @@ Route::get('/how-to-use-usc', [StaticPagesController::class, 'howToUseUSC'])->na
 Route::get('/usc-returns/create', [UscReturnController::class, 'create'])->name('usc-returns.create');
 Route::post('/usc-returns', [UscReturnController::class, 'store'])->name('usc-returns.store');
 Route::get('/usc-returns', [UscReturnController::class, 'index'])->name('usc-returns.index');
+Route::put('/returns/{returnId}/received-back', [UscReturnController::class, 'receivedBackItems'])->name('usc-returns.receivedBack');
 
 // CX INFOS
 Route::get('/cx-infos', [CxInfoController::class, 'index'])->name('cxInfos.index');

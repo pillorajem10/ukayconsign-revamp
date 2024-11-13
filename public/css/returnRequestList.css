@@ -17,6 +17,28 @@
     font-weight: bold;
 }
 
+/* Custom button styling for "Received Back" button */
+.btn-received-back {
+    background-color: #28a745;  /* Blue background (you can customize this) */
+    color: white;                /* White text color */
+    border-radius: 5px;          /* Rounded corners */
+    padding: 10px;          /* Padding for a larger button */
+    font-size: 10px;             /* Font size */
+    border: none;                /* Remove default border */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
+}
+
+.btn-received-back:hover {
+    background-color: darkgreen;   /* Darker blue on hover */
+    transform: scale(1.05);       /* Slight scaling effect on hover */
+}
+
+.btn-received-back:active {
+    background-color: darkgreen;   /* Even darker blue when active */
+    transform: scale(1);          /* Reset scaling when clicked */
+}
+
+
 .return-request-table tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
