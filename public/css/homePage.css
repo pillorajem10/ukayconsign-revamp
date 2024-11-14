@@ -40,8 +40,8 @@
 }
 
 .product-section-card-img {
-    /*width: 100%; /* Full width */
-    height: 16rem; /* Fixed height */
+    width: 100%; /* Full width */
+    height: 100%; /* Fixed height */
     display: flex;
     justify-content: center;
     align-items: center;
