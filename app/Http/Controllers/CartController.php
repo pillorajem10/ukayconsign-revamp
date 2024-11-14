@@ -131,6 +131,36 @@ class CartController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('home')->with('error', 'Failed to delete selected items. Please try again.');
         }
-    }           
+    }
+    
+
+
+    public function addQuantity($cartId)
+    {
+        // Find the cart item
+        $cart = Cart::findOrFail($cartId);
+
+        // Increase the quantity
+        $cart->quantity += 1;
+        $cart->save(); // Save the updated quantity
+
+        return redirect()->route('cart.index')->with('success', 'Quantity increased!');
+    }
+
+
+
+    public function subQuantity($cartId)
+    {
+        // Find the cart item
+        $cart = Cart::findOrFail($cartId);
+
+        // Decrease the quantity if greater than 1
+        if ($cart->quantity > 1) {
+            $cart->quantity -= 1;
+            $cart->save(); // Save the updated quantity
+        }
+
+        return redirect()->route('cart.index')->with('success', 'Quantity decreased!');
+    }
 }
 

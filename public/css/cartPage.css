@@ -37,6 +37,75 @@
     color: #d9534f; /* Red color for emphasis */
 }
 
+/* Style the + button */
+.plus-btn {
+    background-color: #f0f0f0; /* Light background color */
+    color: #007bff; /* Blue text color */
+    border: 1px solid #ccc; /* Light border */
+    padding: 5px 10px; /* Padding inside the button */
+    font-size: 16px; /* Font size */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Show pointer on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.plus-btn:hover {
+    background-color: #007bff; /* Change to blue on hover */
+    color: white; /* Change text color to white */
+    border-color: #007bff; /* Change border color to blue */
+}
+
+.plus-btn:focus {
+    outline: none; /* Remove default outline on focus */
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Add focus shadow */
+}
+
+.plus-btn:disabled {
+    background-color: #e9ecef; /* Disabled button color */
+    color: #6c757d; /* Disabled text color */
+    border: 1px solid #ddd; /* Disabled border color */
+    cursor: not-allowed; /* Change cursor to not-allowed */
+}
+
+.plus-btn:active {
+    background-color: #0056b3; /* Darker blue when pressed */
+    border-color: #0056b3; /* Darker border */
+}
+
+/* Style the - button */
+.minus-btn {
+    background-color: #f0f0f0; /* Light background color */
+    color: #dc3545; /* Red text color */
+    border: 1px solid #ccc; /* Light border */
+    padding: 5px 10px; /* Padding inside the button */
+    font-size: 16px; /* Font size */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Show pointer on hover */
+    transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.minus-btn:hover {
+    background-color: #dc3545; /* Change to red on hover */
+    color: white; /* Change text color to white */
+    border-color: #dc3545; /* Change border color to red */
+}
+
+.minus-btn:focus {
+    outline: none; /* Remove default outline on focus */
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25); /* Add focus shadow */
+}
+
+.minus-btn:disabled {
+    background-color: #e9ecef; /* Disabled button color */
+    color: #6c757d; /* Disabled text color */
+    border: 1px solid #ddd; /* Disabled border color */
+    cursor: not-allowed; /* Change cursor to not-allowed */
+}
+
+.minus-btn:active {
+    background-color: #c82333; /* Darker red when pressed */
+    border-color: #c82333; /* Darker border */
+}
 
 
 

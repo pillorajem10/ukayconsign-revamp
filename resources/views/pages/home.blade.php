@@ -55,14 +55,14 @@
         <div class="prodlist-cont">
             @include('sections.productList', ['products' => $groupedProducts]) 
         </div> 
-        <div class="cart-cont">
+        {{--<div class="cart-cont">
             @include('sections.cartList', ['carts' => $carts]) 
-        </div>
+        </div>--}}
     </div>
 
-    <script src="{{ asset('js/home.js?v=6.9') }}"></script>
+    <script src="{{ asset('js/home.js?v=7.0') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=6.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=7.0') }}">
 @endsection

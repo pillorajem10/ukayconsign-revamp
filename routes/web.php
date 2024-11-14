@@ -62,6 +62,8 @@ Route::get('/products', function () {
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/delete-selected', [CartController::class, 'deleteSelected'])->name('cart.deleteSelected');
+Route::post('/cart/add-quantity/{cartId}', [CartController::class, 'addQuantity'])->name('cart.addQuantity');
+Route::post('/cart/sub-quantity/{cartId}', [CartController::class, 'subQuantity'])->name('cart.subQuantity');
 Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
 

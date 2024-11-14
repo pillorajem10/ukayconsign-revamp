@@ -11,8 +11,8 @@
                     <th class="cart-page-select">Select</th>
                     <th class="cart-page-select">Image</th>
                     <th class="cart-page-product-sku">Bundle</th>
-                    <th class="cart-page-category">Product Category</th> 
-                    <th class="cart-page-price">Price/Pc</th> 
+                    <th class="cart-page-category">Product Category</th>
+                    <th class="cart-page-price">Price/Pc</th>
                     <th class="cart-page-quantity">Quantity</th>
                     <th class="cart-page-srp">SRP</th>
                     <th class="cart-page-subtotal">Sub Total</th>
@@ -44,7 +44,29 @@
                         <td class="cart-view-product-sku-value">{{ $cart->product->Bundle }}</td>
                         <td class="cart-view-category-value">{{ $cart->product->Category ?? 'N/A' }}</td> 
                         <td class="cart-view-price-value">₱{{ number_format($cart->price, 2) }}</td>
-                        <td class="cart-view-quantity-value">{{ $cart->quantity }}</td>
+    
+                        <!-- Quantity Section with Form -->
+                        <td class="cart-view-quantity-value">
+                            <!-- Subtract Quantity Form -->
+                            <form action="{{ route('cart.subQuantity', $cart->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-light minus-btn" {{ $cart->quantity <= 1 ? 'disabled' : '' }}>-</button>
+                            </form>
+    
+                            <!-- Quantity Display -->
+                            <input type="text" class="quantity-input" value="{{ $cart->quantity }}" readonly style="width: 50px; text-align: center;" />
+    
+                            <!-- Add Quantity Form -->
+                            <form action="{{ route('cart.addQuantity', $cart->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-light plus-btn" 
+                                        {{ $cart->quantity >= $cart->product->Bundle_Qty ? 'disabled' : '' }}>
+                                    +
+                                </button>
+                            </form>
+                            
+                        </td>
+    
                         <td class="cart-view-srp-value">{{ $cart->product->SRP ?? 'N/A' }}</td> 
                         <td class="cart-view-subtotal-value">₱{{ number_format($subtotal, 2) }}</td>
                     </tr>
@@ -67,6 +89,7 @@
             </tfoot>
         </table>
     </div>
+    
     
 
     <div class="small-screen-cart-container">
@@ -92,7 +115,26 @@
                         <div class="small-screen-cart-product-sku"><strong>Bundle:</strong> {{ $cart->product->Bundle }}</div>
                         <div class="small-screen-cart-category"><strong>Category:</strong> {{ $cart->product->Category ?? 'N/A' }}</div>
                         <div class="small-screen-cart-price"><strong>Price/pc:</strong> ₱{{ number_format($cart->price, 2) }}</div>
-                        <div class="small-screen-cart-quantity"><strong>Quantity:</strong> {{ $cart->quantity }}</div>
+    
+                        <!-- Quantity Section with Form -->
+                        <div class="small-screen-cart-quantity">
+                            <strong>Quantity:</strong>
+                            <!-- Subtract Quantity Form -->
+                            <form action="{{ route('cart.subQuantity', $cart->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-light minus-btn" {{ $cart->quantity <= 1 ? 'disabled' : '' }}>-</button>
+                            </form>
+    
+                            <!-- Quantity Display -->
+                            <input type="text" class="quantity-input" value="{{ $cart->quantity }}" readonly style="width: 50px; text-align: center;" />
+    
+                            <!-- Add Quantity Form -->
+                            <form action="{{ route('cart.addQuantity', $cart->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-light plus-btn">+</button>
+                            </form>
+                        </div>
+    
                         <div class="small-screen-cart-srp"><strong>SRP:</strong> {{ $cart->product->SRP ?? 'N/A' }}</div>
                         <div class="small-screen-cart-subtotal"><strong>Sub Total:</strong> ₱{{ number_format($subtotal, 2) }}</div>
                     </div>
@@ -111,12 +153,13 @@
             <div class="small-screen-cart-login-message">Please log in to view your cart.</div>
         @endif
     </div>
+    
      
 
     <!-- Include the cart.js file -->
-    <script src="{{ asset('js/cart.js?v=6.9') }}"></script>
+    <script src="{{ asset('js/cart.js?v=7.0') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=6.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=7.0') }}">
 @endsection
