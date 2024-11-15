@@ -55,14 +55,15 @@
         <div class="prodlist-cont">
             @include('sections.productList', ['products' => $groupedProducts]) 
         </div> 
-        {{--<div class="cart-cont">
+        <div class="cart-cont">
+            <strong>Note</strong>: To Add or Subtract Quantity go to cart page.
             @include('sections.cartList', ['carts' => $carts]) 
-        </div>--}}
+        </div>
     </div>
 
-    <script src="{{ asset('js/home.js?v=7.1') }}"></script>
+    <script src="{{ asset('js/home.js?v=7.2') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=7.1') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=7.2') }}">
 @endsection

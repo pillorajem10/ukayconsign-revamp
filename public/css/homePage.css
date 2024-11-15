@@ -15,7 +15,7 @@
     flex-wrap: wrap; /* Allow wrapping of columns */
     justify-content: center; /* Center the columns */
     align-items: stretch;
-    gap: 20px;
+    gap: 30px;
 }
 
 .product-section-card {
@@ -209,11 +209,11 @@
     gap: 10px;
 }
 
-/*
+
 .prodlist-cont {
-    width: 60rem;
+    width: 40rem;
 }
-*/
+
 
 .button-container {
     display: flex;
@@ -432,7 +432,7 @@
 
 
 /* Responsive styles */
-@media (max-width: 1545px) {
+@media (max-width: 1315px) {
     .product-section-card-title {
         font-size: .8rem;
         font-weight: bold;
@@ -446,6 +446,7 @@
         display: none;
     }
 
+    
     .prodlist-cont {
         width: 100%;
     }

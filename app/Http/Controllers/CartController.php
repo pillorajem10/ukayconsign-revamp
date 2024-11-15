@@ -41,38 +41,6 @@ class CartController extends Controller
             'products.*.price' => 'required|numeric',
         ]);
     
-        // Set max bundle count based on user badge or as 3 for unauthenticated users
-        $maxBundleCount = (Auth::check()) ? PHP_INT_MAX : 3; // Default to 3 for non-logged users
-    
-        if (Auth::check()) {
-            $user = User::find($userId);
-            switch ($user->badge) {
-                case 'Silver':
-                    $maxBundleCount = 3; // Max for Silver
-                    break;
-                case 'Gold':
-                    $maxBundleCount = 5; // Max for Gold
-                    break;
-            }
-        }
-    
-        // Count unique bundles in cart using the unique user ID
-        $currentBundleCount = Cart::where('user_id', $userId)
-            ->with('product') // Load the product relationship
-            ->select('product_sku') // Select only the product SKU
-            ->distinct() // Get distinct product SKUs
-            ->get()
-            ->unique('product.Bundle') // Filter unique bundles based on the product's Bundle attribute
-            ->count();
-    
-        // Log the user's badge and current bundle count
-        \Log::info("User ID: $userId, Max Bundle Count: $maxBundleCount, Current Unique Bundle Count: $currentBundleCount");
-    
-        // Check if user has reached the max bundle count
-        if ($currentBundleCount >= $maxBundleCount) {
-            return redirect()->route('home')->with('error', 'Bundle count limit is already reached.');
-        }
-    
         // Create a new cart entry for each product
         try {
             foreach ($request->products as $sku => $product) {
@@ -102,6 +70,7 @@ class CartController extends Controller
             return response()->json(['message' => 'Failed to add items to cart.'], 500);
         }
     }
+    
     
     
     

@@ -43,11 +43,12 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-        // Validate request
+        // Validate request data based on authentication status
         if (!Auth::check()) {
             \Log::info('Incoming request data NOT AUTHENTICATED', [
                 'request_data' => $request->all(),
             ]);
+            
             // Validation rules for unauthenticated users
             $request->validate([
                 'first_name' => 'required|string|max:255',
@@ -57,35 +58,15 @@ class CheckoutController extends Controller
                 'store_address' => 'required|string|max:255',
                 'store_phone_number' => 'required|string|max:20',
                 'phone_number' => 'required|string|max:20',
-                // 'store_email' => 'required|email|max:255',
                 'store_fb_link' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email|max:255',
                 'password' => 'required|min:8',
-                'estimated_items_sold_per_month' => 'nullable|integer|min:0', // Add validation for this field
+                'estimated_items_sold_per_month' => 'nullable|integer|min:0',
                 'fb_link' => 'nullable|string|max:255',
                 'government_id_card' => 'required|file|mimes:jpg,png,pdf|max:5048',
                 'proof_of_billing' => 'required|file|mimes:jpg,png,pdf|max:5048',
                 'selfie_uploaded' => 'required|file|mimes:jpg,png|max:5048',
-            ], [
-                'first_name.required' => 'First name is required.',
-                'last_name.required' => 'Last name is required.',
-                'address.required' => 'Address is required.',
-                'store_name.required' => 'Store name is required.',
-                'store_address.required' => 'Store address is required.',
-                'store_phone_number.required' => 'Store phone number is required.',
-                'phone_number.required' => 'Phone number is required.',
-                // 'store_email.required' => 'Store email is required.',
-                'store_fb_link.required' => 'Store Facebook link is required.',
-                'email.required' => 'Email is required.',
-                'email.unique' => 'This email is already registered.',
-                'password.required' => 'Password is required.',
-                'password.min' => 'Password must be at least 8 characters.',
-                'estimated_items_sold_per_month.integer' => 'Estimated items sold must be a number.',
-                'estimated_items_sold_per_month.min' => 'Estimated items sold must be at least 0.',
-                'government_id_card.required' => 'Government ID card is required.',
-                'proof_of_billing.required' => 'Proof of billing is required.',
-                'selfie_uploaded.required' => 'Selfie upload is required.',
-            ]);            
+            ]);
         } else {
             // Validation rules for authenticated users
             $request->validate([
@@ -95,25 +76,54 @@ class CheckoutController extends Controller
                 'store_name' => 'required|string|max:255',
                 'store_address' => 'required|string|max:255',
                 'store_phone_number' => 'required|string|max:20',
-                // 'store_email' => 'required|email|max:255',
                 'store_fb_link' => 'required|string|max:255',
             ]);
-        }        
-        
+        }
+    
         // Check if user is authenticated
         $user = Auth::user();
-        
-        // Use user ID if authenticated, otherwise use session ID
         $userId = $user ? $user->id : session()->getId(); // Use session ID if not logged in
     
-    
-        // Retrieve the cart items for the user or session
+        // Retrieve cart items for the user or session
         $carts = Cart::where('user_id', $userId)->get();
     
-        // Log the retrieved carts
-    
+        // Check if cart is not empty
         if ($carts->isNotEmpty()) {
-            // Handle user registration if not authenticated
+            // Retrieve user's badge and set the order limit
+            $badge = $user ? $user->badge : null;
+
+            // If badge is not set, null, or undefined, assign "Silver" as the default
+            if (!$badge) {
+                $badge = 'Silver';
+            }
+
+            $limit = 0;
+    
+            // Set limit based on user badge
+            switch ($badge) {
+                case 'Silver':
+                    $limit = 50000;
+                    break;
+                case 'Gold':
+                    $limit = 75000;
+                    break;
+                case 'Platinum':
+                    $limit = 100000;
+                    break;
+                default:
+                    $limit = 50000; // Default limit for users with no badge or unknown badge
+            }
+    
+            // Calculate the total price of the cart
+            $totalPrice = $carts->sum(function ($cart) {
+                return $cart->price * $cart->quantity;
+            });
+    
+            // Check if the total price exceeds the user's limit
+            if ($totalPrice > $limit && $limit > 0) {
+                return redirect()->back()->with('error', "Sorry, but your badge is limited to consign orders below ₱" . number_format($limit, 0, '.', ',') . " worth. You can adjust the quantities in the cart page.");
+            }
+
             if (!$user) {
                 // Check if email already exists
                 if (User::where('email', $request->email)->exists()) {
@@ -133,49 +143,42 @@ class CheckoutController extends Controller
                     'government_id_card' => file_get_contents($request->file('government_id_card')->getRealPath()), // Read file as binary
                     'proof_of_billing' => file_get_contents($request->file('proof_of_billing')->getRealPath()), // Read file as binary
                     'selfie_uploaded' => file_get_contents($request->file('selfie_uploaded')->getRealPath()), // Read file as binary
-                ]);                              
+                ]);
             } else {
-                // Update user's fname and lname only if they are NULL
-                if (is_null($user->fname)) {
-                    $user->fname = $request->first_name;
-                }
-    
-                if (is_null($user->lname)) {
-                    $user->lname = $request->last_name;
-                }
-    
-                // Save changes to the user
-                $user->save();
+                // Update user's first and last names if they are not already set
+                $user->update([
+                    'fname' => $user->fname ?? $request->first_name,
+                    'lname' => $user->lname ?? $request->last_name,
+                ]);
             }
     
-            // Check for existing store by store_name
+    
+            // Check if the store exists
             $existingStore = Store::where('store_name', $request->store_name)->first();
     
             if ($existingStore) {
-                // Update the existing store information
+                // Update existing store information
                 $existingStore->update([
                     'store_address' => $request->store_address,
                     'store_phone_number' => $request->store_phone_number,
-                    // 'store_email' => $request->store_email,
                     'store_fb_link' => $request->store_fb_link,
                 ]);
-                $storeId = $existingStore->id; // Get the existing store ID
+                $storeId = $existingStore->id;
             } else {
-                // Create new store information
+                // Create new store
                 $newStore = Store::create([
                     'store_name' => $request->store_name,
                     'store_owner' => $user->id,
                     'store_address' => $request->store_address,
                     'store_fb_link' => $request->store_fb_link,
                     'store_phone_number' => $request->store_phone_number,
-                    // 'store_email' => $request->store_email,
                     'store_total_earnings' => 0,
                     'store_status' => 'active',
                 ]);
-                $storeId = $newStore->id; // Get the new store ID
+                $storeId = $newStore->id;
             }
     
-            // Build the productsOrdered array with store_id
+            // Build the productsOrdered array
             $productsOrdered = $carts->map(function ($cart) use ($storeId) {
                 return [
                     'cart_id' => $cart->id,
@@ -195,14 +198,12 @@ class CheckoutController extends Controller
             $order = Order::create([
                 'first_name' => $user->fname,
                 'last_name' => $user->lname,
-                'user_id' => $user->id, // Use the newly registered user's ID
+                'user_id' => $user->id,
                 'products_ordered' => json_encode($productsOrdered),
                 'address' => $request->address,
                 'store_name' => $request->store_name,
                 'email' => $user->email,
-                'total_price' => $carts->sum(function ($cart) {
-                    return $cart->price * $cart->quantity;
-                }),
+                'total_price' => $totalPrice,
                 'order_date' => now(),
                 'order_status' => 'Processing',
                 'createdAt' => now(),
@@ -211,15 +212,16 @@ class CheckoutController extends Controller
             // Clear the cart for the user
             Cart::where('user_id', $userId)->delete();
     
-            // Send the order confirmation email to the user
+            // Send order confirmation email to user
             Mail::to($user->email)->send(new OrderConfirmationMail($order, $productsOrdered));
     
-            // Send the order notification to all admins
+            // Send order notification to admins
             $adminUsers = User::where('role', 'admin')->get();
             foreach ($adminUsers as $admin) {
                 Mail::to($admin->email)->send(new AdminOrderNotification($order));
             }
-
+    
+            // Login the user if not authenticated
             if (!Auth::check()) {
                 Auth::login($user);
                 return redirect()->route('home')->with('success', 'Your order has been placed successfully and your account is already registered. Please note that it is subject to approval, and you will receive an email notification from us shortly.');
