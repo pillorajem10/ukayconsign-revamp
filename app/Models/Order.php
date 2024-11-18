@@ -31,6 +31,7 @@ class Order extends Model
         'order_date',
         'order_status',
         'createdAt',
+        'proof_of_receive', // Added the proof_of_receive column for mass assignment
     ];
 
     // Optionally, define casts for attributes
@@ -38,5 +39,6 @@ class Order extends Model
         'total_price' => 'decimal:2',
         'order_date' => 'datetime',
         'createdAt' => 'datetime',
+        'proof_of_receive' => 'binary', // If you want to cast the proof_of_receive to binary
     ];
 }
