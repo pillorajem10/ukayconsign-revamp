@@ -82,7 +82,7 @@
                                 @else
                                     <div><button class="btn btn-danger" disabled>Cancel Order</button></div>
                                 @endif
-                                @if (!in_array($order->order_status, ['Canceled', 'Delivered']))
+                                @if (!in_array($order->order_status, ['Canceled', 'Delivered', 'Packed', 'Processing', 'Approved', 'Decline']))
                                     <div>
                                         <form action="{{ route('orders.updateStatus', $order->id) }}" method="POST">
                                             @csrf
