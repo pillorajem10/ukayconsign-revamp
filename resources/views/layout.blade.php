@@ -206,7 +206,8 @@
 
             <div class="navbar-badge">
                 @if(Auth::check())
-                    @php
+                <script>console.log('AUTHENTICATED!!!!!!!!!!!!!')</script>
+                         @php
                         $user = Auth::user();  // Get the authenticated user
                         $stores = App\Models\Store::where('store_owner', $user->id)->get();  // Get all stores owned by the user
                         $highestEarnings = $stores->max('store_total_earnings');  // Get the highest earnings
