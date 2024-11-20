@@ -206,8 +206,7 @@
 
             <div class="navbar-badge">
                 @if(Auth::check())
-                <script>console.log('AUTHENTICATED!!!!!!!!!!!!!')</script>
-                         @php
+                    @php
                         $user = Auth::user();  // Get the authenticated user
                         $stores = App\Models\Store::where('store_owner', $user->id)->get();  // Get all stores owned by the user
                         $highestEarnings = $stores->max('store_total_earnings');  // Get the highest earnings
@@ -270,6 +269,16 @@
                             <div class="badge">
                                 <img src="{{ asset('images/Plat.png') }}" alt="Platinum Badge" style="max-width: 35px; border-radius: 8px; margin: 10px 0;">
                                 <p class="progress-text">₱{{ $nextBadgeThreshold }}</p>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($user->badge == 'Platinum')
+                        <div class="badge-progress-container">
+                            <!-- Gold Badge -->
+                            <div class="badge">
+                                <img src="{{ asset('images/Plat.png') }}" alt="Plat Badge" style="max-width: 35px; border-radius: 8px; margin: 10px 0;">
+                                <p class="progress-text">₱{{ $highestEarnings }}</p>
                             </div>
                         </div>
                     @endif
