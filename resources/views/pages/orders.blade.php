@@ -108,5 +108,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=7.2') }}">
+    <link rel="stylesheet" href="{{ asset('css/ordersPage.css?v=7.3') }}">
 @endsection
