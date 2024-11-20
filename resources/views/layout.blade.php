@@ -58,7 +58,7 @@
         }
 
         .navbar-brand img {
-            width: 5rem;
+            width: 4rem;
         }
 
         .navbar-nav .nav-link {
@@ -82,8 +82,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 30px;
-            height: 30px;
+            width: 20px;
+            height: 20px;
         }
 
         .navbar-toggler-icon span {
@@ -134,14 +134,149 @@
         .menu-icon {
             margin-right: .5rem;
         }
+
+        .navbar-badge {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .heading-cont {
+            display: flex;
+            align-items: center;
+            width: 30rem;
+        }
+
+        /* Container for badges and progress bar */
+        .badge-progress-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Distribute space evenly between the badges and the progress bar */
+            width: 100%;  /* Ensure it takes up the full width available */
+        }
+
+        /* Badge styling */
+        .badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Progress Bar Container */
+        .progress-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;  /* Allow progress bar container to grow */
+        }
+
+        /* Styling the progress bar */
+        progress {
+            width: 100%;
+            height: 20px;
+            margin-bottom: 5px;
+        }
+
+        /* Optional: Styling for the progress percentage text */
+        .progress-text {
+            font-size: 11px;
+            color: #fff;
+            margin: 0;
+        }
+
+        
+
+        @media (max-width: 1000px) {
+            .heading-cont {
+                width: 83%;
+            }
+        }
     </style>
     @yield('styles')
 </head>
 <body>
     <nav class="navbar navbar-expand-lg">
-        <a class="navbar-brand" href="/">
-            <img src="{{ asset('images/USC_logo.png') }}" alt="Logo">
-        </a>
+
+        <div class="heading-cont">
+            <a class="navbar-brand" href="/">
+                <img src="{{ asset('images/USC_logo.png') }}" alt="Logo">
+            </a>
+
+            <div class="navbar-badge">
+                @if(Auth::check())
+                    @php
+                        $user = Auth::user();  // Get the authenticated user
+                        $stores = App\Models\Store::where('store_owner', $user->id)->get();  // Get all stores owned by the user
+                        $highestEarnings = $stores->max('store_total_earnings');  // Get the highest earnings
+            
+                        // Define thresholds for badges
+                        $silverToGoldThreshold = 50000;  // Example threshold for Silver to Gold
+                        $goldToPlatinumThreshold = 75000;  // Example threshold for Gold to Platinum
+            
+                        // Determine the threshold based on the user's badge
+                        $nextBadgeThreshold = 0;
+                        $progress = 0;
+            
+                        if ($user->badge == 'Silver') {
+                            $nextBadgeThreshold = $silverToGoldThreshold;
+                        } elseif ($user->badge == 'Gold') {
+                            $nextBadgeThreshold = $goldToPlatinumThreshold;
+                        }
+            
+                        // Calculate progress if a threshold exists
+                        if ($nextBadgeThreshold > 0) {
+                            $progress = min(100, ($highestEarnings / $nextBadgeThreshold) * 100);
+                        }
+                    @endphp
+            
+                    @if($user->badge == 'Silver')
+                        <div class="badge-progress-container">
+                            <!-- Silver Badge -->
+                            <div class="badge">
+                                <img src="{{ asset('images/Silver.png') }}" alt="Silver Badge" style="max-width: 35px; border-radius: 8px; margin: 10px 0;">
+                                <p class="progress-text">₱{{ $highestEarnings }}</p>
+                            </div>
+            
+                            <!-- Progress Bar -->
+                            <div class="progress-container">
+                                <progress id="progress-bar" value="{{ $progress }}" max="100"></progress>
+                            </div>
+            
+                            <!-- Gold Badge -->
+                            <div class="badge">
+                                <img src="{{ asset('images/Gold.png') }}" alt="Gold Badge" style="max-width: 35px; border-radius: 8px; margin: 10px 0;">
+                                <p class="progress-text">₱{{ $nextBadgeThreshold }}</p>
+                            </div>
+                        </div>
+                    @endif
+            
+                    @if($user->badge == 'Gold')
+                        <div class="badge-progress-container">
+                            <!-- Gold Badge -->
+                            <div class="badge">
+                                <img src="{{ asset('images/Gold.png') }}" alt="Gold Badge" style="max-width: 35px; border-radius: 8px; margin: 10px 0;">
+                                <p class="progress-text">₱{{ $highestEarnings }}</p>
+                            </div>
+            
+                            <!-- Progress Bar -->
+                            <div class="progress-container">
+                                <progress id="progress-bar" value="{{ $progress }}" max="100"></progress>
+                            </div>
+            
+                            <!-- Platinum Badge -->
+                            <div class="badge">
+                                <img src="{{ asset('images/Plat.png') }}" alt="Platinum Badge" style="max-width: 35px; border-radius: 8px; margin: 10px 0;">
+                                <p class="progress-text">₱{{ $nextBadgeThreshold }}</p>
+                            </div>
+                        </div>
+                    @endif
+                @endif
+            </div>            
+            
+        </div>
+
         <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <div class="navbar-toggler-icon">
                 <span class="bar1"></span>
