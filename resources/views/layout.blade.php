@@ -202,7 +202,6 @@
         <div class="heading-cont">
             <a class="navbar-brand" href="/">
                 <img src="{{ asset('images/USC_logo.png') }}" alt="Logo">
-                Test
             </a>
 
             <div class="navbar-badge">
