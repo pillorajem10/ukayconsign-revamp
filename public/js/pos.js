@@ -6,6 +6,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoContainer = document.getElementById('videoContainer');
     const barcodeForm = document.getElementById('barcodeForm');
 
+    window.onload = function() {
+        document.getElementById('barcodeNumberField').focus();
+    };
+
     // Function to hide messages after a specified duration
     function hideMessage(elementId, duration) {
         const messageElement = document.getElementById(elementId);

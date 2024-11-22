@@ -26,5 +26,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/promos.css?v=7.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/promos.css?v=7.5') }}">
 @endsection

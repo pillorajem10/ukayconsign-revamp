@@ -118,10 +118,10 @@
         </div>
               
         
-        <script src="{{ asset('js/cxInfos.js?v=7.4') }}"></script>
+        <script src="{{ asset('js/cxInfos.js?v=7.5') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/cxInfos.css?v=7.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/cxInfos.css?v=7.5') }}">
 @endsection

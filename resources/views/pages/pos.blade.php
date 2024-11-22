@@ -29,7 +29,7 @@
         <form method="POST" action="{{ route('pos.index', ['store_id' => request()->input('store_id')]) }}" id="barcodeForm" onsubmit="updateSelectedAction()">
             @csrf
             <input type="hidden" name="action" id="actionInput" value="{{ $selectedAction }}">
-            <input type="text" name="barcode_number" placeholder="Enter Barcode Number" required class="form-input">
+            <input type="text" name="barcode_number" id="barcodeNumberField" placeholder="Enter Barcode Number" required class="form-input">
             <button type="submit" class="form-button">Get Barcode Details</button>
         </form>                           
 
@@ -231,7 +231,7 @@
         </div>        
         
         <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
-        <script src="{{ asset('js/pos.js?v=7.4') }}"></script>
+        <script src="{{ asset('js/pos.js?v=7.5') }}"></script>
         <script>
             // Pass PHP values to JavaScript variables
             const totalAmount = {{ json_encode($posCarts->sum('sub_total')) }};
@@ -240,5 +240,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/pos.css?v=7.4') }}">
+    <link rel="stylesheet" href="{{ asset('css/pos.css?v=7.5') }}">
 @endsection
