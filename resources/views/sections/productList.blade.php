@@ -19,7 +19,7 @@
                 @php
                     // Sort the items based on category
                     $sortedItems = $items->sortBy(function($item) {
-                        $order = ['Essential', 'Signature', 'Exclusive'];
+                        $order = ['Smart Buy', 'Essential', 'Signature', 'Exclusive'];
                         return array_search($item->Category, $order);
                     });
                 
@@ -66,7 +66,7 @@
                                     @endforeach
                                 
                                     <!-- Add empty rows if there are less than 3 items -->
-                                    @for ($i = $sortedItems->count(); $i < 3; $i++)
+                                    @for ($i = $sortedItems->count(); $i < 4; $i++)
                                         <tr>
                                             <td>&nbsp;</td>
                                             <td>&nbsp;</td>

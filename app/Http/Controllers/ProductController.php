@@ -62,12 +62,10 @@ class ProductController extends Controller
         $products = Product::when($search, function ($query) use ($search) {
             return $query->where('ProductID', 'like', '%' . $search . '%');
         })
-        ->when(Auth::check() && (Auth::user()->email === 'pillorajem7@gmail.com' || Auth::user()->email === 'snapstockinventorychecker@gmail.com' || Auth::user()->email === 'anotheremail@example.com'), function ($query) {
-            return $query; // Retrieve all products for specific users
-        }, function ($query) {
-            return $query->where('SKU', '!=', 'TEST'); // Filter out restricted SKUs
-        })
+        ->where('is_hidden', false)  // Add the condition to only show products where 'is_hidden' is false
         ->get(); // Execute the query
+        
+        
         
         // Group the products by Bundle
         $groupedProducts = $products->groupBy('Bundle');

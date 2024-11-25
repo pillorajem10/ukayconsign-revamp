@@ -112,7 +112,8 @@
                     <label for="terms" class="checkout-page-label">I have read and agree to the <a href="#terms-conditions" target="_blank">terms and conditions</a>.</label>
                 </div>
 
-                <button type="submit" id="submit-button" class="checkout-page-btn" disabled>Proceed to Place Order</button>
+                {{--<button type="submit" id="submit-button" class="checkout-page-btn" disabled>Proceed to Place Order</button>--}}
+                <div>Placing Order Is Not Available For Now.</div>
             </form>
 
             <!-- Modal for Terms and Conditions -->
