@@ -113,7 +113,8 @@
                 </div>
 
                 {{--<button type="submit" id="submit-button" class="checkout-page-btn" disabled>Proceed to Place Order</button>--}}
-                <div>Placing Order Is Not Available For Now.</div>
+                {{--<div>Placing Order Is Not Available For Now.</div>--}}
+                <button type="submit" id="submit-button" class="checkout-page-btn" disabled>Proceed to Place Order</button>
             </form>
 
             <!-- Modal for Terms and Conditions -->

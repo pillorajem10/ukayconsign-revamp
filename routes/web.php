@@ -11,6 +11,7 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UscReturnController;
 use App\Http\Controllers\StoreInventoryController;
 use App\Http\Controllers\PosController;
+use App\Http\Controllers\PosSaleController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\PromoController;
 use App\Http\Controllers\DashboardController;
@@ -88,6 +89,11 @@ Route::post('/pos/sale', [PosController::class, 'completeSale'])->name('sales.st
 Route::get('/pos/choose', [PosController::class, 'chooseStore'])->name('pos.choose');
 Route::post('/pos/void', [PosController::class, 'voidItem'])->name('pos.void');
 Route::post('/pos/apply-discount', [PosController::class, 'applyDiscount'])->name('pos.applyDiscount'); // Add this line
+
+Route::match(['get', 'post'], '/pos-preloved', [PosSaleController::class, 'index'])->name('posSale.index');
+Route::post('/pos-preloved/sale', [PosSaleController::class, 'completeSale'])->name('salesPrelove.store');
+Route::post('/pos-preloved/void', [PosSaleController::class, 'voidItem'])->name('posSale.void');
+Route::post('/pos-preloved/apply-discount', [PosSaleController::class, 'applyDiscount'])->name('posSale.applyDiscount'); // Add this line
 
 
 // SALES
