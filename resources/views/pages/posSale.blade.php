@@ -96,9 +96,20 @@
                                         @csrf
                                         <input type="hidden" name="product_sku" value="{{ $cart['product_sku'] }}">
                                         <input type="hidden" name="store_id" value="{{ request()->input('store_id') }}">
-                                        <input type="number" name="discount" step="0.01" value="{{ number_format($cart['discount'], 2) }}" class="form-input discount-input" placeholder="Enter Discount">
-                                        <button type="submit" class="apply-discount-button">Apply</button> <!-- Apply Discount Button -->
-                                    </form>
+                                        
+                                        <select name="discount" class="form-input discount-input">
+                                            <option value="50" {{ $cart['discount'] == 50 ? 'selected' : '' }}>50%</option>
+                                            <option value="40" {{ $cart['discount'] == 40 ? 'selected' : '' }}>40%</option>
+                                            <option value="35" {{ $cart['discount'] == 35 ? 'selected' : '' }}>35%</option>
+                                            <option value="30" {{ $cart['discount'] == 30 ? 'selected' : '' }}>30%</option>
+                                            <option value="25" {{ $cart['discount'] == 25 ? 'selected' : '' }}>25%</option>
+                                            <option value="20" {{ $cart['discount'] == 20 ? 'selected' : '' }}>20%</option>
+                                            <option value="15" {{ $cart['discount'] == 15 ? 'selected' : '' }}>15%</option>
+                                            <option value="10" {{ $cart['discount'] == 10 ? 'selected' : '' }}>10%</option>
+                                        </select>
+                                        
+                                        <button type="submit" class="apply-discount-button">Apply</button>
+                                    </form>                                    
                                 </td>                                
                                 <td>{{ number_format($cart['sub_total'], 2) }}</td>
                                 <td>

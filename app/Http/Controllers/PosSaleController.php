@@ -323,7 +323,7 @@ class PosSaleController extends Controller
         // Validate the request
         $request->validate([
             'product_sku' => 'required|string',
-            'discount' => 'required|numeric|min:0',
+            'discount' => 'required|numeric|min:0', // Discount value (percentage)
         ]);
         
         // Find the item in the PosCart for the authenticated user (no store_id filter)
@@ -336,15 +336,19 @@ class PosSaleController extends Controller
                 ->with('error', 'Item not found in the cart.');
         }
         
-        // Check if the discount exceeds the original total
-        if ($request->discount >= $posCartItem->orig_total) {
+        // Check if the discount percentage is valid (i.e., less than 100% but not negative)
+        if ($request->discount < 0 || $request->discount > 100) {
             return redirect()->route('posSale.index')
-                ->with('error', 'Discount cannot be bigger than the original total.');
+                ->with('error', 'Discount percentage must be between 0 and 100.');
         }
         
-        // Update the discount
-        $posCartItem->discount = $request->discount;
-        $posCartItem->sub_total = max(0, $posCartItem->orig_total - $posCartItem->discount); // Recalculate sub_total
+        // Store the discount percentage directly in the database (e.g., 50, 40, etc.)
+        $posCartItem->discount = $request->discount; // Store the percentage value
+        
+        // Calculate the sub-total after applying the discount percentage
+        $discountAmount = ($posCartItem->orig_total * $request->discount) / 100; // Calculate the actual discount amount based on percentage
+        $posCartItem->sub_total = max(0, $posCartItem->orig_total - $discountAmount); // Recalculate sub_total based on the discount amount
+        
         $posCartItem->save();
         
         return redirect()->route('posSale.index')
