@@ -42,12 +42,12 @@
         <!-- Pass breakdown data to JS using a data attribute -->
         <div id="breakdownData" data-breakdown="{{ json_encode($breakdown) }}" style="display: none;"></div>
 
-        <script src="{{ asset('js/sale-breakdown.js?v=7.5') }}"></script>
+        <script src="{{ asset('js/sale-breakdown.js?v=7.6') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/sale-breakdown.css?v=7.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/sale-breakdown.css?v=7.6') }}">
 @endsection
 
