@@ -157,9 +157,9 @@
      
 
     <!-- Include the cart.js file -->
-    <script src="{{ asset('js/cart.js?v=7.5') }}"></script>
+    <script src="{{ asset('js/cart.js?v=7.6') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=7.5') }}">
+    <link rel="stylesheet" href="{{ asset('css/cartPage.css?v=7.6') }}">
 @endsection
