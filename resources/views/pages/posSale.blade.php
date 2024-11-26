@@ -72,14 +72,23 @@
         <div id="posCartDetails" style="{{ $selectedAction === 'price-check' ? 'display: none;' : '' }}">
             <h2 class="inventory-title">POS Cart</h2>
             @if(!empty($posCarts))
+                <div>
+                    <!-- Add a select field for discount type -->
+                    <label for="discount-type">Discount Type:</label>
+                    <select id="discount-type" class="discount-type">
+                        <option value="amount" selected>Discount By Amount</option>
+                        <option value="percent">Discount By Percent</option>
+                    </select>
+                </div>
+                
                 <table class="styled-table">
                     <thead>
                         <tr>
                             <th>Product</th>
                             <th>Quantity</th>
                             <th>Price</th>
-                            <th>Original Total</th> <!-- New column for Original Total -->
-                            <th>Discount</th> <!-- New column for Discount -->
+                            <th>Original Total</th>
+                            <th>Discount</th>
                             <th>Sub Total</th>
                             <th>Action</th> 
                         </tr>
@@ -90,14 +99,38 @@
                                 <td>{{ $cart['product_bundle_id'] }}</td>
                                 <td>{{ $cart['quantity'] }}</td>
                                 <td>{{ number_format($cart['price'], 2) }}</td>
-                                <td>{{ number_format($cart['orig_total'], 2) }}</td> <!-- Display Original Total -->
+                                <td>{{ number_format($cart['orig_total'], 2) }}</td>
                                 <td>
                                     <form method="POST" action="{{ route('posSale.applyDiscount') }}" class="discount-form">
                                         @csrf
                                         <input type="hidden" name="product_sku" value="{{ $cart['product_sku'] }}">
                                         <input type="hidden" name="store_id" value="{{ request()->input('store_id') }}">
-                                        <input type="number" name="discount" step="0.01" value="{{ number_format($cart['discount'], 2) }}" class="form-input discount-input" placeholder="Enter Discount">
-                                        <button type="submit" class="apply-discount-button">Apply</button> <!-- Apply Discount Button -->
+                
+                                        <!-- Dynamic discount input area -->
+                                        <div class="discount-input-container">
+                                            <input type="number" 
+                                                name="discount" 
+                                                step="0.01" 
+                                                value="{{ number_format($cart['discount'], 2) }}" 
+                                                class="form-input discount-input" 
+                                                placeholder="Enter Discount" 
+                                                style="display: none;">
+                                            
+                                            <select name="discount_percent" 
+                                                    class="form-input discount-percent" 
+                                                    style="display: none;">
+                                                <option value="">Select Percent</option>
+                                                @foreach([50, 40, 35, 30, 25, 20, 15, 10] as $percent)
+                                                    <option value="{{ $percent }}" 
+                                                            {{ old('discount_percent', $cart['discount']) == $percent ? 'selected' : '' }}>
+                                                        {{ $percent }}%
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        
+                                        </div>
+                
+                                        <button type="submit" class="apply-discount-button">Apply</button>
                                     </form>
                                 </td>                                
                                 <td>{{ number_format($cart['sub_total'], 2) }}</td>
@@ -119,6 +152,7 @@
                         </tr>
                     </tfoot>
                 </table>
+            
         
                 <!-- Sale Form -->
                 <h2 class="form-title">Complete Sale</h2>

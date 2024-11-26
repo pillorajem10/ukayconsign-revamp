@@ -154,3 +154,45 @@ document.addEventListener('DOMContentLoaded', function() {
         actionSelect.addEventListener('change', updateSelectedAction); // Add event listener for action select
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const discountTypeSelect = document.getElementById('discount-type');
+    const discountForms = document.querySelectorAll('.discount-form');
+
+    // Function to update the discount input fields based on the selected discount type
+    function updateDiscountFields(type) {
+        discountForms.forEach((form) => {
+            const discountInput = form.querySelector('.discount-input');
+            const discountPercent = form.querySelector('.discount-percent');
+
+            if (type === 'amount') {
+                discountInput.style.display = 'inline-block';
+                discountPercent.style.display = 'none';
+                discountPercent.value = ''; // Clear percent selection
+            } else if (type === 'percent') {
+                discountInput.style.display = 'none';
+                discountPercent.style.display = 'inline-block';
+                discountInput.value = ''; // Clear amount input
+            }
+        });
+    }
+
+    // Check if there's a stored discount type in sessionStorage
+    const storedDiscountType = sessionStorage.getItem('discount_type');
+    if (storedDiscountType) {
+        // If found, initialize based on the stored value
+        discountTypeSelect.value = storedDiscountType;
+        updateDiscountFields(storedDiscountType);
+    } else {
+        // Initialize fields based on the default selection
+        updateDiscountFields(discountTypeSelect.value);
+    }
+
+    // Listen for changes to the discount type dropdown and save the selection in sessionStorage
+    discountTypeSelect.addEventListener('change', (event) => {
+        const selectedType = event.target.value;
+        sessionStorage.setItem('discount_type', selectedType); // Store the selected type
+        updateDiscountFields(selectedType);
+    });
+});
+

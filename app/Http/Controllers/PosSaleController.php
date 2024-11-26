@@ -323,32 +323,52 @@ class PosSaleController extends Controller
         // Validate the request
         $request->validate([
             'product_sku' => 'required|string',
-            'discount' => 'required|numeric|min:0',
+            'discount' => 'nullable|numeric|min:0',
+            'discount_percent' => 'nullable|integer|min:0|max:100',
         ]);
-        
-        // Find the item in the PosCart for the authenticated user (no store_id filter)
+    
+        // Find the item in the PosCart for the authenticated user
         $posCartItem = PosCart::where('product_sku', $request->product_sku)
             ->where('user', auth()->id())
             ->first();
-        
+    
         if (!$posCartItem) {
             return redirect()->route('posSale.index')
                 ->with('error', 'Item not found in the cart.');
         }
-        
-        // Check if the discount exceeds the original total
-        if ($request->discount >= $posCartItem->orig_total) {
+    
+        $discount = 0;
+    
+        // If the discount is a percentage, store the percentage value
+        if ($request->filled('discount_percent')) {
+            // Store the percentage value directly, no calculation needed here
+            $discount = $request->discount_percent;
+    
+            // Calculate the discount amount based on the percentage
+            $discountAmount = ($posCartItem->orig_total * ($discount / 100));
+            $posCartItem->sub_total = max(0, $posCartItem->orig_total - $discountAmount);
+        }
+        // If the discount is a fixed amount, calculate the discount
+        else if ($request->filled('discount')) {
+            $discount = $request->discount;
+    
+            // If it's a fixed amount, subtract the discount amount from the original total
+            $posCartItem->sub_total = max(0, $posCartItem->orig_total - $discount);
+        }
+    
+        // Ensure the discount does not exceed the original total
+        if ($discount >= $posCartItem->orig_total) {
             return redirect()->route('posSale.index')
                 ->with('error', 'Discount cannot be bigger than the original total.');
         }
-        
-        // Update the discount
-        $posCartItem->discount = $request->discount;
-        $posCartItem->sub_total = max(0, $posCartItem->orig_total - $posCartItem->discount); // Recalculate sub_total
+    
+        // Save the discount (either percentage or fixed amount)
+        $posCartItem->discount = $discount;
+    
         $posCartItem->save();
-        
+    
         return redirect()->route('posSale.index')
             ->with('success', 'Discount applied successfully.');
-    }        
+    }       
 }
 
