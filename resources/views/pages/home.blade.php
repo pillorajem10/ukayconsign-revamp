@@ -61,9 +61,9 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/home.js?v=7.6') }}"></script>
+    <script src="{{ asset('js/home.js?v=7.7') }}"></script>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=7.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/homePage.css?v=7.7') }}">
 @endsection

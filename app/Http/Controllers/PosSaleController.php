@@ -124,22 +124,27 @@ class PosSaleController extends Controller
 
     private function addToPosCart($productDetails, $barcodeNumber)
     {
+        // Check if the product already exists in the cart for the current user
         $existingCart = PosCart::where('product_sku', $productDetails->SKU)
             ->where('user', auth()->id())
-            ->first();  // Removed store_id check
-    
+            ->first();
+        
         if ($existingCart) {
-            // If it exists, increment the quantity
+            // If the cart entry exists, increment the quantity
             $existingCart->quantity += 1; // Increment by 1
             $existingCart->orig_total = $existingCart->quantity * $existingCart->price; // Update total
             $existingCart->sub_total = max(0, $existingCart->orig_total - $existingCart->discount); // Update sub-total
-    
+            
+            // Calculate consign_total (quantity * consign_price)
+            $existingCart->consign_total = $existingCart->quantity * $existingCart->consign_price; // Update consign_total
+            
             // Append the new barcode number to the barcode_numbers field
             $barcodeNumbers = json_decode($existingCart->barcode_numbers, true); // Decode the existing barcode numbers into an array
             $barcodeNumbers[] = $barcodeNumber; // Add the new barcode number
             $existingCart->barcode_numbers = json_encode($barcodeNumbers); // Encode back into JSON and save
-    
-            $existingCart->save(); // Save the updated cart
+            
+            // Save the updated cart entry
+            $existingCart->save();
         } else {
             // If it doesn't exist, create a new PosCart entry
             $posCart = new PosCart();
@@ -152,22 +157,27 @@ class PosSaleController extends Controller
             $posCart->product_bundle_id = $productDetails->ProductID;
             $posCart->user = auth()->id();
             $posCart->discount = 0;
-    
-            // Removed store_id assignment
-            $posCart->barcode_numbers = json_encode([$barcodeNumber]); // Initialize barcode_numbers as an array with the first barcode number
-    
-            $posCart->save(); // Save the new cart entry
+        
+            // Assign the consign_price (based on quantity)
+            $posCart->consign_price = $productDetails->Consign;
+        
+            // Calculate consign_total (quantity * consign_price)
+            $posCart->consign_total = $posCart->quantity * $posCart->consign_price; // Calculate consign_total
+            
+            // Initialize barcode_numbers as an array with the first barcode number
+            $posCart->barcode_numbers = json_encode([$barcodeNumber]);
+        
+            // Save the new cart entry
+            $posCart->save();
         }
-    }    
+    }
+    
+    
+     
     
     
     
     
-
-
-
-
-
     public function completeSale(Request $request)
     {
         if ($request->mode_of_payment === 'Interest') {
