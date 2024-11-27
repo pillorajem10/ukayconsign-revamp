@@ -152,6 +152,7 @@
                             <th class="header-cell">Store</th>
                             <th class="header-cell">Today</th>
                             <th class="header-cell">This Month</th>
+                            <th class="header-cell">Action</th>
                         </tr>
                     </thead>
                     <tbody class="table-body">
@@ -160,6 +161,16 @@
                                 <td class="data-cell" data-label="Store">{{ $earnings['store_name'] }}</td>
                                 <td class="data-cell" data-label="Today">₱{{ number_format($earnings['total_today'], 2) }}</td>
                                 <td class="data-cell" data-label="This Month">₱{{ number_format($earnings['total_month'], 2) }}</td>
+                                <td class="data-cell" data-label="Action">
+                                    <div class="action-btns">
+                                        <a href="{{ route('saleBreakdown.index', ['store_id' => $storeId, 'day' => \Carbon\Carbon::today()->toDateString(), 'filter' => 'daily']) }}" class="btn btn-info">
+                                            View Today
+                                        </a>
+                                        <a href="{{ route('saleBreakdown.index', ['store_id' => $storeId, 'month' => \Carbon\Carbon::now()->format('m'), 'filter' => 'monthly']) }}" class="btn btn-info">
+                                            View This Month
+                                        </a>  
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -241,7 +252,7 @@
             </div>                      
         </div>
 
-        <script src="{{ asset('js/dashboard.js?v=7.6') }}"></script>
+        <script src="{{ asset('js/dashboard.js?v=7.7') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             const monthlyData = @json(array_values($monthlyData));
@@ -251,5 +262,5 @@
 
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=7.6') }}">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css?v=7.7') }}">
 @endsection

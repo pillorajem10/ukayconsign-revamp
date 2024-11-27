@@ -207,6 +207,13 @@ h1 {
     animation: slideInRight 0.5s ease forwards;
 }
 
+.action-btns {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 5px;
+}
+
 /* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .dashboard-container, .promo-container {
@@ -243,38 +250,53 @@ h1 {
 }
 
 @media (max-width: 600px) {
+    /*
     .table-header {
-        display: none; /* Hide the header on small screens */
+        display: none; 
     }
 
+    
     .table-body, .table-row, .data-cell {
-        display: block; /* Stack the rows */
-        width: 100%; /* Full width */
+        display: block; /* Stack the rows 
+        width: 100%; /* Full width 
     }
+    
 
     .table-row {
-        margin-bottom: 15px; /* Space between rows */
-        border: 1px solid #ddd; /* Border around rows */
+        margin-bottom: 15px; 
+        border: 1px solid #ddd; 
     }
 
     .data-cell {
-        text-align: right; /* Right-align text for better readability */
+        text-align: right; 
         position: relative;
-        padding-left: 50%; /* Space for label */
+        padding-left: 50%; 
     }
 
     .data-cell::before {
-        content: attr(data-label); /* Add label for the data */
+        content: attr(data-label);
         position: absolute;
-        left: 10px; /* Space from the left */
-        font-weight: bold; /* Bold label */
+        left: 10px; 
+        font-weight: bold;
         text-align: left;
+    }
+    */
+
+    .table-body, .table-row, .data-cell, .table-header {
+        padding: 2px;
+        font-size: .7rem;
+        font-weight: bold;
+    }
+
+    .btn-info {
+        padding: 2px;
+        font-size: .7rem;
     }
 
     .promo-image {
-        max-width: 100%; /* Adjust size as needed */
-        margin: 10px; /* Space around each image */
-        border-radius: 8px; /* Rounded corners */
+        max-width: 100%; 
+        margin: 10px; 
+        border-radius: 8px; 
     }
     
 }

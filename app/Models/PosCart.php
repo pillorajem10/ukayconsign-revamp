@@ -9,7 +9,7 @@ class PosCart extends Model
 {
     use HasFactory;
 
-    protected $table = 'usc_pos_cart'; // Set your table name here
+    protected $table = 'usc_pos_cart';
 
     protected $fillable = [
         'product_sku',
@@ -21,8 +21,10 @@ class PosCart extends Model
         'orig_total',
         'discount',
         'user',
-        'store_id', // New field added
-        'barcode_numbers', // Add this field to the fillable array
+        'store_id',
+        'barcode_numbers',
+        'consign_price',
+        'consign_total',
     ];
 
     protected $casts = [
@@ -31,8 +33,10 @@ class PosCart extends Model
         'sub_total' => 'decimal:2',
         'orig_total' => 'decimal:2',
         'discount' => 'decimal:2',
-        'barcode_numbers' => 'array', // Cast it to array if you're saving it as a JSON-like structure
+        'barcode_numbers' => 'array',
+        'consign_price' => 'decimal:2',
+        'consign_total' => 'decimal:2',
     ];
 
-    public $timestamps = false; // Set to true if you have created_at and updated_at columns
+    public $timestamps = false;
 }
