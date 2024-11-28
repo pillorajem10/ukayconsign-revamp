@@ -27,6 +27,9 @@ class PosSaleController extends Controller
     }
 
 
+
+
+    
     public function index(Request $request)
     {
         // Check if the authenticated user is 43
@@ -81,11 +84,6 @@ class PosSaleController extends Controller
     
         return view('pages.posSale', compact('productDetails', 'posCarts', 'selectedAction'));
     }
-    
-       
-    
-    
-    
 
 
 
@@ -114,9 +112,6 @@ class PosSaleController extends Controller
     
         return ['error' => 'No items are detected on this barcode.'];
     }
-       
-    
-    
 
 
 
@@ -124,60 +119,82 @@ class PosSaleController extends Controller
 
     private function addToPosCart($productDetails, $barcodeNumber)
     {
-        // Check if the product already exists in the cart for the current user
-        $existingCart = PosCart::where('product_sku', $productDetails->SKU)
-            ->where('user', auth()->id())
-            ->first();
-        
-        if ($existingCart) {
-            // If the cart entry exists, increment the quantity
-            $existingCart->quantity += 1; // Increment by 1
-            $existingCart->orig_total = $existingCart->quantity * $existingCart->price; // Update total
-            $existingCart->sub_total = max(0, $existingCart->orig_total - $existingCart->discount); // Update sub-total
-            
-            // Calculate consign_total (quantity * consign_price)
-            $existingCart->consign_total = $existingCart->quantity * $existingCart->consign_price; // Update consign_total
-            
-            // Append the new barcode number to the barcode_numbers field
-            $barcodeNumbers = json_decode($existingCart->barcode_numbers, true); // Decode the existing barcode numbers into an array
-            $barcodeNumbers[] = $barcodeNumber; // Add the new barcode number
-            $existingCart->barcode_numbers = json_encode($barcodeNumbers); // Encode back into JSON and save
-            
-            // Save the updated cart entry
-            $existingCart->save();
+        // Attempt to find the barcode
+        $barcode = ProductBarcode::where('barcode_number', $barcodeNumber)->first();
+    
+        if ($barcode) {
+            // Fetch the related ReceivedProduct using the received_product_id from ProductBarcode
+            $receivedProduct = $barcode->receivedProduct;
+    
+            // Debug: Check if receivedProduct is null
+            if (!$receivedProduct) {
+                return redirect()->route('posSale.index')->with('error', 'No related ReceivedProduct found for this barcode.');
+            }
+    
+            // Debug: Print the receivedProduct data
+            \Log::info('Received Product:', ['receivedProduct' => $receivedProduct]);
+    
+            // Check if the receivedProduct exists and has a cost
+            if ($receivedProduct) {
+                // Check if the product already exists in the cart for the current user
+                $existingCart = PosCart::where('product_sku', $productDetails->SKU)
+                    ->where('user', auth()->id())
+                    ->first();
+    
+                if ($existingCart) {
+                    // If the cart entry exists, increment the quantity
+                    $existingCart->quantity += 1; // Increment by 1
+                    $existingCart->orig_total = $existingCart->quantity * $existingCart->price; // Update total
+                    $existingCart->sub_total = max(0, $existingCart->orig_total - $existingCart->discount); // Update sub-total
+    
+                    // Calculate consign_total (quantity * consign_price)
+                    $existingCart->consign_total = $existingCart->quantity * $existingCart->consign_price; // Update consign_total
+    
+                    // Append the new barcode number to the barcode_numbers field
+                    $barcodeNumbers = json_decode($existingCart->barcode_numbers, true); // Decode the existing barcode numbers into an array
+                    $barcodeNumbers[] = $barcodeNumber; // Add the new barcode number
+                    $existingCart->barcode_numbers = json_encode($barcodeNumbers); // Encode back into JSON and save
+    
+                    // Save the updated cart entry
+                    $existingCart->save();
+                } else {
+                    // If it doesn't exist, create a new PosCart entry
+                    $posCart = new PosCart();
+                    $posCart->product_sku = $productDetails->SKU;
+                    $posCart->quantity = 1; // Start with a quantity of 1
+                    $posCart->price = $productDetails->SRP; // Assuming the price is in the Product model
+                    $posCart->date_added = now();
+                    $posCart->orig_total = $posCart->quantity * $posCart->price;
+                    $posCart->sub_total = max(0, $posCart->orig_total - 0); // Discount is defaulted to 0
+                    $posCart->product_bundle_id = $productDetails->ProductID;
+                    $posCart->user = auth()->id();
+                    $posCart->discount = 0;
+    
+                    // Assign the consign_price based on the cost from the related ReceivedProduct
+                    $posCart->consign_price = $receivedProduct->cost;  // Use the cost from ReceivedProduct
+    
+                    // Calculate consign_total (quantity * consign_price)
+                    $posCart->consign_total = $posCart->quantity * $posCart->consign_price; // Calculate consign_total
+    
+                    // Initialize barcode_numbers as an array with the first barcode number
+                    $posCart->barcode_numbers = json_encode([$barcodeNumber]);
+    
+                    // Save the new cart entry
+                    $posCart->save();
+                }
+            } else {
+                // If no related ReceivedProduct is found, you can return an error or handle it
+                return redirect()->route('posSale.index')->with('error', 'Received product not found for this barcode.');
+            }
         } else {
-            // If it doesn't exist, create a new PosCart entry
-            $posCart = new PosCart();
-            $posCart->product_sku = $productDetails->SKU;
-            $posCart->quantity = 1; // Start with a quantity of 1
-            $posCart->price = $productDetails->SRP; // Assuming the price is in the Product model
-            $posCart->date_added = now();
-            $posCart->orig_total = $posCart->quantity * $posCart->price;
-            $posCart->sub_total = max(0, $posCart->orig_total - 0); // Discount is defaulted to 0
-            $posCart->product_bundle_id = $productDetails->ProductID;
-            $posCart->user = auth()->id();
-            $posCart->discount = 0;
-        
-            // Assign the consign_price (based on quantity)
-            $posCart->consign_price = $productDetails->Consign;
-        
-            // Calculate consign_total (quantity * consign_price)
-            $posCart->consign_total = $posCart->quantity * $posCart->consign_price; // Calculate consign_total
-            
-            // Initialize barcode_numbers as an array with the first barcode number
-            $posCart->barcode_numbers = json_encode([$barcodeNumber]);
-        
-            // Save the new cart entry
-            $posCart->save();
+            return redirect()->route('posSale.index')->with('error', 'Barcode not found.');
         }
     }
-    
-    
-     
-    
-    
-    
-    
+
+
+
+
+
     public function completeSale(Request $request)
     {
         if ($request->mode_of_payment === 'Interest') {
@@ -265,9 +282,6 @@ class PosSaleController extends Controller
         return redirect()->route('posSale.index')
             ->with('success', 'Sale completed successfully.');
     }
-    
-
-    
 
 
 
@@ -319,10 +333,6 @@ class PosSaleController extends Controller
         return redirect()->route('posSale.index')
             ->with('success', 'Item voided successfully.');
     }
-    
-    
-    
-
 
 
 
