@@ -83,8 +83,8 @@
 @media (max-width: 480px) {
     /* Further reduce font sizes and paddings on extra small screens */
     .table.breakdown-table th, .table.breakdown-table td {
-        padding: 6px;  /* Even less padding */
-        font-size: 12px;  /* Smaller font size */
+        padding: 5px;  /* Even less padding */
+        font-size: 10px;  /* Smaller font size */
     }
 
     .sale-breakdown-title {
