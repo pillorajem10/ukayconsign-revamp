@@ -1,5 +1,98 @@
-.chart-container {
+/* Default styles */
+.table-responsive.breakdown-table-container {
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+.table.breakdown-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table.breakdown-table th, .table.breakdown-table td {
+    padding: 12px;
+    text-align: left;
+    font-size: 16px;
+}
+
+/* Adjust chart container styles */
+.chart-container.sales-pie-chart-container,
+.chart-container.profit-pie-chart-container {
     max-width: 500px; /* Set your desired max-width */
     width: 100%;
     margin: 0 auto; /* Optional: centers the container */
+}
+
+.chart-parent-cont {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.chart-label {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px; /* Add space between the label and the chart */
+    color: #333; /* Set color of the label text */
+}
+
+/* Media Query for Small Screens (e.g. mobile) */
+@media (max-width: 768px) {
+    /* Reduce table font size and padding */
+    .table.breakdown-table th, .table.breakdown-table td {
+        padding: 8px;  /* Less padding for small screens */
+        font-size: 14px;  /* Smaller font size */
+    }
+
+    /* Adjust chart container for smaller screens */
+    .chart-container.sales-pie-chart-container,
+    .chart-container.profit-pie-chart-container {
+        max-width: 100%;  /* Let the chart take full width on smaller screens */
+        margin-bottom: 20px;
+    }
+
+    .chart-label {
+        font-size: 16px;  /* Adjust font size for small screens */
+    }
+
+    /* Stack charts vertically on small screens */
+    .chart-parent-cont {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Reduce the overall width of the table */
+    .table-responsive.breakdown-table-container {
+        overflow-x: auto;
+    }
+
+    /* Optional: You can also reduce the font size for headings */
+    .sale-breakdown-title {
+        font-size: 20px;  /* Smaller heading size for mobile */
+    }
+
+    /* Optional: Adjust the padding for the back button */
+    .back-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Further reduce font sizes and paddings on extra small screens */
+    .table.breakdown-table th, .table.breakdown-table td {
+        padding: 6px;  /* Even less padding */
+        font-size: 12px;  /* Smaller font size */
+    }
+
+    .sale-breakdown-title {
+        font-size: 18px;  /* Smaller heading for extra small screens */
+    }
+
+    .back-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
 }

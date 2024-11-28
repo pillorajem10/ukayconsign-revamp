@@ -59,25 +59,33 @@ class SaleBreakdownController extends Controller
         // Loop through each sale and decode the ordered_items JSON
         foreach ($sales as $sale) {
             $orderedItems = json_decode($sale->ordered_items, true);
-        
+            
             foreach ($orderedItems as $item) {
                 $productBundleId = $item['product_bundle_id'];
                 $subTotal = (float) $item['sub_total'];
                 $quantity = (int) $item['quantity'];
-        
+                $consignTotal = (float) $item['consign_total'];  // Adding consign_total
+                
+                // Calculate total_profit (subTotal - consignTotal)
+                $totalProfit = $subTotal - $consignTotal;  // This is not stored in the database, just calculated
+                
                 // If the product_bundle_id is already in the breakdown, update the totals
                 if (isset($breakdown[$productBundleId])) {
                     $breakdown[$productBundleId]['total'] += $subTotal;
                     $breakdown[$productBundleId]['quantity'] += $quantity;
+                    $breakdown[$productBundleId]['consign_total'] += $consignTotal;  // Update consign_total
+                    $breakdown[$productBundleId]['total_profit'] += $totalProfit;  // Update total_profit
                 } else {
                     // Initialize the totals for this product_bundle_id
                     $breakdown[$productBundleId] = [
                         'total' => $subTotal,
-                        'quantity' => $quantity
+                        'quantity' => $quantity,
+                        'consign_total' => $consignTotal,  // Initialize consign_total
+                        'total_profit' => $totalProfit,    // Initialize total_profit
                     ];
                 }
             }
-        }        
+        }              
     
         // Pass the breakdown data and store_id to the view
         return view('pages.saleBreakdown', [

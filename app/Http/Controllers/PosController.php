@@ -344,10 +344,10 @@ class PosController extends Controller
             if ($user) {
                 $promoted = false; // Track if the user has been promoted
         
-                if ($store->store_total_earnings >= 30000 && $user->badge === 'Silver') {
+                if ($store->store_total_earnings >= 50000 && $user->badge === 'Silver') {
                     $user->badge = 'Gold'; // Update badge to Gold
                     $promoted = true;
-                } elseif ($store->store_total_earnings >= 50000 && $user->badge === 'Gold') {
+                } elseif ($store->store_total_earnings >= 75000 && $user->badge === 'Gold') {
                     $user->badge = 'Platinum'; // Update badge to Platinum
                     $promoted = true;
                 }
