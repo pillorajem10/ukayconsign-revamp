@@ -40,27 +40,30 @@
                         <p class="void-text"><strong>Voided</strong></p> <!-- Display Voided message -->
                     @elseif(request('store_id') == 7 && \Carbon\Carbon::parse($sale->createdAt)->format('F j, Y') == \Carbon\Carbon::now()->format('F j, Y'))
                         <!-- If sale is not voided, store_id is 7, and sale was made today, display the Void button -->
-                        <form action="{{ route('sales.void', ['sale_id' => $sale->id]) }}" method="POST" style="margin-top: 10px;">
+                        <form action="{{ route('sales.void', ['sale_id' => $sale->id, 'store_id' => 7]) }}" method="POST" style="margin-top: 10px;">
                             @csrf
                             @method('PUT')
-                            
+                    
+                            <!-- Hidden input for store_id -->
+                            <input type="hidden" name="store_id" value="7">
+                    
                             <!-- Void Button -->
                             <button type="button" class="btn btn-danger mb-4" onclick="return verifyPassword()">Void</button>
                         </form>
-                        
+                    
                         <!-- Custom Modal (Password Prompt) -->
                         <div id="passwordModal" class="modal">
                             <div class="modal-content">
                                 <h4>Please Enter Password to Void</h4>
-                        
+                    
                                 <!-- The form for password submission -->
                                 <form id="passwordForm" method="POST" action="{{ route('sales.void', ['sale_id' => $sale->id]) }}">
                                     @csrf
                                     @method('PUT')
-                        
+                    
                                     <!-- Password Field -->
                                     <input type="password" id="password" name="password" placeholder="Password" class="form-control mb-2" required>
-                                    
+                    
                                     <!-- Submit and Cancel Buttons -->
                                     <button type="button" onclick="submitForm()" class="btn btn-danger">Submit</button>
                                     <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancel</button>
