@@ -38,8 +38,8 @@
                 <div class="sale-card">
                     @if($sale->is_voided)
                         <p class="void-text"><strong>Voided</strong></p> <!-- Display Voided message -->
-                    @elseif(request('store_id') == 7)
-                        <!-- If sale is not voided and store_id is 7, display the Void button -->
+                    @elseif(request('store_id') == 7 && \Carbon\Carbon::parse($sale->createdAt)->format('F j, Y') == \Carbon\Carbon::now()->format('F j, Y'))
+                        <!-- If sale is not voided, store_id is 7, and sale was made today, display the Void button -->
                         <form action="{{ route('sales.void', ['sale_id' => $sale->id]) }}" method="POST" style="margin-top: 10px;">
                             @csrf
                             @method('PUT')
