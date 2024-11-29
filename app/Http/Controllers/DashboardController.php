@@ -43,12 +43,15 @@ class DashboardController extends Controller
             $storeEarnings[$storeId] = [
                 'store_name' => $store->store_name, // Store name added
                 'total_today' => Sale::where('sale_made', $storeId)
-                    ->whereDate('createdAt', today())
-                    ->sum('total'), 
+                                    ->where('is_voided', false)
+                                    ->whereDate('createdAt', today())
+                                    ->sum('total'), 
+
                 'total_month' => Sale::where('sale_made', $storeId)
-                    ->whereMonth('createdAt', date('m'))
-                    ->whereYear('createdAt', date('Y'))
-                    ->sum('total'), 
+                                    ->where('is_voided', false)
+                                    ->whereMonth('createdAt', date('m'))
+                                    ->whereYear('createdAt', date('Y'))
+                                    ->sum('total'),
             ];
         }        
     
@@ -116,11 +119,13 @@ class DashboardController extends Controller
             // Fetch monthly totals for the selected store
             $monthlyTotals = Sale::selectRaw('SUM(total) as total, MONTH(createdAt) as month')
                 ->where('sale_made', $selectedStoreId) // Filter by selected store
+                ->where('is_voided', false) // Filter by is_voided = false
                 ->whereYear('createdAt', date('Y')) // Current year
                 ->groupBy('month')
                 ->orderBy('month')
                 ->get()
                 ->keyBy('month');
+
     
             // Create an array for all months
             $monthlyData = [];
@@ -131,12 +136,13 @@ class DashboardController extends Controller
             // Fetch monthly totals for all stores
             $monthlyTotals = Sale::selectRaw('SUM(total) as total, MONTH(createdAt) as month')
                 ->whereIn('sale_made', $stores->pluck('id')->toArray()) // Filter by user's stores
+                ->where('is_voided', false) // Filter by is_voided = false
                 ->whereYear('createdAt', date('Y')) // Current year
                 ->groupBy('month')
                 ->orderBy('month')
                 ->get()
                 ->keyBy('month');
-    
+
             // Create an array for all months
             $monthlyData = [];
             for ($i = 1; $i <= 12; $i++) {

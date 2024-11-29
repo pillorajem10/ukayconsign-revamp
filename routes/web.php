@@ -98,6 +98,8 @@ Route::post('/pos-preloved/apply-discount', [PosSaleController::class, 'applyDis
 
 // SALES
 Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
+Route::put('/sales/{sale_id}/void', [SaleController::class, 'voidSale'])->name('sales.void');
+
 
 // PROMOS
 // Route::get('/promos', [PromoController::class, 'index'])->name('promos.index');
@@ -131,6 +133,7 @@ Route::post('/send-blast-emails', [CxInfoController::class, 'sendBlastEmails'])-
 
 // SALE BREAKDOWN
 Route::get('/sale-breakdown', [SaleBreakdownController::class, 'index'])->name('saleBreakdown.index');
+
 
 // BILLING
 Route::get('/billings', [BillingController::class, 'index'])->name('billings.index');

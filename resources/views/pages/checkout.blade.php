@@ -176,10 +176,10 @@
                 @endif
             </div>
         </div>
-        <script src="{{ asset('js/checkout.js?v=7.9') }}"></script>
+        <script src="{{ asset('js/checkout.js?v=8.0') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/checkout.css?v=7.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/checkout.css?v=8.0') }}">
 @endsection

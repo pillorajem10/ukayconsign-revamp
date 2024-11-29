@@ -7,10 +7,20 @@
         <h1 class="sale-breakdown-title">Sale Breakdown</h1>
 
         <div class="mb-3">
-            <a href="{{ url()->previous() == route('dashboard') ? route('dashboard') : (url()->previous() == route('tallies.index') ? route('tallies.index', ['store_id' => request('store_id')]) : url()->previous()) }}" class="btn btn-secondary back-btn">
-                Back 
+            <a href="{{ url()->previous() == route('dashboard') 
+                ? route('dashboard') 
+                : (url()->previous() == route('tallies.index') 
+                    ? route('tallies.index', ['store_id' => request('store_id')]) 
+                    : url()->previous()) }}" 
+                class="btn btn-secondary back-btn">
+                Back
             </a>
+            <!-- New route for View Sale By Customers -->
+            <a href="{{ route('sales.index', ['store_id' => request('store_id')]) }}" class="btn btn-dark-green ml-2">
+                View Sale By Customers
+            </a>            
         </div>
+        
         
         @if(count($breakdown) > 0)
             <div class="table-responsive breakdown-table-container">
@@ -88,11 +98,11 @@
         <!-- Pass breakdown data to JS using a data attribute -->
         <div id="breakdownData" class="breakdown-data" data-breakdown="{{ json_encode($breakdown) }}" style="display: none;"></div>
 
-        <script src="{{ asset('js/sale-breakdown.js?v=7.9') }}"></script>
+        <script src="{{ asset('js/sale-breakdown.js?v=8.0') }}"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/sale-breakdown.css?v=7.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/sale-breakdown.css?v=8.0') }}">
 @endsection

@@ -78,7 +78,7 @@
             </div>
         @endif
 
-        <script src="{{ asset('js/tallies.js?v=7.9') }}"></script>
+        <script src="{{ asset('js/tallies.js?v=8.0') }}"></script>
     </div>
 
     <nav aria-label="Page navigation">
@@ -90,5 +90,5 @@
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/tallies.css?v=7.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/tallies.css?v=8.0') }}">
 @endsection

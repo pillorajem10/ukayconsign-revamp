@@ -38,6 +38,17 @@
     color: #333; /* Set color of the label text */
 }
 
+.btn-dark-green {
+    background-color: green; /* Dark Green */
+    color: white;
+}
+
+.btn-dark-green:hover {
+    background-color: darkgreen; /* Dark Green */
+    color: white;
+}
+
+
 /* Media Query for Small Screens (e.g. mobile) */
 @media (max-width: 768px) {
     /* Reduce table font size and padding */

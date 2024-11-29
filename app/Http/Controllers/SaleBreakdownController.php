@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class SaleBreakdownController extends Controller
 {
-    /**
-     * Display the sale breakdown page.
-     *
-     * @return \Illuminate\View\View
-     */
+    public function __construct()
+    {
+        $this->middleware('auth'); // Require authentication for all methods in this controller
+    }
+    
     public function index(Request $request)
     {
         // Get the store ID and filter from the request
@@ -31,7 +31,8 @@ class SaleBreakdownController extends Controller
         }
     
         // Initialize the query for sales data based on the store ID
-        $salesQuery = Sale::where('sale_made', $store_id);
+        $salesQuery = Sale::where('sale_made', $store_id)
+                  ->where('is_voided', false);
     
         // Filter the sales query based on the selected filter
         if ($filter == 'daily') {

@@ -7,8 +7,10 @@
         <h2 class="page-title">Sales Records</h2>
 
         <div class="back-to-dashboard">
-            <a href="{{ route('stores.index') }}" class="btn btn-secondary">Back to Stores</a>
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+            {{--<a href="{{ route('stores.index') }}" class="btn btn-secondary">Back to Stores</a>--}}
         </div>
+        
         
         <!-- Filter Form -->
         <div class="filter-form-container">
@@ -34,28 +36,60 @@
         @else
             @foreach($sales as $sale)
                 <div class="sale-card">
+                    @if($sale->is_voided)
+                        <p class="void-text"><strong>Voided</strong></p> <!-- Display Voided message -->
+                    @elseif(request('store_id') == 7)
+                        <!-- If sale is not voided and store_id is 7, display the Void button -->
+                        <form action="{{ route('sales.void', ['sale_id' => $sale->id]) }}" method="POST" style="margin-top: 10px;">
+                            @csrf
+                            @method('PUT')
+                            
+                            <!-- Void Button -->
+                            <button type="button" class="btn btn-danger mb-4" onclick="return verifyPassword()">Void</button>
+                        </form>
+                        
+                        <!-- Custom Modal (Password Prompt) -->
+                        <div id="passwordModal" class="modal">
+                            <div class="modal-content">
+                                <h4>Please Enter Password to Void</h4>
+                        
+                                <!-- The form for password submission -->
+                                <form id="passwordForm" method="POST" action="{{ route('sales.void', ['sale_id' => $sale->id]) }}">
+                                    @csrf
+                                    @method('PUT')
+                        
+                                    <!-- Password Field -->
+                                    <input type="password" id="password" name="password" placeholder="Password" class="form-control mb-2" required>
+                                    
+                                    <!-- Submit and Cancel Buttons -->
+                                    <button type="button" onclick="submitForm()" class="btn btn-danger">Submit</button>
+                                    <button type="button" onclick="closeModal()" class="btn btn-secondary">Cancel</button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
                     <h3 class="card-title">Sale ID: {{ $sale->id }}</h3>
                     <div class="card-content">
                         <p><strong>Customer Name:</strong> {{ $sale->customer_name }}</p>
                         <p><strong>Customer Number:</strong> {{ $sale->customer_number }}</p>
                         <p><strong>Total:</strong> {{ number_format($sale->total, 2) }}</p>
-
+                
                         <!-- Payment Method Display -->
                         <p><strong>Mode of Payment:</strong> {{ $sale->mode_of_payment }}</p>
-
+                
                         <!-- Conditional Fields -->
                         <div id="cashFields" style="{{ $sale->mode_of_payment === 'Cash' ? '' : 'display: none;' }}">
                             <p><strong>Amount Paid:</strong> {{ number_format($sale->amount_paid, 2) }}</p>
                             <p><strong>Change Given:</strong> {{ number_format($sale->cx_change, 2) }}</p>
                         </div>
-
+                
                         <div id="ewalletFields" style="{{ $sale->mode_of_payment === 'eWallet' ? '' : 'display: none;' }}">
                             <p><strong>Reference Number (eWallet):</strong> {{ $sale->ref_number_ewallet }}</p>
                         </div>
-
+                
                         <p><strong>Date of Transaction:</strong> {{ \Carbon\Carbon::parse($sale->date_of_transaction)->format('F j, Y') }}</p>
                     </div>
-
+                
                     <h4 class="items-title">Ordered Items</h4>
                     <table class="items-table">
                         <thead>
@@ -77,7 +111,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                </div>                      
             @endforeach
         @endif
 
@@ -85,10 +119,12 @@
             <ul class="pagination justify-content-center">
                 {{ $sales->appends(request()->query())->links('vendor.pagination.bootstrap-4') }}
             </ul>
-        </nav>  
+        </nav> 
+        
+        <script src="{{ asset('js/saleDetails.js?v=8.0') }}"></script>
     </div>
 @endsection
 
 @section('styles')
-    <link rel="stylesheet" href="{{ asset('css/saleDetails.css?v=7.9') }}">
+    <link rel="stylesheet" href="{{ asset('css/saleDetails.css?v=8.0') }}">
 @endsection

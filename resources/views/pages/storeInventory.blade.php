@@ -80,7 +80,7 @@
         </div>
 
         <!-- Link to JS and CSS with cache-busting version -->
-        <script src="{{ asset('js/storeInv.js?v=7.9') }}"></script>
-        <link rel="stylesheet" href="{{ asset('css/storeInv.css?v=7.9') }}">
+        <script src="{{ asset('js/storeInv.js?v=8.0') }}"></script>
+        <link rel="stylesheet" href="{{ asset('css/storeInv.css?v=8.0') }}">
     </div>
 @endsection
