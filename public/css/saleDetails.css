@@ -122,3 +122,60 @@ label {
     margin-top: 20px;
     font-weight: bold;
 }
+
+.void-text {
+    color: #ff0000;
+    font-size: 2rem;
+}
+
+    /* Modal Background */
+    .modal {
+        display: none; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9999;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        width: 300px;
+    }
+
+    /* Input Field */
+    .modal-content input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Buttons */
+    .modal-content button {
+        padding: 10px 15px;
+        border: none;
+        cursor: pointer;
+        margin: 5px;
+    }
+
+    .modal-content button.btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .modal-content button.btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }

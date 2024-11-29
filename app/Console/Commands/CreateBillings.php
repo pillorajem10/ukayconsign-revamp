@@ -74,9 +74,11 @@ class CreateBillings extends Command
                 
                 // Now fetch the sales within this date range
                 $sales = Sale::where('sale_made', $store->id)
+                    ->where('is_voided', false)  // Filter by is_voided = false
                     ->where('createdAt', '>=', $startDate)  // Start date (3 days ago)
                     ->where('createdAt', '<=', $endDate)  // End date (current date)
                     ->get();
+            
                 
                 $this->info("Total sales found for store {$store->store_name}: " . $sales->count());
                 Log::info("Total sales found for store {$store->store_name}: " . $sales->count());
