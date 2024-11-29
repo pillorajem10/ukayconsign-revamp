@@ -7,6 +7,7 @@ use App\Models\Store;
 use App\Models\Product;
 use App\Models\ProductBarcode;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SaleController extends Controller
 {
@@ -48,25 +49,49 @@ class SaleController extends Controller
     
     public function voidSale($saleId)
     {
-        // Find the sale by ID
         $sale = Sale::find($saleId);
-    
+        
         if (!$sale) {
             return redirect()->back()->with('error', 'Sale not found.');
         }
     
+        $store = Store::find(7);
+        
+        if (!$store) {
+            return redirect()->back()->with('error', 'Store not found.');
+        }
+    
+        // Log the store details to check the found store
+        Log::debug('Store Details:', $store->toArray());
+        
+        // Deduct the sale total from the store's total earnings
+        $store->store_total_earnings -= $sale->total;
+        $store->save(); // Save the updated store
+        
+        // Log the updated store total earnings
+        Log::debug('Updated Store Earnings:', ['store_total_earnings' => $store->store_total_earnings]);
+        
         // Decode the ordered_items JSON to get an array of items
         $orderedItems = json_decode($sale->ordered_items);
-    
+        
+        // Log the ordered items to inspect their structure
+        Log::debug('Ordered Items:', $orderedItems);
+        
         // Loop through each ordered item and update the product stock and barcodes
         foreach ($orderedItems as $item) {
             // Find the product by SKU
             $product = Product::where('SKU', $item->product_sku)->first();
-    
+            
             if ($product) {
+                // Log the product details
+                Log::debug('Product Found:', $product->toArray());
+    
                 // Add the quantity of the item back to the product stock
                 $product->Stock += $item->quantity;
                 $product->save(); // Save the updated stock
+    
+                // Log the updated product stock
+                Log::debug('Updated Product Stock:', ['SKU' => $item->product_sku, 'Stock' => $product->Stock]);
     
                 // Process barcodes for the current item
                 $barcodeNumbers = json_decode($item->barcode_numbers);
@@ -79,9 +104,15 @@ class SaleController extends Controller
                         ->first();
     
                     if ($productBarcode) {
+                        // Log the barcode details
+                        Log::debug('Barcode Found:', $productBarcode->toArray());
+    
                         // Set the 'is_used' flag to false (or 0)
                         $productBarcode->is_used = false;
                         $productBarcode->save(); // Save the updated barcode
+    
+                        // Log the barcode update
+                        Log::debug('Updated Barcode:', ['barcode_number' => $barcodeNumber, 'is_used' => $productBarcode->is_used]);
                     }
                 }
             }
@@ -90,7 +121,10 @@ class SaleController extends Controller
         // Mark the sale as voided
         $sale->is_voided = true;
         $sale->save(); // Save the voided sale
+        
+        // Log the sale voided status
+        Log::debug('Sale Voided:', ['sale_id' => $sale->id, 'is_voided' => $sale->is_voided]);
     
-        return redirect()->back()->with('success', 'Sale has been voided, stock updated, and barcodes reset.');
+        return redirect()->back()->with('success', 'Sale has been voided, stock updated, barcodes reset, and store earnings adjusted.');
     }     
 }
